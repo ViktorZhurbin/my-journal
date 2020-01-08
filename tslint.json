@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "tslint-plugin-prettier",
+        "tslint-config-prettier"
+    ],
+    "rules": {
+        "prettier": true
+    },
+    "exclude": [
+        "gulpfile.js",
+        "node_modules/",
+        "dist/",
+        ".vscode/"
+    ]
+}
