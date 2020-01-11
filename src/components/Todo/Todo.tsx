@@ -1,18 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import styles from './Todo.module.css';
+import { ITodo } from '~/models';
 
 interface TodoProps {
-    text: string;
+    todo: ITodo;
+    isEditing: boolean;
+    onToggle: (id: string) => void;
+    onDelete: (id: string) => void;
+    toggleEdit: (id: string | null) => void;
+    onEdit: (id: string, task: string) => void;
 }
 
-export const Todo: React.FC<TodoProps> = ({ text }) => {
+export const Todo: React.FC<TodoProps> = ({
+    todo: { id, task, isDone },
+    isEditing,
+    toggleEdit,
+    onDelete,
+    onToggle,
+    onEdit,
+}) => {
+    const [editTask, setEditTask] = useState(task);
+
+    const handleSubmit = () => {
+        toggleEdit(null);
+        onEdit(id, editTask);
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (isEditing) {
+            const title = event.target.value.trim();
+            setEditTask(title);
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            handleSubmit();
+        } else if (event.key === 'Escape') {
+            setEditTask(task);
+            toggleEdit(null);
+        }
+    };
+
+    const handleToggle = () => onToggle(id);
+    const handleDelete = () => onDelete(id);
+    const handleToggleEdit = () => toggleEdit(id);
+
     return (
         <li className={styles.listItem}>
-            <div>
-                <input type="checkbox" />
-                <label>{text}</label>
-            </div>
+            {isEditing ? (
+                <input
+                    className={styles.edit}
+                    type="text"
+                    value={editTask}
+                    onChange={handleChange}
+                    onBlur={handleSubmit}
+                    onKeyDown={handleKeyDown}
+                />
+            ) : (
+                <div className={styles.view}>
+                    <input
+                        type="checkbox"
+                        checked={isDone}
+                        onChange={handleToggle}
+                    />
+                    <label onClick={handleToggleEdit}>{task}</label>
+                    <button className={styles.destroy} onClick={handleDelete} />
+                </div>
+            )}
         </li>
     );
 };

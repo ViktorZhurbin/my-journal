@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { TodoList } from './components/TodoList';
+import { TodoList } from '~/containers/TodoList';
 
 export const App: React.FC = () => (
     <div>
-        <TodoList todos={['Type', 'Script']} />
+        <TodoList />
     </div>
 );
