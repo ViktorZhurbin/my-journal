@@ -1,0 +1,53 @@
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 30px;
+    padding-left: 15px;
+}
+
+.edit {
+    box-sizing: border-box;
+    border: none;
+}
+
+.deleteButton {
+    display: none;
+}
+
+.container:hover .deleteButton {
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    padding: 3px;
+    opacity: 0.5;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    display: block;
+    opacity: 0.8;
+    background-color: #5f636828;
+}
+
+.deleteButton:before,
+.deleteButton:after {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    content: ' ';
+    height: 12px;
+    width: 1.25px;
+    background-color: #333;
+}
+.deleteButton:before {
+    transform: rotate(45deg);
+}
+.deleteButton:after {
+    transform: rotate(-45deg);
+}

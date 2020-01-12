@@ -6,19 +6,11 @@ import styles from './Checkbox.module.css';
 const cx = classNames.bind(styles);
 
 interface ICheckboxProps {
-    checked: boolean;
+    isChecked: boolean;
     onToggle: () => void;
-    label?: string;
-    onLabelClick?: () => void;
-    onDelete?: () => void;
 }
-export const Checkbox: React.FC<ICheckboxProps> = ({
-    checked,
-    label,
-    onToggle,
-    onLabelClick,
-    onDelete,
-}) => {
+
+export const Checkbox: React.FC<ICheckboxProps> = ({ isChecked, onToggle }) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' || event.key === ' ') {
             onToggle();
@@ -26,32 +18,17 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     };
 
     return (
-        <div className={styles.row}>
-            <div
-                className={cx('checkbox', { checked })}
-                onClick={onToggle}
-                tabIndex={0}
-                role="checkbox"
-                aria-checked={checked}
-                onKeyDown={handleKeyDown}
-            >
-                <svg viewBox="0,0,50,50">
-                    <path d="M5 30 L 20 45 L 45 5"></path>
-                </svg>
-            </div>
-            {label && (
-                <div className={styles.labelWithButton}>
-                    <div className={styles.label} onClick={onLabelClick}>
-                        {label}
-                    </div>
-                    <div
-                        className={styles.deleteButton}
-                        onClick={onDelete}
-                        role="button"
-                        aria-label="Delete"
-                    />
-                </div>
-            )}
+        <div
+            className={cx('checkbox', { isChecked })}
+            onClick={onToggle}
+            tabIndex={0}
+            role="checkbox"
+            aria-checked={isChecked}
+            onKeyDown={handleKeyDown}
+        >
+            <svg viewBox="0,0,50,50">
+                <path d="M5 30 L 20 45 L 45 5"></path>
+            </svg>
         </div>
     );
 };

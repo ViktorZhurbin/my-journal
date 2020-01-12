@@ -1,4 +1,9 @@
 .listItem {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
     list-style: none;
     height: 30px;
     border-bottom: 1px solid transparent;

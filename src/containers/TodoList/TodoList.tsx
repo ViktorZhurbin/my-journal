@@ -27,7 +27,6 @@ export const TodoList: React.FC<TodoListProps> = ({
     setAllDone,
     setVisibilityFilter,
 }) => {
-    const [editingId, setEditingId] = useState();
     const [isAllDone, setIsAllDone] = useState(false);
 
     const handleToggleAll = () => {
@@ -45,19 +44,24 @@ export const TodoList: React.FC<TodoListProps> = ({
             </header>
             <Input placeholder="What needs to be done?" onSubmit={addTodo} />
             <section>
-                <Checkbox checked={isAllDone} onToggle={handleToggleAll} />
+                <Checkbox isChecked={isAllDone} onToggle={handleToggleAll} />
                 <ul className={styles.list}>
                     {ids.map(id => (
                         <Todo
                             key={id}
                             todo={byId[id]}
-                            isEditing={id === editingId}
-                            toggleEdit={setEditingId}
                             onEdit={editTodo}
                             onToggle={toggleTodo}
                             onDelete={deleteTodo}
                         />
                     ))}
+                    <Todo
+                        key={1}
+                        todo={{ id: 'c', task: 'test', isDone: false }}
+                        onEdit={editTodo}
+                        onToggle={toggleTodo}
+                        onDelete={deleteTodo}
+                    />
                 </ul>
             </section>
         </div>
