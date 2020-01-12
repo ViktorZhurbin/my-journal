@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 interface IInputProps {
     onSubmit: (value: string) => void;
+    placeholder?: string;
 }
 
-export const Input: React.FC<IInputProps> = ({ onSubmit }) => {
+export const Input: React.FC<IInputProps> = ({ onSubmit, placeholder }) => {
     const [value, setValue] = useState('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +21,7 @@ export const Input: React.FC<IInputProps> = ({ onSubmit }) => {
     return (
         <input
             type="text"
+            placeholder={placeholder || ''}
             value={value}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

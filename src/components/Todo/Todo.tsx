@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import styles from './Todo.module.css';
+
 import { ITodo } from '~/models';
 
 interface TodoProps {
@@ -51,6 +52,7 @@ export const Todo: React.FC<TodoProps> = ({
         <li className={styles.listItem}>
             {isEditing ? (
                 <input
+                    autoFocus
                     className={styles.edit}
                     type="text"
                     value={editTask}
@@ -66,7 +68,9 @@ export const Todo: React.FC<TodoProps> = ({
                         onChange={handleToggle}
                     />
                     <label onClick={handleToggleEdit}>{task}</label>
-                    <button className={styles.destroy} onClick={handleDelete} />
+                    <div className={styles.delete} onClick={handleDelete}>
+                        x
+                    </div>
                 </div>
             )}
         </li>

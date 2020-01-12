@@ -1,3 +1,13 @@
 .listItem {
     list-style: none;
 }
+
+.view {
+    display: flex;
+}
+
+.delete {
+    color: lightpink;
+    margin-left: 10px;
+    cursor: pointer;
+}

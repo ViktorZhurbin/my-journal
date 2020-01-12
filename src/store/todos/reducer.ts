@@ -5,10 +5,13 @@ import {
     todoAddAction,
     todoDeleteAction,
     todoEditAction,
+    setAllDoneAction,
+    setVisibilityFilter,
 } from './actions';
 import { ITodoList, ITodo } from '~/models';
 
 const initialTodos: ITodoList = {
+    visibilityFilter: 'SHOW_ALL',
     ids: ['a', 'b'],
     byId: {
         a: {
@@ -25,6 +28,10 @@ const initialTodos: ITodoList = {
 };
 
 export const todos = createReducer(/* initialState.todos */ initialTodos, {
+    [setVisibilityFilter.type]: (state, { payload }) => {
+        return { ...state, visibilityFilter: payload };
+    },
+
     [todoToggleAction.type]: (state, { payload }) => {
         const toggledTodo = state.byId[payload.id];
         const newById = {
@@ -50,6 +57,7 @@ export const todos = createReducer(/* initialState.todos */ initialTodos, {
     },
 
     [todoAddAction.type]: (state, { payload }) => ({
+        ...state,
         ids: [...state.ids, payload.id],
         byId: {
             ...state.byId,
@@ -58,19 +66,35 @@ export const todos = createReducer(/* initialState.todos */ initialTodos, {
     }),
 
     [todoDeleteAction.type]: (state, { payload }) => {
-        const newIds = state.ids.filter(id => id !== payload.id);
-        const newById = Object.keys(state.byId).reduce<{
-            [key: string]: ITodo;
-        }>((object, key) => {
-            if (key !== payload.id) {
-                object[key] = state.byId[key];
-            }
+        const newIds: string[] = [];
+        const newById: { [key: string]: ITodo } = {};
 
-            return object;
-        }, {});
+        state.ids.forEach((id: string) => {
+            if (id !== payload.id) {
+                newIds.push(id);
+                newById[id] = state.byId[id];
+            }
+        });
 
         return {
+            ...state,
             ids: newIds,
+            byId: newById,
+        };
+    },
+
+    [setAllDoneAction.type]: (state, { payload }) => {
+        const newById: { [key: string]: ITodo } = {};
+        state.ids.forEach(id => {
+            const todo = state.byId[id];
+            newById[id] = {
+                ...todo,
+                isDone: payload,
+            };
+        });
+
+        return {
+            ...state,
             byId: newById,
         };
     },

@@ -1,0 +1,19 @@
+.footer {
+    display: flex;
+}
+
+.filters {
+    display: flex;
+    margin-left: 15px;
+}
+
+.filterItem {
+    padding: 3px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.filterItem.selected {
+    border: 1px solid rebeccapurple;
+    border-radius: 4px;
+}

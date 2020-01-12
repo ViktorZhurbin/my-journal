@@ -7,10 +7,13 @@ import {
     todoToggleAction,
     todoDeleteAction,
     todoEditAction,
+    setAllDoneAction,
+    setVisibilityFilter,
 } from '~/store/todos/actions';
+import { getVisibleTodos } from '~/store/todos/selectors';
 
-const mapStateToProps = ({ todos }: IStore) => ({
-    todos,
+const mapStateToProps = (store: IStore) => ({
+    todos: getVisibleTodos(store),
 });
 
 const mapDispatchToProps = {
@@ -18,6 +21,8 @@ const mapDispatchToProps = {
     addTodo: todoAddAction,
     editTodo: todoEditAction,
     deleteTodo: todoDeleteAction,
+    setAllDone: setAllDoneAction,
+    setVisibilityFilter,
 };
 
 const ConnectedTodoList = connect(
