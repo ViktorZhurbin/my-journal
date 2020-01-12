@@ -43,18 +43,18 @@ export const TodoList: React.FC<TodoListProps> = ({
     const showAll = () => setVisibilityFilter('SHOW_ALL');
 
     return (
-        <>
-            <header>
-                <button onClick={handleToggleAll}>
-                    {isAllDone ? 'Uncheck' : 'Check'} all
-                </button>
+        <div className={styles.container}>
+            <header className={styles.header}>
                 <Input
                     placeholder="What needs to be done?"
                     onSubmit={addTodo}
                 />
+                <button onClick={handleToggleAll}>
+                    {isAllDone ? 'Uncheck' : 'Check'} all
+                </button>
             </header>
             <section>
-                <ul>
+                <ul className={styles.list}>
                     {ids.map(id => (
                         <Todo
                             key={id}
@@ -100,6 +100,6 @@ export const TodoList: React.FC<TodoListProps> = ({
                     </p>
                 </div>
             </footer>
-        </>
+        </div>
     );
 };

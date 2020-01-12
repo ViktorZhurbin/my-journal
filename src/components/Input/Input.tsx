@@ -16,6 +16,7 @@ export const Input: React.FC<IInputProps> = ({ onSubmit, placeholder }) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             onSubmit(value);
+            setValue('');
         }
     };
     return (

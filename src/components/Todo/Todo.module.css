@@ -1,13 +1,36 @@
 .listItem {
     list-style: none;
+    border-bottom: 1px solid #ededed;
+    font-size: 24px;
+}
+
+.listItem label {
+    word-break: break-all;
+    padding: 15px 15px 15px 30px;
+    padding-top: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-left: 60px;
+    display: block;
+    line-height: 1.2;
+    transition: color 0.4s;
 }
 
 .view {
     display: flex;
+    align-items: center;
 }
 
 .delete {
-    color: lightpink;
+    color: red;
+    padding: 4px;
     margin-left: 10px;
     cursor: pointer;
+}
+
+.textWithButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

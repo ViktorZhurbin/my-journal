@@ -67,9 +67,11 @@ export const Todo: React.FC<TodoProps> = ({
                         checked={isDone}
                         onChange={handleToggle}
                     />
-                    <label onClick={handleToggleEdit}>{task}</label>
-                    <div className={styles.delete} onClick={handleDelete}>
-                        x
+                    <div className={styles.textWithButton}>
+                        <label onClick={handleToggleEdit}>{task}</label>
+                        <div className={styles.delete} onClick={handleDelete}>
+                            x
+                        </div>
                     </div>
                 </div>
             )}
