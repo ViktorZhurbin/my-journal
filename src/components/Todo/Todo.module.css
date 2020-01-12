@@ -1,7 +1,5 @@
 .listItem {
     list-style: none;
-    border-bottom: 1px solid #ededed;
-    font-size: 24px;
 }
 
 .listItem label {
@@ -12,7 +10,7 @@
     padding-bottom: 15px;
     padding-left: 60px;
     display: block;
-    line-height: 1.2;
+    line-height: 1.25rem;
     transition: color 0.4s;
 }
 

@@ -1,0 +1,88 @@
+.container {
+    margin-top: 10px;
+    position: relative;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    height: 28px;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    border: 2px solid #333;
+    opacity: 0.5;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+.checkbox:hover {
+    opacity: 0.8;
+}
+
+.label {
+    padding: 5px 30px 5px 30px;
+}
+
+svg {
+    pointer-events: none;
+    width: 16px;
+    height: 16px;
+}
+
+.checkbox.checked svg path {
+    stroke-dashoffset: 0;
+}
+
+svg path {
+    fill: none;
+    stroke: #333;
+    stroke-width: 4px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 101;
+    /* transition: all 350ms cubic-bezier(1, 0, 0.37, 0.91); */
+}
+
+.labelWithButton {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.deleteButton {
+    position: absolute;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    padding: 3px;
+    opacity: 0.5;
+    border-radius: 50%;
+}
+.deleteButton:hover {
+    opacity: 0.8;
+    background-color: #5f636828;
+}
+.deleteButton:before,
+.deleteButton:after {
+    position: absolute;
+    left: 10px;
+    top: 5px;
+    content: ' ';
+    height: 12px;
+    width: 2px;
+    background-color: #333;
+}
+.deleteButton:before {
+    transform: rotate(45deg);
+}
+.deleteButton:after {
+    transform: rotate(-45deg);
+}

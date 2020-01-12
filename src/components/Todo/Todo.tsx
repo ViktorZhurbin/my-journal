@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-import styles from './Todo.module.css';
-
+import { Checkbox } from '~/components/Checkbox';
 import { ITodo } from '~/models';
+
+import styles from './Todo.module.css';
 
 interface TodoProps {
     todo: ITodo;
@@ -49,32 +50,28 @@ export const Todo: React.FC<TodoProps> = ({
     const handleToggleEdit = () => toggleEdit(id);
 
     return (
-        <li className={styles.listItem}>
-            {isEditing ? (
-                <input
-                    autoFocus
-                    className={styles.edit}
-                    type="text"
-                    value={editTask}
-                    onChange={handleChange}
-                    onBlur={handleSubmit}
-                    onKeyDown={handleKeyDown}
-                />
-            ) : (
-                <div className={styles.view}>
+        <>
+            <li className={styles.listItem}>
+                {isEditing ? (
                     <input
-                        type="checkbox"
-                        checked={isDone}
-                        onChange={handleToggle}
+                        autoFocus
+                        className={styles.edit}
+                        type="text"
+                        value={editTask}
+                        onChange={handleChange}
+                        onBlur={handleSubmit}
+                        onKeyDown={handleKeyDown}
                     />
-                    <div className={styles.textWithButton}>
-                        <label onClick={handleToggleEdit}>{task}</label>
-                        <div className={styles.delete} onClick={handleDelete}>
-                            x
-                        </div>
-                    </div>
-                </div>
-            )}
-        </li>
+                ) : (
+                    <Checkbox
+                        checked={isDone}
+                        label={task}
+                        onToggle={handleToggle}
+                        onLabelClick={handleToggleEdit}
+                        onDelete={handleDelete}
+                    />
+                )}
+            </li>
+        </>
     );
 };
