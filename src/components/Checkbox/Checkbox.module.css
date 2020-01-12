@@ -1,12 +1,9 @@
-.container {
-    margin-top: 10px;
-    position: relative;
-}
-
 .row {
     display: flex;
+    position: relative;
     align-items: center;
-    height: 28px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .checkbox {
@@ -19,6 +16,7 @@
     cursor: pointer;
     width: 18px;
     height: 18px;
+    outline-color: transparent;
 }
 
 .checkbox:hover {
@@ -26,7 +24,8 @@
 }
 
 .label {
-    padding: 5px 30px 5px 30px;
+    padding-right: 30px;
+    padding-left: 15px;
 }
 
 svg {
@@ -58,6 +57,11 @@ svg path {
 }
 
 .deleteButton {
+    display: none;
+}
+
+.row:hover .deleteButton {
+    display: block;
     position: absolute;
     right: 0;
     width: 16px;
@@ -65,11 +69,15 @@ svg path {
     padding: 3px;
     opacity: 0.5;
     border-radius: 50%;
+    cursor: pointer;
 }
+
 .deleteButton:hover {
+    display: block;
     opacity: 0.8;
     background-color: #5f636828;
 }
+
 .deleteButton:before,
 .deleteButton:after {
     position: absolute;
@@ -77,7 +85,7 @@ svg path {
     top: 5px;
     content: ' ';
     height: 12px;
-    width: 2px;
+    width: 1.25px;
     background-color: #333;
 }
 .deleteButton:before {

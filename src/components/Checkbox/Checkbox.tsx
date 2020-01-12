@@ -26,7 +26,6 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     };
 
     return (
-        <div className={styles.container}>
             <div className={styles.row}>
                 <div
                     className={cx('checkbox', { checked })}
@@ -51,7 +50,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
                         aria-label="Delete"
                     />
                 </div>
-            </div>
+            )}
         </div>
     );
 };

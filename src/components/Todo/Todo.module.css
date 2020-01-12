@@ -1,5 +1,10 @@
 .listItem {
     list-style: none;
+    height: 30px;
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .listItem label {
