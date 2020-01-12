@@ -7,10 +7,10 @@ const cx = classNames.bind(styles);
 
 interface ICheckboxProps {
     checked: boolean;
-    label: string;
     onToggle: () => void;
-    onLabelClick: () => void;
-    onDelete: () => void;
+    label?: string;
+    onLabelClick?: () => void;
+    onDelete?: () => void;
 }
 export const Checkbox: React.FC<ICheckboxProps> = ({
     checked,
@@ -26,19 +26,20 @@ export const Checkbox: React.FC<ICheckboxProps> = ({
     };
 
     return (
-            <div className={styles.row}>
-                <div
-                    className={cx('checkbox', { checked })}
-                    onClick={onToggle}
-                    tabIndex={0}
-                    role="checkbox"
-                    aria-checked={checked}
-                    onKeyDown={handleKeyDown}
-                >
-                    <svg viewBox="0,0,50,50">
-                        <path d="M5 30 L 20 45 L 45 5"></path>
-                    </svg>
-                </div>
+        <div className={styles.row}>
+            <div
+                className={cx('checkbox', { checked })}
+                onClick={onToggle}
+                tabIndex={0}
+                role="checkbox"
+                aria-checked={checked}
+                onKeyDown={handleKeyDown}
+            >
+                <svg viewBox="0,0,50,50">
+                    <path d="M5 30 L 20 45 L 45 5"></path>
+                </svg>
+            </div>
+            {label && (
                 <div className={styles.labelWithButton}>
                     <div className={styles.label} onClick={onLabelClick}>
                         {label}

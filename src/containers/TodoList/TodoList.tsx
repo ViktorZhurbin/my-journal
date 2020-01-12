@@ -1,22 +1,21 @@
 import React, { useState } from 'react';
-import classNames from 'classnames/bind';
 
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
 import { ITodoList } from '~/models';
 
 import styles from './TodoList.module.css';
-
-const cx = classNames.bind(styles);
+import { Checkbox } from '~/components/Checkbox';
+import { Filters } from './Filters';
 
 interface TodoListProps {
     todos: ITodoList;
     addTodo: (task: string) => void;
     deleteTodo: (id: string) => void;
     toggleTodo: (id: string) => void;
-    setVisibilityFilter: (value: string) => void;
     editTodo: (id: string, task: string) => void;
     setAllDone: (value: boolean) => void;
+    setVisibilityFilter: (value: string) => void;
 }
 
 export const TodoList: React.FC<TodoListProps> = ({
@@ -36,24 +35,17 @@ export const TodoList: React.FC<TodoListProps> = ({
         setAllDone(!isAllDone);
     };
 
-    const active = ids.filter(id => !byId[id].isDone);
-
-    const showActive = () => setVisibilityFilter('SHOW_ACTIVE');
-    const showCompleted = () => setVisibilityFilter('SHOW_COMPLETED');
-    const showAll = () => setVisibilityFilter('SHOW_ALL');
-
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
-                <Input
-                    placeholder="What needs to be done?"
-                    onSubmit={addTodo}
+            <header>
+                <Filters
+                    filter={visibilityFilter}
+                    setFilter={setVisibilityFilter}
                 />
-                <button onClick={handleToggleAll}>
-                    {isAllDone ? 'Uncheck' : 'Check'} all
-                </button>
             </header>
+            <Input placeholder="What needs to be done?" onSubmit={addTodo} />
             <section>
+                <Checkbox checked={isAllDone} onToggle={handleToggleAll} />
                 <ul className={styles.list}>
                     {ids.map(id => (
                         <Todo
@@ -68,38 +60,6 @@ export const TodoList: React.FC<TodoListProps> = ({
                     ))}
                 </ul>
             </section>
-            <footer className={styles.footer}>
-                <p>
-                    {active.length} {active.length === 1 ? 'item' : 'items'}{' '}
-                    left
-                </p>
-                <div className={styles.filters}>
-                    <p
-                        className={cx('filterItem', {
-                            selected: visibilityFilter === 'SHOW_ALL',
-                        })}
-                        onClick={showAll}
-                    >
-                        All
-                    </p>
-                    <p
-                        className={cx('filterItem', {
-                            selected: visibilityFilter === 'SHOW_ACTIVE',
-                        })}
-                        onClick={showActive}
-                    >
-                        To Do
-                    </p>
-                    <p
-                        className={cx('filterItem', {
-                            selected: visibilityFilter === 'SHOW_COMPLETED',
-                        })}
-                        onClick={showCompleted}
-                    >
-                        Done
-                    </p>
-                </div>
-            </footer>
         </div>
     );
 };

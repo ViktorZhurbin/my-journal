@@ -5,22 +5,15 @@
     color: #4d4d4d;
 }
 
-.header {
+.filters {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .list {
     padding: 0;
-}
-
-.footer {
-    display: flex;
-}
-
-.filters {
-    display: flex;
-    margin-left: 15px;
+    margin: 0;
 }
 
 .filterItem {
