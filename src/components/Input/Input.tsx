@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import styles from './Input.module.css';
+
 interface IInputProps {
     onSubmit: (value: string) => void;
     placeholder?: string;
@@ -21,6 +23,7 @@ export const Input: React.FC<IInputProps> = ({ onSubmit, placeholder }) => {
     };
     return (
         <input
+            className={styles.input}
             type="text"
             placeholder={placeholder || ''}
             value={value}
