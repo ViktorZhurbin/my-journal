@@ -17,7 +17,6 @@ interface TodoListProps {
     deleteTodo: (id: string) => void;
     toggleTodo: (id: string) => void;
     editTodo: (id: string, task: string) => void;
-    setAllDone: (value: boolean) => void;
     setVisibilityFilter: (value: string) => void;
 }
 
@@ -27,16 +26,8 @@ export const TodoList: React.FC<TodoListProps> = ({
     deleteTodo,
     toggleTodo,
     editTodo,
-    setAllDone,
     setVisibilityFilter,
 }) => {
-    const [isAllDone, setIsAllDone] = useState(false);
-
-    const handleToggleAll = () => {
-        setIsAllDone(!isAllDone);
-        setAllDone(!isAllDone);
-    };
-
     return (
         <div className={styles.container}>
             <header>
@@ -51,11 +42,6 @@ export const TodoList: React.FC<TodoListProps> = ({
                 classNames={cx('inputTodo')}
             />
             <section>
-                <Checkbox
-                    isChecked={isAllDone}
-                    onToggle={handleToggleAll}
-                    classNames={cx('toggleAll')}
-                />
                 <ul className={styles.list}>
                     {ids.map(id => (
                         <Todo

@@ -7,7 +7,6 @@ import {
     todoToggleAction,
     todoDeleteAction,
     todoEditAction,
-    setAllDoneAction,
     setVisibilityFilter,
 } from '~/store/todos/actions';
 import { getVisibleTodos } from '~/store/todos/selectors';
@@ -21,7 +20,6 @@ const mapDispatchToProps = {
     addTodo: todoAddAction,
     editTodo: todoEditAction,
     deleteTodo: todoDeleteAction,
-    setAllDone: setAllDoneAction,
     setVisibilityFilter,
 };
 

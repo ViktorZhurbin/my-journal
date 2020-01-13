@@ -5,7 +5,6 @@ import {
     todoAddAction,
     todoDeleteAction,
     todoEditAction,
-    setAllDoneAction,
     setVisibilityFilter,
 } from './actions';
 import { ITodoList, ITodo } from '~/models';
@@ -24,7 +23,7 @@ const initialTodos: ITodoList = {
             task: 'Learn Firebase',
             isDone: false,
         },
-    },
+        },
 };
 
 export const todos = createReducer(/* initialState.todos */ initialTodos, {
@@ -79,22 +78,6 @@ export const todos = createReducer(/* initialState.todos */ initialTodos, {
         return {
             ...state,
             ids: newIds,
-            byId: newById,
-        };
-    },
-
-    [setAllDoneAction.type]: (state, { payload }) => {
-        const newById: { [key: string]: ITodo } = {};
-        state.ids.forEach(id => {
-            const todo = state.byId[id];
-            newById[id] = {
-                ...todo,
-                isDone: payload,
-            };
-        });
-
-        return {
-            ...state,
             byId: newById,
         };
     },

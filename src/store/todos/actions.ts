@@ -21,6 +21,4 @@ export const todoDeleteAction = createAction('TODO__DELETE', id => ({
     payload: { id },
 }));
 
-export const setAllDoneAction = createAction('TODO__SET_ALL_DONE');
-
 export const setVisibilityFilter = createAction('TODO__SET_VISIBILITY_FILTER');
