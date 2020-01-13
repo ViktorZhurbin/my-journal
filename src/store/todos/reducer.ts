@@ -11,7 +11,7 @@ import { ITodoList, ITodo } from '~/models';
 
 const initialTodos: ITodoList = {
     visibilityFilter: 'SHOW_ALL',
-    ids: ['a', 'b'],
+    ids: ['a', 'b', 'c', 'd'],
     byId: {
         a: {
             id: 'a',
@@ -23,7 +23,17 @@ const initialTodos: ITodoList = {
             task: 'Learn Firebase',
             isDone: false,
         },
+        c: {
+            id: 'c',
+            task: 'Learn DOM',
+            isDone: true,
         },
+        d: {
+            id: 'd',
+            task: 'Learn CSS',
+            isDone: false,
+        },
+    },
 };
 
 export const todos = createReducer(/* initialState.todos */ initialTodos, {

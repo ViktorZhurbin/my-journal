@@ -52,13 +52,6 @@ export const TodoList: React.FC<TodoListProps> = ({
                             onDelete={deleteTodo}
                         />
                     ))}
-                    <Todo
-                        key={1}
-                        todo={{ id: 'c', task: 'test', isDone: false }}
-                        onEdit={editTodo}
-                        onToggle={toggleTodo}
-                        onDelete={deleteTodo}
-                    />
                 </ul>
             </section>
         </div>
