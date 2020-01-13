@@ -1,8 +1,17 @@
 .container {
-    min-width: 230px;
-    max-width: 350px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 496px;
     margin: 0 auto;
     color: #4d4d4d;
+    background-color: #fff;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 25px 0;
+    box-sizing: border-box;
 }
 
 .filters {
@@ -26,4 +35,22 @@
 .filterItem.selected {
     border: 1px solid rebeccapurple;
     border-radius: 4px;
+}
+
+.inputTodo {
+    align-self: center;
+    box-sizing: border-box;
+    width: 85%;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    color: #4d4d4d;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+}
+
+.toggleAll {
+    margin-left: 25px;
 }

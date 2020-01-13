@@ -5,15 +5,18 @@ import styles from './TextInput.module.css';
 interface ITextInputProps {
     text: string;
     onDelete: () => void;
-    onEdit: (value: string) => void;
+    onSubmit: (value: string) => void;
+    isEditing: boolean;
+    setIsEditing: (value: boolean) => void;
 }
 export const TextInput: React.FC<ITextInputProps> = ({
     text,
     onDelete,
-    onEdit,
+    onSubmit,
+    isEditing,
+    setIsEditing,
 }) => {
     const [inputValue, setInputValue] = useState(text || '');
-    const [isEditing, setIsEditing] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (isEditing) {
@@ -23,7 +26,7 @@ export const TextInput: React.FC<ITextInputProps> = ({
     };
 
     const handleSubmit = () => {
-        onEdit(inputValue);
+        onSubmit(inputValue);
         setIsEditing(false);
     };
 

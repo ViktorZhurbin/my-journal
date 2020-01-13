@@ -8,9 +8,14 @@ const cx = classNames.bind(styles);
 interface ICheckboxProps {
     isChecked: boolean;
     onToggle: () => void;
+    classNames?: any;
 }
 
-export const Checkbox: React.FC<ICheckboxProps> = ({ isChecked, onToggle }) => {
+export const Checkbox: React.FC<ICheckboxProps> = ({
+    isChecked,
+    onToggle,
+    classNames,
+}) => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter' || event.key === ' ') {
             onToggle();
@@ -19,7 +24,7 @@ export const Checkbox: React.FC<ICheckboxProps> = ({ isChecked, onToggle }) => {
 
     return (
         <div
-            className={cx('checkbox', { isChecked })}
+            className={cx('checkbox', classNames, { isChecked })}
             onClick={onToggle}
             tabIndex={0}
             role="checkbox"

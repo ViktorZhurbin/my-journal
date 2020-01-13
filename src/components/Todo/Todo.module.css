@@ -1,9 +1,8 @@
-.listItem {
+.todo {
     display: flex;
     position: relative;
     align-items: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 25px;
     list-style: none;
     height: 30px;
     border-bottom: 1px solid transparent;
@@ -12,33 +11,15 @@
     font-weight: 400;
 }
 
-.listItem label {
-    word-break: break-all;
-    padding: 15px 15px 15px 30px;
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    padding-left: 60px;
-    display: block;
-    line-height: 1.25rem;
-    transition: color 0.4s;
+.todo.isEditing {
+    border-top-color: rgba(0, 0, 0, 0.15);
+    border-bottom-color: rgba(0, 0, 0, 0.15);
 }
 
-.view {
-    display: flex;
-    align-items: center;
+.todo:hover > svg path {
+    fill: #333;
 }
 
-.delete {
-    color: red;
-    padding: 4px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.textWithButton {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.drag {
+    cursor: move;
 }

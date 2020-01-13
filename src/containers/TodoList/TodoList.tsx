@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import classNamesBind from 'classnames/bind';
 
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
+import { Checkbox } from '~/components/Checkbox';
 import { ITodoList } from '~/models';
+import { Filters } from './Filters';
 
 import styles from './TodoList.module.css';
-import { Checkbox } from '~/components/Checkbox';
-import { Filters } from './Filters';
+
+const cx = classNamesBind.bind(styles);
 
 interface TodoListProps {
     todos: ITodoList;
@@ -42,9 +45,17 @@ export const TodoList: React.FC<TodoListProps> = ({
                     setFilter={setVisibilityFilter}
                 />
             </header>
-            <Input placeholder="What needs to be done?" onSubmit={addTodo} />
+            <Input
+                placeholder="What needs to be done?"
+                onSubmit={addTodo}
+                classNames={cx('inputTodo')}
+            />
             <section>
-                <Checkbox isChecked={isAllDone} onToggle={handleToggleAll} />
+                <Checkbox
+                    isChecked={isAllDone}
+                    onToggle={handleToggleAll}
+                    classNames={cx('toggleAll')}
+                />
                 <ul className={styles.list}>
                     {ids.map(id => (
                         <Todo

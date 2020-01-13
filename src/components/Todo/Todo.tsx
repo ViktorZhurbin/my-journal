@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import classNames from 'classnames/bind';
 
 import { Checkbox } from '~/components/Checkbox';
+import { TextInput } from '~/components/TextInput';
 import { ITodo } from '~/models';
 
 import styles from './Todo.module.css';
-import { TextInput } from '../TextInput';
+
+const cx = classNames.bind(styles);
 
 interface TodoProps {
     todo: ITodo;
@@ -19,17 +22,21 @@ export const Todo: React.FC<TodoProps> = ({
     onToggle,
     onEdit,
 }) => {
+    const [isEditing, setIsEditing] = useState(false);
+
     const handleInputSubmit = (inputValue: string) => onEdit(id, inputValue);
-    const handleToggle = () => onToggle(id);
+    const handleCheckboxToggle = () => onToggle(id);
     const handleDelete = () => onDelete(id);
 
     return (
-        <li className={styles.listItem}>
-            <Checkbox isChecked={isDone} onToggle={handleToggle} />
+        <li className={cx('todo', { isEditing })}>
+            <Checkbox isChecked={isDone} onToggle={handleCheckboxToggle} />
             <TextInput
                 text={task}
                 onDelete={handleDelete}
-                onEdit={handleInputSubmit}
+                onSubmit={handleInputSubmit}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
             />
         </li>
     );

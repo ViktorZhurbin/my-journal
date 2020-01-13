@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 
-import styles from './Input.module.css';
-
 interface IInputProps {
     onSubmit: (value: string) => void;
     placeholder?: string;
+    classNames?: any;
 }
 
-export const Input: React.FC<IInputProps> = ({ onSubmit, placeholder }) => {
+export const Input: React.FC<IInputProps> = ({
+    onSubmit,
+    placeholder,
+    classNames,
+}) => {
     const [value, setValue] = useState('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +26,7 @@ export const Input: React.FC<IInputProps> = ({ onSubmit, placeholder }) => {
     };
     return (
         <input
-            className={styles.input}
+            className={classNames}
             type="text"
             placeholder={placeholder || ''}
             value={value}

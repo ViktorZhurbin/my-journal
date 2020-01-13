@@ -8,9 +8,21 @@
     padding-left: 15px;
 }
 
+.text,
+.edit {
+    width: 100%;
+    cursor: text;
+}
 .edit {
     box-sizing: border-box;
     border: none;
+}
+
+.edit:focus {
+    outline-width: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #4d4d4d;
 }
 
 .deleteButton {
