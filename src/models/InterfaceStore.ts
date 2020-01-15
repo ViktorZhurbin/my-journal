@@ -1,5 +1,5 @@
-import { ITodoList } from './InterfaceTodo';
+import { ITodo } from './InterfaceTodo';
 
 export interface IStore {
-    todos: ITodoList;
+    todos: ITodo[] | null;
 }

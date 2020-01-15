@@ -20,5 +20,3 @@ export const todoEditAction = createAction('TODO__EDIT', (id, task) => ({
 export const todoDeleteAction = createAction('TODO__DELETE', id => ({
     payload: { id },
 }));
-
-export const setVisibilityFilter = createAction('TODO__SET_VISIBILITY_FILTER');
