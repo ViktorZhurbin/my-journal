@@ -16,6 +16,10 @@
     border-bottom-color: rgba(0, 0, 0, 0.15);
 }
 
+.isDone {
+    text-decoration-line: line-through;
+}
+
 .todo:hover > svg path {
     fill: #333;
 }

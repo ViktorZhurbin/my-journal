@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import classNames from 'classnames/bind';
 
 import styles from './TextInput.module.css';
+
+const cx = classNames.bind(styles);
 
 interface ITextInputProps {
     text: string;
@@ -8,6 +11,7 @@ interface ITextInputProps {
     onSubmit: (value: string) => void;
     isEditing: boolean;
     setIsEditing: (value: boolean) => void;
+    classNames: string;
 }
 export const TextInput: React.FC<ITextInputProps> = ({
     text,
@@ -15,6 +19,7 @@ export const TextInput: React.FC<ITextInputProps> = ({
     onSubmit,
     isEditing,
     setIsEditing,
+    classNames,
 }) => {
     const [inputValue, setInputValue] = useState(text || '');
 
@@ -50,7 +55,7 @@ export const TextInput: React.FC<ITextInputProps> = ({
             {isEditing ? (
                 <input
                     autoFocus
-                    className={styles.edit}
+                    className={cx('edit', classNames)}
                     type="text"
                     value={inputValue}
                     onChange={handleChange}
@@ -59,7 +64,10 @@ export const TextInput: React.FC<ITextInputProps> = ({
                 />
             ) : (
                 <>
-                    <div className={styles.text} onClick={onTextClick}>
+                    <div
+                        className={cx('text', classNames)}
+                        onClick={onTextClick}
+                    >
                         {text}
                     </div>
                     <div

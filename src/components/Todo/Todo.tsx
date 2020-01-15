@@ -33,6 +33,7 @@ export const Todo: React.FC<TodoProps> = ({
             <Checkbox isChecked={isDone} onToggle={handleCheckboxToggle} />
             <TextInput
                 text={task}
+                classNames={cx({ isDone })}
                 onDelete={handleDelete}
                 onSubmit={handleInputSubmit}
                 isEditing={isEditing}

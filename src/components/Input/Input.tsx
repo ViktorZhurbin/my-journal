@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 interface IInputProps {
     onSubmit: (value: string) => void;
     placeholder?: string;
-    classNames?: any;
+    classNames?: string;
 }
 
 export const Input: React.FC<IInputProps> = ({

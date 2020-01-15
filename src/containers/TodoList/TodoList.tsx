@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import classNamesBind from 'classnames/bind';
+import React from 'react';
+import classNames from 'classnames/bind';
 
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
-import { Checkbox } from '~/components/Checkbox';
 import { ITodoList } from '~/models';
 import { Filters } from './Filters';
 
 import styles from './TodoList.module.css';
 
-const cx = classNamesBind.bind(styles);
+const cx = classNames.bind(styles);
 
 interface TodoListProps {
     todos: ITodoList;
