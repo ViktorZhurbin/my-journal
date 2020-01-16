@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TodoList } from '~/containers/TodoList';
+import { TodoList } from '~/components/TodoList';
 
 export const App: React.FC = () => (
     <div>
