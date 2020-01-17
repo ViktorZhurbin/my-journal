@@ -15,7 +15,7 @@
     opacity: 0.8;
 }
 
-svg {
+.checkbox svg {
     pointer-events: none;
     width: 16px;
     height: 16px;
@@ -25,7 +25,7 @@ svg {
     stroke-dashoffset: 0;
 }
 
-svg path {
+.checkbox svg path {
     fill: none;
     stroke: #333;
     stroke-width: 4px;
