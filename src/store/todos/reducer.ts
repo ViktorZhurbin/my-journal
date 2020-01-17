@@ -23,7 +23,7 @@ export const todos = createReducer(initialState.todos, {
         ),
 
     [todoAddAction.type]: (state, { payload }) =>
-        state ? [...state, payload] : [payload],
+        state ? [payload, ...state] : [payload],
 
     [todoDeleteAction.type]: (state, { payload }) =>
         state && state.filter(todo => todo.id !== payload.id),
