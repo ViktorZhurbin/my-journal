@@ -5,20 +5,30 @@ import classNames from 'classnames/bind';
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
 import { todoAddAction } from '~/store/todos/actions';
-import { selectTodos } from '~/store/todos/selectors';
+import {
+    selectCompleteTodos,
+    selectActiveTodos,
+} from '~/store/todos/selectors';
 
 import styles from './TodoList.module.css';
 
 const cx = classNames.bind(styles);
 
 export const TodoList: React.FC = () => {
-    const todos = useSelector(selectTodos);
+    const activeTodos = useSelector(selectActiveTodos);
+    const completeTodos = useSelector(selectCompleteTodos);
     const dispatch = useDispatch();
 
     const addTodo = useCallback(
         (task: string) => dispatch(todoAddAction(task)),
         [dispatch]
     );
+
+    const completeItemsText =
+        completeTodos &&
+        `${completeTodos.length} Completed item${
+            completeTodos.length > 1 ? 's' : ''
+        }`;
 
     return (
         <div className={styles.container}>
@@ -29,12 +39,30 @@ export const TodoList: React.FC = () => {
                     classNames={cx('inputTodo')}
                 />
             </header>
-            <section>
-                <ul className={styles.list}>
-                    {todos &&
-                        todos.map(todo => <Todo key={todo.id} todo={todo} />)}
+            <section className={cx('active')}>
+                <ul className={cx('list')}>
+                    {activeTodos?.map(todo => (
+                        <Todo key={todo.id} todo={todo} />
+                    ))}
                 </ul>
             </section>
+            {completeTodos?.length ? (
+                <section className={cx('completed')}>
+                    <div>
+                        {activeTodos?.length ? (
+                            <div className={cx('expandCompleted')} />
+                        ) : null}
+                        <div className={cx('numCompletedText')}>
+                            {completeItemsText}
+                        </div>
+                    </div>
+                    <ul className={cx('list')}>
+                        {completeTodos?.map(todo => (
+                            <Todo key={todo.id} todo={todo} />
+                        ))}
+                    </ul>
+                </section>
+            ) : null}
         </div>
     );
 };

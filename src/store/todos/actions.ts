@@ -9,7 +9,7 @@ export const todoAddAction = createAction('TODO__ADD', task => ({
     payload: {
         id: uuidv4(),
         task,
-        isDone: false,
+        isComplete: false,
     },
 }));
 

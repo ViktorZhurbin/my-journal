@@ -16,7 +16,7 @@
     border-bottom-color: rgba(0, 0, 0, 0.15);
 }
 
-.isDone {
+.isComplete {
     text-decoration-line: line-through;
 }
 

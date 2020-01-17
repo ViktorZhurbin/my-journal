@@ -19,7 +19,9 @@ interface TodoProps {
     todo: ITodo;
 }
 
-export const Todo: React.FC<TodoProps> = ({ todo: { id, task, isDone } }) => {
+export const Todo: React.FC<TodoProps> = ({
+    todo: { id, task, isComplete },
+}) => {
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch();
 
@@ -41,12 +43,12 @@ export const Todo: React.FC<TodoProps> = ({ todo: { id, task, isDone } }) => {
         <li className={cx('todo', { isEditing })}>
             <Checkbox
                 classNames={cx('checkbox')}
-                isChecked={isDone}
+                isChecked={isComplete}
                 onToggle={toggleTodo}
             />
             <TextInput
                 text={task}
-                classNames={cx('todoText', { isDone })}
+                classNames={cx('todoText', { isComplete })}
                 onDelete={deleteTodo}
                 onSubmit={editTodo}
                 isEditing={isEditing}

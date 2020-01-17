@@ -4,24 +4,24 @@ import { ITodo } from '~/models';
 const mockedTodos: ITodo[] = [
     {
         id: 'a',
-        task: 'Главное дело на день',
-        isDone: false,
+        task: 'First todo',
+        isComplete: false,
     },
-    // {
-    //     id: 'b',
-    //     task: 'Learn Firebase',
-    //     isDone: false,
-    // },
-    // {
-    //     id: 'c',
-    //     task: 'Learn DOM',
-    //     isDone: true,
-    // },
-    // {
-    //     id: 'd',
-    //     task: 'Learn CSS',
-    //     isDone: false,
-    // },
+    {
+        id: 'b',
+        task: 'Еще одно',
+        isComplete: false,
+    },
+    {
+        id: 'c',
+        task: 'Это готово',
+        isComplete: true,
+    },
+    {
+        id: 'd',
+        task: 'Это ещё нет',
+        isComplete: false,
+    },
 ];
 
 export const initialState: IStore = {
