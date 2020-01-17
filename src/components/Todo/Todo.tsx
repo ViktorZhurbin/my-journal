@@ -39,10 +39,14 @@ export const Todo: React.FC<TodoProps> = ({ todo: { id, task, isDone } }) => {
 
     return (
         <li className={cx('todo', { isEditing })}>
-            <Checkbox isChecked={isDone} onToggle={toggleTodo} />
+            <Checkbox
+                classNames={cx('checkbox')}
+                isChecked={isDone}
+                onToggle={toggleTodo}
+            />
             <TextInput
                 text={task}
-                classNames={cx({ isDone })}
+                classNames={cx('todoText', { isDone })}
                 onDelete={deleteTodo}
                 onSubmit={editTodo}
                 isEditing={isEditing}

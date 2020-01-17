@@ -8,6 +8,11 @@
     padding-left: 15px;
 }
 
+.text {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .text,
 .edit {
     width: 100%;
@@ -20,10 +25,8 @@
 }
 
 .edit:focus {
-    outline-width: 0;
-    font-size: 14px;
-    font-weight: 400;
-    color: #4d4d4d;
+    outline: none;
+    padding: 0;
 }
 
 .deleteButton {
