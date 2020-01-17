@@ -48,13 +48,9 @@ export const TodoList: React.FC = () => {
             </section>
             {completeTodos?.length ? (
                 <section className={cx('completed')}>
-                    <div>
-                        {activeTodos?.length ? (
-                            <div className={cx('expandCompleted')} />
-                        ) : null}
-                        <div className={cx('numCompletedText')}>
-                            {completeItemsText}
-                        </div>
+                    {activeTodos?.length ? <hr /> : null}
+                    <div className={cx('numCompletedText')}>
+                        {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
                         {completeTodos?.map(todo => (

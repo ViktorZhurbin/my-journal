@@ -16,7 +16,6 @@
 .text,
 .edit {
     width: 100%;
-    cursor: text;
 }
 
 .edit {
@@ -39,7 +38,7 @@
     right: 0;
     width: 16px;
     height: 16px;
-    padding: 3px;
+    padding: 4px;
     opacity: 0.5;
     border-radius: 50%;
     cursor: pointer;
@@ -47,17 +46,17 @@
 
 .deleteButton:hover {
     display: block;
-    opacity: 0.8;
+    opacity: 0.9;
     background-color: #5f636828;
 }
 
 .deleteButton:before,
 .deleteButton:after {
     position: absolute;
-    left: 10px;
-    top: 5px;
+    left: 11.375px;
+    top: 5.5px;
     content: ' ';
-    height: 12px;
+    height: 13px;
     width: 1.25px;
     background-color: #333;
 }

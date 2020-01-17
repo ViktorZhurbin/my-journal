@@ -42,14 +42,18 @@
 
 .completed {
     color: #5f6368;
+    margin-top: 5px;
+}
+
+.completed hr {
+    color: black;
+    opacity: 0.3;
+    margin: 5px 20px 0;
 }
 
 .numCompletedText {
-    padding: 5px 25px;
-}
-
-.expandCompleted {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    margin: 5px 24px 14px 24px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 58px;
     cursor: pointer;
 }
