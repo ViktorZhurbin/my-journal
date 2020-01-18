@@ -7,6 +7,7 @@ import {
     todoAddAction,
     todoDeleteAction,
     todoEditAction,
+    todoListUpdateAction,
 } from './actions';
 
 export const todos = createReducer(initialState.todos, {
@@ -31,4 +32,6 @@ export const todos = createReducer(initialState.todos, {
 
     [todoDeleteAction.type]: (state, { payload }) =>
         state && state.filter(todo => todo.id !== payload.id),
+
+    [todoListUpdateAction.type]: (state, { payload }) => payload,
 });

@@ -2,14 +2,15 @@
     position: relative;
     display: flex;
     align-items: flex-start;
-    padding: 5px 25px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 25px 5px 30px;
     list-style: none;
     border-bottom: 1px solid transparent;
     border-top: 1px solid transparent;
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 400;
-    cursor: text;
 }
 
 .todo.isEditing {
@@ -33,6 +34,7 @@
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 400;
+    cursor: text;
 }
 
 .checkbox {
@@ -42,10 +44,6 @@
 
 .todo:hover > svg path {
     fill: #333;
-}
-
-.drag {
-    cursor: move;
 }
 
 .deleteButton {

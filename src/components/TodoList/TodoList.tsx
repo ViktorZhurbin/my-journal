@@ -4,13 +4,16 @@ import classNames from 'classnames/bind';
 
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
-import { todoAddAction } from '~/store/todos/actions';
+import { todoAddAction, todoListUpdateAction } from '~/store/todos/actions';
 import {
     selectCompleteTodos,
     selectActiveTodos,
 } from '~/store/todos/selectors';
 
 import styles from './TodoList.module.css';
+import { ITodo } from '~/models';
+import { reorder } from '~/helpers';
+import { DraggableTodoList } from './DraggableTodoList';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +21,7 @@ export const TodoList: React.FC = () => {
     const [isCompletedHidden, setIsCompletedHidden] = useState(false);
 
     const activeTodos = useSelector(selectActiveTodos);
-    const completeTodos = useSelector(selectCompleteTodos);
+    const completedTodos = useSelector(selectCompleteTodos);
     const dispatch = useDispatch();
 
     const addTodo = useCallback(
@@ -26,12 +29,20 @@ export const TodoList: React.FC = () => {
         [dispatch]
     );
 
+    const updateTodos = useCallback(
+        (todos: ITodo[]) => dispatch(todoListUpdateAction(todos)),
+        [dispatch]
+    );
+
+    const handleReorder = (reorderedActiveTodos: ITodo[]) =>
+        updateTodos(reorderedActiveTodos.concat(completedTodos));
+
     const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
 
     const completeItemsText =
-        completeTodos &&
-        `${completeTodos.length} Completed ${
-            completeTodos.length > 1 ? 'items' : 'item'
+        completedTodos &&
+        `${completedTodos.length} Completed ${
+            completedTodos.length > 1 ? 'items' : 'item'
         }`;
 
     return (
@@ -44,13 +55,13 @@ export const TodoList: React.FC = () => {
                 />
             </header>
             <section className={cx('active')}>
-                <ul className={cx('list')}>
-                    {activeTodos?.map(todo => (
-                        <Todo key={todo.id} todo={todo} />
-                    ))}
-                </ul>
+                <DraggableTodoList
+                    todos={activeTodos}
+                    onReorder={handleReorder}
+                    classNames={cx('list')}
+                />
             </section>
-            {completeTodos?.length ? (
+            {completedTodos?.length ? (
                 <section className={cx('completed', { isCompletedHidden })}>
                     {activeTodos?.length ? <hr /> : null}
                     <div
@@ -61,7 +72,7 @@ export const TodoList: React.FC = () => {
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
-                        {completeTodos?.map(todo => (
+                        {completedTodos?.map(todo => (
                             <Todo key={todo.id} todo={todo} />
                         ))}
                     </ul>

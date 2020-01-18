@@ -1,0 +1,28 @@
+.todoWrapper {
+    display: flex;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.todoWrapper:hover .dragHandle,
+.dragHandle.isDragging {
+    visibility: visible;
+    z-index: 1;
+}
+
+.todoWrapper.isDraggingOver:hover .dragHandle {
+    visibility: hidden;
+}
+
+.dragHandle {
+    visibility: hidden;
+    position: absolute;
+    top: 10px;
+    left: 12px;
+}
+
+.dragIcon {
+    width: 15px;
+    height: 15px;
+}

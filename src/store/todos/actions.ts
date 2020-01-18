@@ -20,3 +20,8 @@ export const todoEditAction = createAction('TODO__EDIT', (id, task) => ({
 export const todoDeleteAction = createAction('TODO__DELETE', id => ({
     payload: { id },
 }));
+
+export const todoListUpdateAction = createAction(
+    'TODO_LIST__UPDATE',
+    todos => ({ payload: todos })
+);
