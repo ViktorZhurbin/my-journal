@@ -51,7 +51,12 @@
     margin: 5px 20px 0;
 }
 
+.completed.isCompletedHidden .list {
+    display: none;
+}
+
 .numCompletedText {
+    position: relative;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 58px;
@@ -61,4 +66,42 @@
 
 .numCompletedText:hover {
     opacity: 1;
+}
+
+.toggleComplete {
+    display: block;
+    position: absolute;
+    top: 13px;
+    left: 23px;
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    opacity: 0.5;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.toggleComplete:before,
+.toggleComplete:after {
+    position: absolute;
+    top: 8px;
+    content: '';
+    width: 2px;
+    height: 9px;
+    background-color: #333;
+}
+
+.toggleComplete:before {
+    transform: rotate(40deg);
+    left: 13px;
+}
+
+.toggleComplete:after {
+    transform: rotate(-40deg);
+    left: 8px;
+}
+
+.isCompletedHidden .toggleComplete {
+    transform: rotate(-90deg);
 }

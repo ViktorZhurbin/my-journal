@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames/bind';
 
@@ -15,6 +15,8 @@ import styles from './TodoList.module.css';
 const cx = classNames.bind(styles);
 
 export const TodoList: React.FC = () => {
+    const [isCompletedHidden, setIsCompletedHidden] = useState(false);
+
     const activeTodos = useSelector(selectActiveTodos);
     const completeTodos = useSelector(selectCompleteTodos);
     const dispatch = useDispatch();
@@ -24,10 +26,12 @@ export const TodoList: React.FC = () => {
         [dispatch]
     );
 
+    const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
+
     const completeItemsText =
         completeTodos &&
-        `${completeTodos.length} Completed item${
-            completeTodos.length > 1 ? 's' : ''
+        `${completeTodos.length} Completed ${
+            completeTodos.length > 1 ? 'items' : 'item'
         }`;
 
     return (
@@ -47,9 +51,13 @@ export const TodoList: React.FC = () => {
                 </ul>
             </section>
             {completeTodos?.length ? (
-                <section className={cx('completed')}>
+                <section className={cx('completed', { isCompletedHidden })}>
                     {activeTodos?.length ? <hr /> : null}
-                    <div className={cx('numCompletedText')}>
+                    <div
+                        className={cx('numCompletedText')}
+                        onClick={toggleCompleteHidden}
+                    >
+                        <div className={cx('toggleComplete')} />
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
