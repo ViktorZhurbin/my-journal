@@ -1,17 +1,13 @@
 import React, { useState, useCallback } from 'react';
 import classNames from 'classnames/bind';
+import { useMutation } from '@apollo/react-hooks';
 
+import { DELETE_TODO, EDIT_TODO, TOGGLE_TODO, GET_TODOS } from '~/graphql';
 import { Checkbox } from '~/components/Checkbox';
 import { TextInput } from '~/components/TextInput';
 import { ITodo } from '~/models';
-import {
-    todoToggleAction,
-    todoDeleteAction,
-    todoEditAction,
-} from '~/store/todos/actions';
 
 import styles from './Todo.module.css';
-import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
@@ -23,20 +19,31 @@ export const Todo: React.FC<TodoProps> = ({
     todo: { id, task, isComplete },
 }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useDispatch();
 
-    const toggleTodo = useCallback(() => dispatch(todoToggleAction(id)), [
-        dispatch,
-        id,
-    ]);
+    const [toggleTodo] = useMutation(TOGGLE_TODO);
+    const handleToggleTodo = useCallback(
+        () => toggleTodo({ variables: { id } }),
+        [id]
+    );
 
-    const deleteTodo = useCallback(() => dispatch(todoDeleteAction(id)), [
-        dispatch,
-        id,
-    ]);
-    const editTodo = useCallback(
-        (task: string) => dispatch(todoEditAction(id, task)),
-        [dispatch, id, task]
+    const [updateTodo] = useMutation(EDIT_TODO);
+    const handleUpdateTodo = useCallback(
+        (task: string) =>
+            updateTodo({
+                variables: { id, task },
+                refetchQueries: [{ query: GET_TODOS }],
+            }),
+        [id, task]
+    );
+
+    const [deleteTodo] = useMutation(DELETE_TODO);
+    const handleDeleteTodo = useCallback(
+        () =>
+            deleteTodo({
+                variables: { id },
+                refetchQueries: [{ query: GET_TODOS }],
+            }),
+        [id]
     );
 
     return (
@@ -44,19 +51,19 @@ export const Todo: React.FC<TodoProps> = ({
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
-                onToggle={toggleTodo}
+                onToggle={handleToggleTodo}
             />
             <div className={cx('todoItem')}>
                 <TextInput
                     text={task}
                     classNames={cx('todoText', { isComplete })}
-                    onSubmit={editTodo}
+                    onSubmit={handleUpdateTodo}
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                 />
                 <div
                     className={cx('deleteButton')}
-                    onClick={deleteTodo}
+                    onClick={handleDeleteTodo}
                     role="button"
                     aria-label="Delete"
                 />
