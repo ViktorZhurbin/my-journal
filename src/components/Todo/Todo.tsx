@@ -46,14 +46,21 @@ export const Todo: React.FC<TodoProps> = ({
                 isChecked={isComplete}
                 onToggle={toggleTodo}
             />
-            <TextInput
-                text={task}
-                classNames={cx('todoText', { isComplete })}
-                onDelete={deleteTodo}
-                onSubmit={editTodo}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
-            />
+            <div className={cx('todoItem')}>
+                <TextInput
+                    text={task}
+                    classNames={cx('todoText', { isComplete })}
+                    onSubmit={editTodo}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                />
+                <div
+                    className={cx('deleteButton')}
+                    onClick={deleteTodo}
+                    role="button"
+                    aria-label="Delete"
+                />
+            </div>
         </li>
     );
 };

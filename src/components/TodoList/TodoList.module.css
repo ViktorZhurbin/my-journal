@@ -54,6 +54,11 @@
 .numCompletedText {
     padding-top: 15px;
     padding-bottom: 15px;
-    margin-left: 58px;
+    padding-left: 58px;
     cursor: pointer;
+    opacity: 0.7;
+}
+
+.numCompletedText:hover {
+    opacity: 1;
 }

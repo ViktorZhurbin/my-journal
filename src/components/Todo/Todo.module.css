@@ -21,7 +21,14 @@
     text-decoration-line: line-through;
 }
 
+.todoItem {
+    position: relative;
+    width: 100%;
+    padding-left: 15px;
+}
+
 .todoText {
+    position: relative;
     color: #4d4d4d;
     font-size: 1rem;
     line-height: 1.5rem;
@@ -39,4 +46,46 @@
 
 .drag {
     cursor: move;
+}
+
+.deleteButton {
+    display: none;
+}
+
+.todo:hover .deleteButton {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    padding: 4px;
+    opacity: 0.5;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.deleteButton:hover {
+    display: block;
+    opacity: 0.9;
+    background-color: #5f636828;
+}
+
+.deleteButton:before,
+.deleteButton:after {
+    position: absolute;
+    left: 11.375px;
+    top: 5.5px;
+    content: ' ';
+    height: 13px;
+    width: 1.25px;
+    background-color: #333;
+}
+
+.deleteButton:before {
+    transform: rotate(45deg);
+}
+
+.deleteButton:after {
+    transform: rotate(-45deg);
 }
