@@ -28,7 +28,11 @@ const typeDefs = gql`
     type TodoUpdateAllResponse {
         success: Boolean
         message: String
-        data: [Todo]
+        data: Todos
+    }
+
+    type Todos {
+        todos: AllTodos
     }
 
     type AllTodos {

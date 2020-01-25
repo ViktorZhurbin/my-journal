@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { useQuery, useMutation, useApolloClient } from '@apollo/react-hooks';
+import React from 'react';
+import { useQuery, useApolloClient } from '@apollo/react-hooks';
 
 import { CREATE_TODO, GET_TODOS, UPDATE_ALL_TODOS } from '~/store/todos';
 import { ITodo } from '~/models';
@@ -10,22 +10,52 @@ const TodoListContainer = () => {
     const { data, loading, error } = useQuery(GET_TODOS);
 
     const client = useApolloClient();
-    const [updateAllTodos] = useMutation(UPDATE_ALL_TODOS);
-    const handleReorderTodos = useCallback(
-        (reorderedActiveTodos: ITodo[]) => {
-            const allTodos = reorderedActiveTodos.concat(data.todos.completed);
-            const todos = allTodos.map(({ id, task, isComplete }) => ({
-                id,
-                task,
-                isComplete,
-            }));
-            return updateAllTodos({
-                variables: { todos },
-                refetchQueries: [{ query: GET_TODOS }],
-            });
-        },
-        [data]
-    );
+
+    const handleReorderTodos = (reorderedActiveTodos: ITodo[]) => {
+        const allTodos = reorderedActiveTodos.concat(data.todos.completed);
+        const todos = allTodos.map(({ id, task, isComplete }) => ({
+            id,
+            task,
+            isComplete,
+        }));
+        client.mutate({
+            mutation: UPDATE_ALL_TODOS,
+            variables: {
+                todos,
+            },
+            optimisticResponse: {
+                updateAllTodos: {
+                    success: true,
+                    message: 'todos reordered',
+                    data: {
+                        todos: {
+                            all: allTodos,
+                            active: reorderedActiveTodos,
+                            completed: data.todos.completed,
+                            __typename: 'AllTodos',
+                        },
+                        __typename: 'Todos',
+                    },
+                    __typename: 'TodoUpdateAllResponse',
+                },
+            },
+            update: (proxy: any, { data: { updateAllTodos } }: any) => {
+                let data = proxy.readQuery({
+                    query: GET_TODOS,
+                });
+
+                if (updateAllTodos) {
+                    data = updateAllTodos.data;
+
+                    proxy.writeQuery({
+                        query: GET_TODOS,
+                        data,
+                    });
+                }
+            },
+        });
+    };
+
     const cachedCreateTodo = (task: string) => {
         client.mutate({
             mutation: CREATE_TODO,
@@ -55,6 +85,7 @@ const TodoListContainer = () => {
                     // Add our todo from the mutation to the end.
                     data.todos.all.push(createTodo.data);
                     data.todos.active.push(createTodo.data);
+
                     // Write our data back to the cache.
                     proxy.writeQuery({
                         query: GET_TODOS,

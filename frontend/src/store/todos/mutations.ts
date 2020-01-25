@@ -6,12 +6,24 @@ export const UPDATE_ALL_TODOS = gql`
             success
             message
             data {
-                id
-                task
-                isComplete
-                __typename
+                todos {
+                    all {
+                        id
+                        task
+                        isComplete
+                    }
+                    active {
+                        id
+                        task
+                        isComplete
+                    }
+                    completed {
+                        id
+                        task
+                        isComplete
+                    }
+                }
             }
-            __typename
         }
     }
 `;

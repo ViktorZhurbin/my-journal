@@ -40,12 +40,15 @@ const Mutation = {
     },
 
     updateAllTodos: async (_, { todos }, { dataSources }) => {
-        const data = await dataSources.todoAPI.updateAllTodos({ todos });
+        await dataSources.todoAPI.updateAllTodos({ todos });
+        const allTodos = await dataSources.todoAPI.getAllTodos();
 
         return {
             success: true,
-            message: 'todo toggled',
-            data,
+            message: 'todos updated',
+            data: {
+                todos: allTodos,
+            },
         };
     },
 };
