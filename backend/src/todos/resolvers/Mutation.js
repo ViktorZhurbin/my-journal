@@ -1,5 +1,3 @@
-const todos = require('../db/datasources/mockTodos');
-
 const Mutation = {
     createTodo: async (_, { task }, { dataSources }) => {
         const data = await dataSources.todoAPI.createTodo({ task });

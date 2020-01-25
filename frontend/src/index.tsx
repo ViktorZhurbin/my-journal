@@ -1,12 +1,13 @@
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { ApolloProvider } from '@apollo/react-hooks';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+    ApolloClient,
+    HttpLink,
+    InMemoryCache,
+    NormalizedCacheObject,
+} from 'apollo-boost';
+import { ApolloProvider } from '@apollo/react-hooks';
 
-// import { typeDefs } from './graphql/schema';
-// import { resolvers } from './graphql/resolvers';
 import { App } from '~/App';
 
 import './index.css';
@@ -19,15 +20,7 @@ const link = new HttpLink({
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     cache,
     link,
-    // typeDefs,
-    // resolvers,
 });
-
-// cache.writeData({
-//     data: {
-//         todos: [],
-//     },
-// });
 
 ReactDOM.render(
     <ApolloProvider client={client}>

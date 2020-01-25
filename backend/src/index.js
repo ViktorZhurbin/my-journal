@@ -1,10 +1,10 @@
 require('dotenv/config');
 const { ApolloServer } = require('apollo-server');
 
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
-const TodoAPI = require('./db/datasources/todo');
-const { createStore } = require('./db');
+const typeDefs = require('./todos/schema');
+const resolvers = require('./todos/resolvers');
+const TodoAPI = require('./todos/api');
+const createStore = require('./todos/createStore');
 
 const store = createStore();
 
@@ -18,4 +18,10 @@ const server = new ApolloServer({
 
 server.listen().then(({ url }) => {
     console.log(`🚀 Server ready at ${url}`);
+});
+
+process.on('exit', () => {
+    server.close(() => {
+        console.log('Process terminated');
+    });
 });

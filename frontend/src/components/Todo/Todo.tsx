@@ -1,73 +1,48 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import { useMutation } from '@apollo/react-hooks';
 
-import { DELETE_TODO, EDIT_TODO, TOGGLE_TODO, GET_TODOS } from '~/graphql';
 import { Checkbox } from '~/components/Checkbox';
 import { TextInput } from '~/components/TextInput';
-import { ITodo } from '~/models';
 
 import styles from './Todo.module.css';
 
 const cx = classNames.bind(styles);
 
 interface TodoProps {
-    todo: ITodo;
+    task: string;
+    isComplete: boolean;
+    onToggle: () => void;
+    onEdit: (task: string) => void;
+    onDelete: () => void;
 }
 
 export const Todo: React.FC<TodoProps> = ({
-    todo: { id, task, isComplete },
+    task,
+    isComplete,
+    onToggle,
+    onEdit,
+    onDelete,
 }) => {
     const [isEditing, setIsEditing] = useState(false);
-
-    const [toggleTodo] = useMutation(TOGGLE_TODO);
-    const handleToggleTodo = useCallback(
-        () =>
-            toggleTodo({
-                variables: { id },
-                refetchQueries: [{ query: GET_TODOS }],
-            }),
-        [id]
-    );
-
-    const [updateTodo] = useMutation(EDIT_TODO);
-    const handleUpdateTodo = useCallback(
-        (task: string) =>
-            updateTodo({
-                variables: { id, task },
-                refetchQueries: [{ query: GET_TODOS }],
-            }),
-        [id, task]
-    );
-
-    const [deleteTodo] = useMutation(DELETE_TODO);
-    const handleDeleteTodo = useCallback(
-        () =>
-            deleteTodo({
-                variables: { id },
-                refetchQueries: [{ query: GET_TODOS }],
-            }),
-        [id]
-    );
 
     return (
         <li className={cx('todo', { isEditing })}>
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
-                onToggle={handleToggleTodo}
+                onToggle={onToggle}
             />
             <div className={cx('todoItem')}>
                 <TextInput
                     text={task}
                     classNames={cx('todoText', { isComplete })}
-                    onSubmit={handleUpdateTodo}
+                    onSubmit={onEdit}
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                 />
                 <div
                     className={cx('deleteButton')}
-                    onClick={handleDeleteTodo}
+                    onClick={onDelete}
                     role="button"
                     aria-label="Delete"
                 />

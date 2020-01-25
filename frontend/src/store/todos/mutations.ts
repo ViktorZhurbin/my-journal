@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'apollo-boost';
 
 export const UPDATE_ALL_TODOS = gql`
     mutation UpdateAllTodos($todos: [TodoInput]) {
@@ -9,7 +9,9 @@ export const UPDATE_ALL_TODOS = gql`
                 id
                 task
                 isComplete
+                __typename
             }
+            __typename
         }
     }
 `;

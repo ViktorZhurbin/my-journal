@@ -1,10 +1,10 @@
+dist/
 node_modules/
 
-frontend/node_modules/
-frontend/dist/
-
-backend/node_modules/
+*.sqlite
 
 .DS_Store
 .vscode/
 .cache/
+
+*.sqlite

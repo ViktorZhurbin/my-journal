@@ -1,7 +1,7 @@
 const { DataTypes, Sequelize, Op } = require('sequelize');
 const path = require('path');
 
-module.exports.createStore = () => {
+const createStore = () => {
     const operatorsAliases = {
         $in: Op.in,
     };
@@ -40,3 +40,5 @@ module.exports.createStore = () => {
         todos,
     };
 };
+
+module.exports = createStore;
