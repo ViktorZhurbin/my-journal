@@ -40,6 +40,16 @@ const Mutation = {
             data,
         };
     },
+
+    updateAllTodos: async (_, { todos }, { dataSources }) => {
+        const data = await dataSources.todoAPI.updateAllTodos({ todos });
+
+        return {
+            success: true,
+            message: 'todo toggled',
+            data,
+        };
+    },
 };
 
 module.exports = Mutation;

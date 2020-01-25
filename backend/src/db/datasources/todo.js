@@ -1,4 +1,5 @@
-const { Op, DataSource } = require('apollo-datasource');
+const { DataSource } = require('apollo-datasource');
+const { Op } = require('sequelize');
 
 class TodoAPI extends DataSource {
     constructor({ store }) {
@@ -7,15 +8,50 @@ class TodoAPI extends DataSource {
     }
 
     async getAllTodos() {
-        const todos = await this.store.todos.findAll();
+        const all = await this.store.todos.findAll();
+        const completed = await this.store.todos.findAll({
+            where: {
+                isComplete: {
+                    [Op.eq]: true,
+                },
+            },
+        });
+        const active = await this.store.todos.findAll({
+            where: {
+                isComplete: {
+                    [Op.eq]: false,
+                },
+            },
+        });
 
-        return Array.isArray(todos) ? todos : [];
+        return {
+            all,
+            active,
+            completed,
+        };
+    }
+
+    async updateAllTodos({ todos }) {
+        await this.store.todos.destroy({
+            where: {
+                id: {
+                    [Op.ne]: null,
+                },
+            },
+        });
+        const created = await this.store.todos.bulkCreate(todos, {
+            returning: true,
+        });
+
+        return created;
     }
 
     async toggleTodo({ id }) {
         const todo = await this.store.todos.findOne({
             where: {
-                id: id,
+                id: {
+                    [Op.eq]: id,
+                },
             },
         });
         todo.isComplete = !todo.isComplete;
@@ -27,7 +63,9 @@ class TodoAPI extends DataSource {
     async editTodo({ id, task }) {
         const todo = await this.store.todos.findOne({
             where: {
-                id: id,
+                id: {
+                    [Op.eq]: id,
+                },
             },
         });
         todo.task = task;
@@ -37,9 +75,11 @@ class TodoAPI extends DataSource {
     }
 
     async deleteTodo({ id }) {
-        const todo = await this.store.todos.destroy({
+        await this.store.todos.destroy({
             where: {
-                id: id,
+                id: {
+                    [Op.eq]: id,
+                },
             },
         });
 

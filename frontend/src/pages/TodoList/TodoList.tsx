@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { CREATE_TODO, GET_TODOS /* UPDATE_TODOS */ } from '~/graphql';
+import { CREATE_TODO, GET_TODOS, UPDATE_ALL_TODOS } from '~/graphql';
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
 
@@ -24,23 +24,31 @@ export const TodoList: React.FC = () => {
             refetchQueries: [{ query: GET_TODOS }],
         });
 
-    // const [updateTodos] = useMutation(UPDATE_TODOS);
-    // const handleUpdateTodos = useCallback(
-    //     (todos: ITodo[]) => updateTodos({ variables: { todos } }),
-    //     [data.todos]
-    // );
+    const [updateAllTodos] = useMutation(UPDATE_ALL_TODOS);
+    const handleReorderTodos = useCallback(
+        (reorderedActiveTodos: ITodo[]) => {
+            const allTodos = reorderedActiveTodos.concat(data.todos.completed);
+            const todos = allTodos.map(({ id, task, isComplete }) => ({
+                id,
+                task,
+                isComplete,
+            }));
+            return updateAllTodos({
+                variables: { todos },
+                refetchQueries: [{ query: GET_TODOS }],
+            });
+        },
+        [data]
+    );
 
-    const handleReorder = (reordered: ITodo[]) => reordered;
-    // const handleReorder = (reorderedActiveTodos: ITodo[]) =>
-    //     handleUpdateTodos(reorderedActiveTodos); //.concat(completedTodos));
+    const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
 
-    // const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
-
-    // const completeItemsText =
-    //     completedTodos &&
-    //     `${completedTodos.length} Completed ${
-    //         completedTodos.length > 1 ? 'items' : 'item'
-    //     }`;
+    const completeItemsText =
+        data &&
+        data.todos.completed &&
+        `${data.todos.completed.length} Completed ${
+            data.todos.completed.length > 1 ? 'items' : 'item'
+        }`;
 
     if (loading || !data) return <p>Loading...</p>;
     if (error) return <p>ERROR</p>;
@@ -56,14 +64,14 @@ export const TodoList: React.FC = () => {
             </header>
             <section className={cx('active')}>
                 <DraggableTodoList
-                    todos={data.todos}
-                    onReorder={handleReorder}
+                    todos={data.todos.active}
+                    onReorder={handleReorderTodos}
                     classNames={cx('list')}
                 />
             </section>
-            {/* {completedTodos?.length ? (
+            {data.todos.completed?.length ? (
                 <section className={cx('completed', { isCompletedHidden })}>
-                    {activeTodos?.length ? <hr /> : null}
+                    {data.todos.active?.length ? <hr /> : null}
                     <div
                         className={cx('numCompletedText')}
                         onClick={toggleCompleteHidden}
@@ -72,12 +80,12 @@ export const TodoList: React.FC = () => {
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
-                        {completedTodos?.map(todo => (
+                        {data.todos.completed?.map((todo: ITodo) => (
                             <Todo key={todo.id} todo={todo} />
                         ))}
                     </ul>
                 </section>
-            ) : null} */}
+            ) : null}
         </div>
     );
 };

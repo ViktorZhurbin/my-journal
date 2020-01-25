@@ -6,8 +6,6 @@ module.exports.createStore = () => {
         $in: Op.in,
     };
 
-    console.log(path.resolve(__dirname, '../../store.sqlite'));
-
     const sequelize = new Sequelize(
         process.env.DATABASE,
         process.env.DATABASE_USER,

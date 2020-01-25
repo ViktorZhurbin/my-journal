@@ -22,7 +22,11 @@ export const Todo: React.FC<TodoProps> = ({
 
     const [toggleTodo] = useMutation(TOGGLE_TODO);
     const handleToggleTodo = useCallback(
-        () => toggleTodo({ variables: { id } }),
+        () =>
+            toggleTodo({
+                variables: { id },
+                refetchQueries: [{ query: GET_TODOS }],
+            }),
         [id]
     );
 

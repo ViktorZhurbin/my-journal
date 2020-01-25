@@ -7,6 +7,12 @@ const typeDefs = gql`
         isComplete: Boolean!
     }
 
+    input TodoInput {
+        id: String!
+        task: String!
+        isComplete: Boolean!
+    }
+
     type TodoUpdateResponse {
         success: Boolean
         message: String
@@ -19,8 +25,20 @@ const typeDefs = gql`
         data: String
     }
 
+    type TodoUpdateAllResponse {
+        success: Boolean
+        message: String
+        data: [Todo]
+    }
+
+    type AllTodos {
+        all: [Todo]
+        active: [Todo]
+        completed: [Todo]
+    }
+
     type Query {
-        todos: [Todo]!
+        todos: AllTodos
     }
 
     type Mutation {
@@ -28,6 +46,7 @@ const typeDefs = gql`
         deleteTodo(id: String!): TodoIdResponse
         editTodo(id: String!, task: String!): TodoUpdateResponse
         toggleTodo(id: String!): TodoUpdateResponse
+        updateAllTodos(todos: [TodoInput]): TodoUpdateAllResponse
     }
 `;
 
