@@ -1,48 +1,38 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 
 import { Todo } from '~/components/Todo';
 import { Input } from '~/components/Input';
-import { todoAddAction, todoListUpdateAction } from '~/store/todos/actions';
-import {
-    selectCompleteTodos,
-    selectActiveTodos,
-} from '~/store/todos/selectors';
 
 import styles from './TodoList.module.css';
 import { ITodo } from '~/models';
-import { reorder } from '~/helpers';
 import { DraggableTodoList } from './DraggableTodoList';
 
 const cx = classNames.bind(styles);
 
-export const TodoList: React.FC = () => {
+interface ITodoListProps {
+    createTodo: (value: string) => void;
+    reorderTodos: (reorderedActiveTodos: ITodo[]) => void;
+    todos: {
+        all: [ITodo];
+        active: [ITodo];
+        completed: [ITodo];
+    };
+}
+
+export const TodoList: React.FC<ITodoListProps> = ({
+    createTodo,
+    todos,
+    reorderTodos,
+}) => {
     const [isCompletedHidden, setIsCompletedHidden] = useState(false);
-
-    const activeTodos = useSelector(selectActiveTodos);
-    const completedTodos = useSelector(selectCompleteTodos);
-    const dispatch = useDispatch();
-
-    const addTodo = useCallback(
-        (task: string) => dispatch(todoAddAction(task)),
-        [dispatch]
-    );
-
-    const updateTodos = useCallback(
-        (todos: ITodo[]) => dispatch(todoListUpdateAction(todos)),
-        [dispatch]
-    );
-
-    const handleReorder = (reorderedActiveTodos: ITodo[]) =>
-        updateTodos(reorderedActiveTodos.concat(completedTodos));
-
     const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
 
     const completeItemsText =
-        completedTodos &&
-        `${completedTodos.length} Completed ${
-            completedTodos.length > 1 ? 'items' : 'item'
+        todos &&
+        todos.completed &&
+        `${todos.completed.length} Completed ${
+            todos.completed.length > 1 ? 'items' : 'item'
         }`;
 
     return (
@@ -50,20 +40,20 @@ export const TodoList: React.FC = () => {
             <header>
                 <Input
                     placeholder="What needs to be done?"
-                    onSubmit={addTodo}
+                    onSubmit={createTodo}
                     classNames={cx('inputTodo')}
                 />
             </header>
             <section className={cx('active')}>
                 <DraggableTodoList
-                    todos={activeTodos}
-                    onReorder={handleReorder}
+                    todos={todos.active}
+                    onReorder={reorderTodos}
                     classNames={cx('list')}
                 />
             </section>
-            {completedTodos?.length ? (
+            {todos.completed?.length ? (
                 <section className={cx('completed', { isCompletedHidden })}>
-                    {activeTodos?.length ? <hr /> : null}
+                    {todos.active?.length ? <hr /> : null}
                     <div
                         className={cx('numCompletedText')}
                         onClick={toggleCompleteHidden}
@@ -72,7 +62,7 @@ export const TodoList: React.FC = () => {
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
-                        {completedTodos?.map(todo => (
+                        {todos.completed?.map((todo: ITodo) => (
                             <Todo key={todo.id} todo={todo} />
                         ))}
                     </ul>

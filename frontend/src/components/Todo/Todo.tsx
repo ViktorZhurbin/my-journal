@@ -1,62 +1,48 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 
 import { Checkbox } from '~/components/Checkbox';
 import { TextInput } from '~/components/TextInput';
-import { ITodo } from '~/models';
-import {
-    todoToggleAction,
-    todoDeleteAction,
-    todoEditAction,
-} from '~/store/todos/actions';
 
 import styles from './Todo.module.css';
-import { useDispatch } from 'react-redux';
 
 const cx = classNames.bind(styles);
 
 interface TodoProps {
-    todo: ITodo;
+    task: string;
+    isComplete: boolean;
+    onToggle: () => void;
+    onEdit: (task: string) => void;
+    onDelete: () => void;
 }
 
 export const Todo: React.FC<TodoProps> = ({
-    todo: { id, task, isComplete },
+    task,
+    isComplete,
+    onToggle,
+    onEdit,
+    onDelete,
 }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const dispatch = useDispatch();
-
-    const toggleTodo = useCallback(() => dispatch(todoToggleAction(id)), [
-        dispatch,
-        id,
-    ]);
-
-    const deleteTodo = useCallback(() => dispatch(todoDeleteAction(id)), [
-        dispatch,
-        id,
-    ]);
-    const editTodo = useCallback(
-        (task: string) => dispatch(todoEditAction(id, task)),
-        [dispatch, id, task]
-    );
 
     return (
         <li className={cx('todo', { isEditing })}>
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
-                onToggle={toggleTodo}
+                onToggle={onToggle}
             />
             <div className={cx('todoItem')}>
                 <TextInput
                     text={task}
                     classNames={cx('todoText', { isComplete })}
-                    onSubmit={editTodo}
+                    onSubmit={onEdit}
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                 />
                 <div
                     className={cx('deleteButton')}
-                    onClick={deleteTodo}
+                    onClick={onDelete}
                     role="button"
                     aria-label="Delete"
                 />
