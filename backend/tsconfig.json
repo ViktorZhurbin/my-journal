@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "lib": ["es6", "esnext"],
+        "esModuleInterop": true,
+        "target": "es6",
+        "strict": true,
+        "moduleResolution": "node"
+    },
+    "exclude": ["node_modules"]
+}

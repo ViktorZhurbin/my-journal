@@ -1,8 +1,6 @@
 dist/
 node_modules/
 
-*.sqlite
-
 .DS_Store
 .vscode/
 .cache/

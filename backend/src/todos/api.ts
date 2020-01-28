@@ -1,8 +1,11 @@
-const { DataSource } = require('apollo-datasource');
-const { Op } = require('sequelize');
+import { DataSource } from 'apollo-datasource';
+import { Op } from 'sequelize';
+import { IStore } from '../@types';
+import { ITodo } from '../@types/Todo';
 
 class TodoAPI extends DataSource {
-    constructor({ store }) {
+    store: IStore;
+    constructor({ store }: any) {
         super();
         this.store = store;
     }
@@ -31,7 +34,7 @@ class TodoAPI extends DataSource {
         };
     }
 
-    async updateAllTodos({ todos }) {
+    async updateAllTodos({ todos }: { todos: ITodo[] }) {
         await this.store.todos.destroy({
             where: {
                 id: {
@@ -46,7 +49,7 @@ class TodoAPI extends DataSource {
         return created;
     }
 
-    async toggleTodo({ id }) {
+    async toggleTodo({ id }: Partial<ITodo>) {
         const todo = await this.store.todos.findOne({
             where: {
                 id: {
@@ -60,7 +63,7 @@ class TodoAPI extends DataSource {
         return todo.dataValues;
     }
 
-    async editTodo({ id, task }) {
+    async editTodo({ id, task }: Partial<ITodo>) {
         const todo = await this.store.todos.findOne({
             where: {
                 id: {
@@ -74,7 +77,7 @@ class TodoAPI extends DataSource {
         return todo.dataValues;
     }
 
-    async deleteTodo({ id }) {
+    async deleteTodo({ id }: Partial<ITodo>) {
         await this.store.todos.destroy({
             where: {
                 id: {
@@ -86,7 +89,7 @@ class TodoAPI extends DataSource {
         return id;
     }
 
-    async createTodo({ task }) {
+    async createTodo({ task }: Partial<ITodo>) {
         const todo = await this.store.todos.create({
             task,
             isComplete: false,
@@ -96,4 +99,4 @@ class TodoAPI extends DataSource {
     }
 }
 
-module.exports = TodoAPI;
+export { TodoAPI };

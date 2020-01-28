@@ -1,4 +1,4 @@
-const { gql } = require('apollo-boost');
+import { gql } from 'apollo-boost';
 
 const typeDefs = gql`
     type Todo {
@@ -54,4 +54,4 @@ const typeDefs = gql`
     }
 `;
 
-module.exports = typeDefs;
+export { typeDefs };
