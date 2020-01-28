@@ -23,10 +23,10 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
         [id]
     );
 
-    const [updateTodo] = useMutation(EDIT_TODO);
+    const [editTodo] = useMutation(EDIT_TODO);
     const onEdit = useCallback(
         (task: string) =>
-            updateTodo({
+            editTodo({
                 variables: { id, task },
                 refetchQueries: [{ query: GET_TODOS }],
             }),

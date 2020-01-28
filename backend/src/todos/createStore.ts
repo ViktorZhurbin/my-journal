@@ -1,15 +1,16 @@
-const { DataTypes, Sequelize, Op } = require('sequelize');
-const path = require('path');
+import { DataTypes, Sequelize, Op, UUIDV4 } from 'sequelize';
+import * as path from 'path';
+import { IStore } from '../@types';
 
-const createStore = () => {
+const createStore = (): IStore => {
     const operatorsAliases = {
         $in: Op.in,
     };
 
     const sequelize = new Sequelize(
-        process.env.DATABASE,
-        process.env.DATABASE_USER,
-        process.env.DATABASE_PASSWORD,
+        process.env.DATABASE!,
+        process.env.DATABASE_USER!,
+        process.env.DATABASE_PASSWORD!,
         {
             dialect: 'sqlite',
             storage: path.resolve(__dirname, '../../store.sqlite'),
@@ -22,7 +23,7 @@ const createStore = () => {
         {
             id: {
                 type: DataTypes.UUID,
-                defaultValue: Sequelize.UUIDV4,
+                defaultValue: UUIDV4,
                 primaryKey: true,
             },
             task: DataTypes.TEXT,
@@ -41,4 +42,4 @@ const createStore = () => {
     };
 };
 
-module.exports = createStore;
+export { createStore };

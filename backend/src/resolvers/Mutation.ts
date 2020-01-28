@@ -1,4 +1,6 @@
-const Mutation = {
+import { MutationResolvers } from '../types';
+
+const Mutation: MutationResolvers = {
     createTodo: async (_, { task }, { dataSources }) => {
         const data = await dataSources.todoAPI.createTodo({ task });
 
@@ -53,4 +55,4 @@ const Mutation = {
     },
 };
 
-module.exports = Mutation;
+export { Mutation };
