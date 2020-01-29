@@ -16,19 +16,12 @@ export type Scalars = {
 
 
 
-export type AllTodos = {
-   __typename?: 'AllTodos',
-  all?: Maybe<Array<Maybe<Todo>>>,
-  active?: Maybe<Array<Maybe<Todo>>>,
-  completed?: Maybe<Array<Maybe<Todo>>>,
-};
-
 export type Mutation = {
    __typename?: 'Mutation',
   createTodo: TodoUpdateResponse,
   deleteTodo: ResponseMessage,
   editTodo: TodoUpdateResponse,
-  toggleTodo?: Maybe<TodoUpdateResponse>,
+  toggleTodo: TodoUpdateResponse,
   updateAllTodos: TodoUpdateAllResponse,
 };
 
@@ -60,7 +53,7 @@ export type MutationUpdateAllTodosArgs = {
 
 export type Query = {
    __typename?: 'Query',
-  todos?: Maybe<AllTodos>,
+  todos: Array<Maybe<Todo>>,
 };
 
 export type ResponseMessage = {
@@ -81,15 +74,10 @@ export type TodoInput = {
   isComplete: Scalars['Boolean'],
 };
 
-export type Todos = {
-   __typename?: 'Todos',
-  todos?: Maybe<AllTodos>,
-};
-
 export type TodoUpdateAllResponse = {
    __typename?: 'TodoUpdateAllResponse',
   success: Scalars['Boolean'],
-  data: Todos,
+  data?: Maybe<Query>,
 };
 
 export type TodoUpdateResponse = {
@@ -173,7 +161,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Query: ResolverTypeWrapper<{}>,
-  AllTodos: ResolverTypeWrapper<AllTodos>,
   Todo: ResolverTypeWrapper<Todo>,
   String: ResolverTypeWrapper<Scalars['String']>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
@@ -182,13 +169,11 @@ export type ResolversTypes = ResolversObject<{
   ResponseMessage: ResolverTypeWrapper<ResponseMessage>,
   TodoInput: TodoInput,
   TodoUpdateAllResponse: ResolverTypeWrapper<TodoUpdateAllResponse>,
-  Todos: ResolverTypeWrapper<Todos>,
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Query: {},
-  AllTodos: AllTodos,
   Todo: Todo,
   String: Scalars['String'],
   Boolean: Scalars['Boolean'],
@@ -197,18 +182,10 @@ export type ResolversParentTypes = ResolversObject<{
   ResponseMessage: ResponseMessage,
   TodoInput: TodoInput,
   TodoUpdateAllResponse: TodoUpdateAllResponse,
-  Todos: Todos,
 }>;
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  todos?: Resolver<Maybe<ResolversTypes['AllTodos']>, ParentType, ContextType>,
-}>;
-
-export type AllTodosResolvers<ContextType = any, ParentType extends ResolversParentTypes['AllTodos'] = ResolversParentTypes['AllTodos']> = ResolversObject<{
-  all?: Resolver<Maybe<Array<Maybe<ResolversTypes['Todo']>>>, ParentType, ContextType>,
-  active?: Resolver<Maybe<Array<Maybe<ResolversTypes['Todo']>>>, ParentType, ContextType>,
-  completed?: Resolver<Maybe<Array<Maybe<ResolversTypes['Todo']>>>, ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
+  todos?: Resolver<Array<Maybe<ResolversTypes['Todo']>>, ParentType, ContextType>,
 }>;
 
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = ResolversObject<{
@@ -222,7 +199,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'task'>>,
   deleteTodo?: Resolver<ResolversTypes['ResponseMessage'], ParentType, ContextType, RequireFields<MutationDeleteTodoArgs, 'id'>>,
   editTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationEditTodoArgs, 'id' | 'task'>>,
-  toggleTodo?: Resolver<Maybe<ResolversTypes['TodoUpdateResponse']>, ParentType, ContextType, RequireFields<MutationToggleTodoArgs, 'id'>>,
+  toggleTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationToggleTodoArgs, 'id'>>,
   updateAllTodos?: Resolver<ResolversTypes['TodoUpdateAllResponse'], ParentType, ContextType, RequireFields<MutationUpdateAllTodosArgs, 'todos'>>,
 }>;
 
@@ -239,24 +216,17 @@ export type ResponseMessageResolvers<ContextType = any, ParentType extends Resol
 
 export type TodoUpdateAllResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['TodoUpdateAllResponse'] = ResolversParentTypes['TodoUpdateAllResponse']> = ResolversObject<{
   success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>,
-  data?: Resolver<ResolversTypes['Todos'], ParentType, ContextType>,
-  __isTypeOf?: isTypeOfResolverFn,
-}>;
-
-export type TodosResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todos'] = ResolversParentTypes['Todos']> = ResolversObject<{
-  todos?: Resolver<Maybe<ResolversTypes['AllTodos']>, ParentType, ContextType>,
+  data?: Resolver<Maybe<ResolversTypes['Query']>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn,
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>,
-  AllTodos?: AllTodosResolvers<ContextType>,
   Todo?: TodoResolvers<ContextType>,
   Mutation?: MutationResolvers<ContextType>,
   TodoUpdateResponse?: TodoUpdateResponseResolvers<ContextType>,
   ResponseMessage?: ResponseMessageResolvers<ContextType>,
   TodoUpdateAllResponse?: TodoUpdateAllResponseResolvers<ContextType>,
-  Todos?: TodosResolvers<ContextType>,
 }>;
 
 

@@ -22,30 +22,20 @@ const typeDefs = gql`
         data: Todo!
     }
 
-    type AllTodos {
-        all: [Todo]
-        active: [Todo]
-        completed: [Todo]
-    }
-
-    type Todos {
-        todos: AllTodos
-    }
-
     type TodoUpdateAllResponse {
         success: Boolean!
-        data: Todos!
+        data: Query
     }
 
     type Query {
-        todos: AllTodos
+        todos: [Todo]!
     }
 
     type Mutation {
         createTodo(task: String!): TodoUpdateResponse!
         deleteTodo(id: String!): ResponseMessage!
         editTodo(id: String!, task: String!): TodoUpdateResponse!
-        toggleTodo(id: String!): TodoUpdateResponse
+        toggleTodo(id: String!): TodoUpdateResponse!
         updateAllTodos(todos: [TodoInput]!): TodoUpdateAllResponse!
     }
 `;

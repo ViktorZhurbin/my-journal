@@ -6,21 +6,9 @@ export const UPDATE_ALL_TODOS = gql`
             success
             data {
                 todos {
-                    all {
-                        id
-                        task
-                        isComplete
-                    }
-                    active {
-                        id
-                        task
-                        isComplete
-                    }
-                    completed {
-                        id
-                        task
-                        isComplete
-                    }
+                    id
+                    task
+                    isComplete
                 }
             }
         }

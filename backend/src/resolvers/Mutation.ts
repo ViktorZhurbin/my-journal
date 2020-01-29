@@ -45,20 +45,11 @@ const Mutation: MutationResolvers = {
     updateAllTodos: async (_, { todos }, { models }) => {
         await models.todoModel.deleteMany({});
         await models.todoModel.insertMany(todos);
-        const allTodos: Todo[] = await models.todoModel.find({});
-
-        const completed = allTodos.filter(item => item.isComplete);
-        const active = allTodos.filter(item => !item.isComplete);
+        const newTodos: Todo[] = await models.todoModel.find({});
 
         return {
             success: true,
-            data: {
-                todos: {
-                    all: allTodos,
-                    completed,
-                    active,
-                },
-            },
+            data: { todos: newTodos },
         };
     },
 };

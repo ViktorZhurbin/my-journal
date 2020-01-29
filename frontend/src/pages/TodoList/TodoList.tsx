@@ -13,26 +13,23 @@ const cx = classNames.bind(styles);
 interface ITodoListProps {
     createTodo: (value: string) => void;
     reorderTodos: (reorderedActiveTodos: ITodo[]) => void;
-    todos: {
-        all: [ITodo];
-        active: [ITodo];
-        completed: [ITodo];
-    };
+    active: [ITodo];
+    completed: [ITodo];
 }
 
 export const TodoList: React.FC<ITodoListProps> = ({
     createTodo,
-    todos,
+    active,
+    completed,
     reorderTodos,
 }) => {
     const [isCompletedHidden, setIsCompletedHidden] = useState(false);
     const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
 
     const completeItemsText =
-        todos &&
-        todos.completed &&
-        `${todos.completed.length} Completed ${
-            todos.completed.length > 1 ? 'items' : 'item'
+        completed &&
+        `${completed.length} Completed ${
+            completed.length > 1 ? 'items' : 'item'
         }`;
 
     return (
@@ -46,14 +43,14 @@ export const TodoList: React.FC<ITodoListProps> = ({
             </header>
             <section className={cx('active')}>
                 <DraggableTodoList
-                    todos={todos.active}
+                    todos={active}
                     onReorder={reorderTodos}
                     classNames={cx('list')}
                 />
             </section>
-            {todos.completed?.length ? (
+            {completed?.length ? (
                 <section className={cx('completed', { isCompletedHidden })}>
-                    {todos.active?.length ? <hr /> : null}
+                    {active?.length ? <hr /> : null}
                     <div
                         className={cx('numCompletedText')}
                         onClick={toggleCompleteHidden}
@@ -62,7 +59,7 @@ export const TodoList: React.FC<ITodoListProps> = ({
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
-                        {todos.completed?.map((todo: ITodo) => (
+                        {completed?.map((todo: ITodo) => (
                             <Todo key={todo.id} todo={todo} />
                         ))}
                     </ul>

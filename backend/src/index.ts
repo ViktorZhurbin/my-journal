@@ -16,6 +16,7 @@ const server = new ApolloServer({
 
 mongoose.connect(process.env.DATABASE_URI!, {
     useNewUrlParser: true,
+    useFindAndModify: false,
 });
 
 server.listen().then(({ url }) => {
