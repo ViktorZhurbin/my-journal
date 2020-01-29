@@ -26,7 +26,6 @@ const TodoListContainer = () => {
             optimisticResponse: {
                 updateAllTodos: {
                     success: true,
-                    message: 'todos reordered',
                     data: {
                         todos: {
                             all: allTodos,
@@ -65,7 +64,6 @@ const TodoListContainer = () => {
             optimisticResponse: {
                 createTodo: {
                     success: true,
-                    message: 'todo added',
                     data: {
                         id: '-1', // -1 is a temporary id for the optimistic response.
                         task,

@@ -7,3 +7,4 @@ generates:
         config:
             federation: true
             useIndexSignature: true
+watch: true

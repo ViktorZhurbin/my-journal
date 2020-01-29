@@ -1,55 +1,63 @@
-import { MutationResolvers } from '../types';
+import { MutationResolvers, Todo } from '../types';
 
 const Mutation: MutationResolvers = {
-    createTodo: async (_, { task }, { dataSources }) => {
-        const data = await dataSources.todoAPI.createTodo({ task });
+    createTodo: async (_, { task }, { models }) => {
+        const data = await models.todoModel.create({
+            task,
+        });
 
         return {
             success: true,
-            message: 'todo added',
             data,
         };
     },
 
-    deleteTodo: async (_, { id }, { dataSources }) => {
-        const data = await dataSources.todoAPI.deleteTodo({ id });
+    deleteTodo: async (_, { id }, { models }) => {
+        await models.todoModel.deleteOne({ id });
 
         return {
             success: true,
-            message: 'todo deleted',
+        };
+    },
+
+    editTodo: async (_, { id, task }, { models }) => {
+        const data = await models.todoModel.findOneAndUpdate({ id }, { task });
+
+        return {
+            success: true,
             data,
         };
     },
 
-    editTodo: async (_, { id, task }, { dataSources }) => {
-        const data = await dataSources.todoAPI.editTodo({ id, task });
+    toggleTodo: async (_, { id }, { models }) => {
+        const todo = await models.todoModel.findOne({ id });
+        const data = await models.todoModel.findOneAndUpdate(
+            { id },
+            { isComplete: !todo.isComplete }
+        );
 
         return {
             success: true,
-            message: 'todo edited',
             data,
         };
     },
 
-    toggleTodo: async (_, { id }, { dataSources }) => {
-        const data = await dataSources.todoAPI.toggleTodo({ id });
+    updateAllTodos: async (_, { todos }, { models }) => {
+        await models.todoModel.deleteMany({});
+        await models.todoModel.insertMany(todos);
+        const allTodos: Todo[] = await models.todoModel.find({});
+
+        const completed = allTodos.filter(item => item.isComplete);
+        const active = allTodos.filter(item => !item.isComplete);
 
         return {
             success: true,
-            message: 'todo toggled',
-            data,
-        };
-    },
-
-    updateAllTodos: async (_, { todos }, { dataSources }) => {
-        await dataSources.todoAPI.updateAllTodos({ todos });
-        const allTodos = await dataSources.todoAPI.getAllTodos();
-
-        return {
-            success: true,
-            message: 'todos updated',
             data: {
-                todos: allTodos,
+                todos: {
+                    all: allTodos,
+                    completed,
+                    active,
+                },
             },
         };
     },

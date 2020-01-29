@@ -1,19 +1,21 @@
 import 'dotenv/config';
 import { ApolloServer } from 'apollo-server';
+import mongoose from 'mongoose';
 
 import { typeDefs } from './schema';
 import { resolvers } from './resolvers';
-import { createStore } from './todos/createStore';
-import { TodoAPI } from './todos/api';
-
-const store = createStore();
+import { models } from './models';
 
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources: () => ({
-        todoAPI: new TodoAPI({ store }),
+    context: async () => ({
+        models,
     }),
+});
+
+mongoose.connect(process.env.DATABASE_URI!, {
+    useNewUrlParser: true,
 });
 
 server.listen().then(({ url }) => {

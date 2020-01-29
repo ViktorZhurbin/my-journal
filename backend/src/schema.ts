@@ -13,26 +13,13 @@ const typeDefs = gql`
         isComplete: Boolean!
     }
 
+    type ResponseMessage {
+        success: Boolean!
+    }
+
     type TodoUpdateResponse {
-        success: Boolean
-        message: String
-        data: Todo
-    }
-
-    type TodoIdResponse {
-        success: Boolean
-        message: String
-        data: String
-    }
-
-    type TodoUpdateAllResponse {
-        success: Boolean
-        message: String
-        data: Todos
-    }
-
-    type Todos {
-        todos: AllTodos
+        success: Boolean!
+        data: Todo!
     }
 
     type AllTodos {
@@ -41,16 +28,25 @@ const typeDefs = gql`
         completed: [Todo]
     }
 
+    type Todos {
+        todos: AllTodos
+    }
+
+    type TodoUpdateAllResponse {
+        success: Boolean!
+        data: Todos!
+    }
+
     type Query {
         todos: AllTodos
     }
 
     type Mutation {
-        createTodo(task: String!): TodoUpdateResponse
-        deleteTodo(id: String!): TodoIdResponse
-        editTodo(id: String!, task: String!): TodoUpdateResponse
+        createTodo(task: String!): TodoUpdateResponse!
+        deleteTodo(id: String!): ResponseMessage!
+        editTodo(id: String!, task: String!): TodoUpdateResponse!
         toggleTodo(id: String!): TodoUpdateResponse
-        updateAllTodos(todos: [TodoInput]): TodoUpdateAllResponse
+        updateAllTodos(todos: [TodoInput]!): TodoUpdateAllResponse!
     }
 `;
 
