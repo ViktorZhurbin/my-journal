@@ -41,12 +41,14 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
 
             if (deleteTodo) {
                 const updatedTodos = data.todos.filter(
-                    (item: ITodo) => item.id === id
+                    (item: ITodo) => item.id !== id
                 );
 
                 proxy.writeQuery({
                     query: GET_TODOS,
-                    data: updatedTodos,
+                    data: {
+                        todos: updatedTodos,
+                    },
                 });
             }
         },
