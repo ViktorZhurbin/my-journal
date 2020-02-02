@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "parcel src/index.html -p 9001",
+        "start": "parcel src/index.html -p 9001",
         "build": "parcel build src/index.html",
         "codegen": "apollo client:codegen --target typescript --watch"
     },
