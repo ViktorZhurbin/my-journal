@@ -13,23 +13,90 @@ interface TodoContainerProps {
 const TodoContainer: React.FC<TodoContainerProps> = ({
     todo: { id, task, isComplete },
 }) => {
-    const [toggleTodo] = useMutation(TOGGLE_TODO);
-    const onToggle = useCallback(
-        () =>
-            toggleTodo({
-                variables: { id },
-                refetchQueries: [{ query: GET_TODOS }],
-            }),
-        [id]
-    );
+    const [toggleTodo] = useMutation(TOGGLE_TODO, {
+        update: (proxy: any, { data: { toggleTodo } }: any) => {
+            const data = proxy.readQuery({
+                query: GET_TODOS,
+            });
 
-    const [editTodo] = useMutation(EDIT_TODO);
-    const onEdit = useCallback(
-        (task: string) =>
-            editTodo({
-                variables: { id, task },
-                refetchQueries: [{ query: GET_TODOS }],
-            }),
+            if (toggleTodo) {
+                const updatedTodos = data.todos.map((item: ITodo) =>
+                    item.id === id
+                        ? { ...item, isComplete: toggleTodo.data.isComplete }
+                        : item
+                );
+
+                proxy.writeQuery({
+                    query: GET_TODOS,
+                    data: {
+                        todos: updatedTodos,
+                    },
+                });
+            }
+        },
+    });
+    const handleToggleTodo = useCallback(() => {
+        const optimisticResponse = {
+            toggleTodo: {
+                __typename: 'TodoUpdateResponse',
+                success: true,
+                data: {
+                    id,
+                    task,
+                    isComplete: !isComplete,
+                    __typename: 'Todo',
+                },
+            },
+        };
+        toggleTodo({
+            variables: { id },
+            optimisticResponse,
+        });
+    }, [id]);
+
+    const [editTodo] = useMutation(EDIT_TODO, {
+        update: (proxy: any, { data: { editTodo } }: any) => {
+            const data = proxy.readQuery({
+                query: GET_TODOS,
+            });
+
+            if (editTodo) {
+                const updatedTodos = data.todos.map((item: ITodo) =>
+                    item.id === id
+                        ? { ...item, task: editTodo.data.task }
+                        : item
+                );
+
+                proxy.writeQuery({
+                    query: GET_TODOS,
+                    data: {
+                        todos: updatedTodos,
+                    },
+                });
+            }
+        },
+    });
+    const handleEditTodo = useCallback(
+        (task: string) => {
+            if (task.length) {
+                const optimisticResponse = {
+                    editTodo: {
+                        __typename: 'TodoUpdateResponse',
+                        success: true,
+                        data: {
+                            id,
+                            task,
+                            isComplete,
+                            __typename: 'Todo',
+                        },
+                    },
+                };
+                editTodo({
+                    variables: { id, task },
+                    optimisticResponse,
+                });
+            }
+        },
         [id, task]
     );
 
@@ -70,8 +137,8 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
         <Todo
             task={task}
             isComplete={isComplete}
-            onToggle={onToggle}
-            onEdit={onEdit}
+            onToggle={handleToggleTodo}
+            onEdit={handleEditTodo}
             onDelete={handleDeleteTodo}
         />
     );

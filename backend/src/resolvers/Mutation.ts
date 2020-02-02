@@ -21,7 +21,11 @@ const Mutation: MutationResolvers = {
     },
 
     editTodo: async (_, { id, task }, { models }) => {
-        const data = await models.todoModel.findOneAndUpdate({ id }, { task });
+        const data = await models.todoModel.findOneAndUpdate(
+            { id },
+            { task },
+            { new: true } /* Return modified entry rather than the original */
+        );
 
         return {
             success: true,
@@ -33,7 +37,8 @@ const Mutation: MutationResolvers = {
         const todo = await models.todoModel.findOne({ id });
         const data = await models.todoModel.findOneAndUpdate(
             { id },
-            { isComplete: !todo.isComplete }
+            { isComplete: !todo.isComplete },
+            { new: true } /* Return modified entry rather than the original */
         );
 
         return {
