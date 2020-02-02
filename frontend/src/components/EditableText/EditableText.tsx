@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 
-import styles from './TextInput.module.css';
+import styles from './EditableText.module.css';
 
 const cx = classNames.bind(styles);
 
-interface ITextInputProps {
+interface IEditableTextProps {
     text: string;
     onSubmit: (value: string) => void;
     isEditing: boolean;
     setIsEditing: (value: boolean) => void;
     classNames: string;
 }
-export const TextInput: React.FC<ITextInputProps> = ({
+export const EditableText: React.FC<IEditableTextProps> = ({
     text,
     onSubmit,
     isEditing,
@@ -23,14 +23,15 @@ export const TextInput: React.FC<ITextInputProps> = ({
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (isEditing) {
-            const title = event.target.value.trim();
-            setInputValue(title);
+            setInputValue(event.target.value);
         }
     };
 
     const handleSubmit = () => {
-        onSubmit(inputValue);
-        setIsEditing(false);
+        if (inputValue.length) {
+            onSubmit(inputValue);
+            setIsEditing(false);
+        }
     };
 
     const handleCancel = () => {
@@ -60,7 +61,7 @@ export const TextInput: React.FC<ITextInputProps> = ({
         />
     ) : (
         <div className={cx('text', classNames)} onClick={onTextClick}>
-            {text}
+            {inputValue}
         </div>
     );
 };

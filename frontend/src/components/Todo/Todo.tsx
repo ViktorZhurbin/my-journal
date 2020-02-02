@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 
 import { Checkbox } from '~/components/Checkbox';
-import { TextInput } from '~/components/TextInput';
+import { EditableText } from '~/components/EditableText';
 
 import styles from './Todo.module.css';
 
@@ -33,7 +33,7 @@ export const Todo: React.FC<TodoProps> = ({
                 onToggle={onToggle}
             />
             <div className={cx('todoItem')}>
-                <TextInput
+                <EditableText
                     text={task}
                     classNames={cx('todoText', { isComplete })}
                     onSubmit={onEdit}
