@@ -14,7 +14,7 @@ export const Input: React.FC<IInputProps> = ({
     const [value, setValue] = useState('');
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value.trim();
+        const value = event.target.value;
         setValue(value);
     };
 

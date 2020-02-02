@@ -77,22 +77,24 @@ const TodoListContainer = () => {
         },
     });
     const handleCreateTodo = (task: string) => {
-        const optimisticResponse = {
-            createTodo: {
-                __typename: 'TodoUpdateResponse',
-                success: true,
-                data: {
-                    __typename: 'Todo',
-                    id: '-1', // -1 is a temporary id for the optimistic response.
-                    task,
-                    isComplete: false,
+        if (task.length) {
+            const optimisticResponse = {
+                createTodo: {
+                    __typename: 'TodoUpdateResponse',
+                    success: true,
+                    data: {
+                        __typename: 'Todo',
+                        id: '-1', // -1 is a temporary id for the optimistic response.
+                        task,
+                        isComplete: false,
+                    },
                 },
-            },
-        };
-        createTodo({
-            variables: { task },
-            optimisticResponse,
-        });
+            };
+            createTodo({
+                variables: { task },
+                optimisticResponse,
+            });
+        }
     };
 
     if (loading || !data) return <p>Loading...</p>;
