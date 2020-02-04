@@ -14,7 +14,8 @@
   "scripts": {
     "start": "ts-node index.ts",
     "dev": "ts-node-dev index.ts --no-notify --respawn --transpileOnly ./",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "heroku-postbuild": "cd frontend && yarn && yarn build"
   },
   "dependencies": {
     "@graphql-codegen/cli": "^1.12.0",
