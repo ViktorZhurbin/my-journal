@@ -69,17 +69,15 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                         >
+                                            <Todo todo={todo}></Todo>
                                             <span
                                                 {...provided.dragHandleProps}
-                                                className={cx('dragHandle', {
-                                                    isDragging,
-                                                })}
+                                                className={cx('dragHandle')}
                                             >
                                                 <DragHandleIcon
                                                     className={cx('dragIcon')}
                                                 />
                                             </span>
-                                            <Todo todo={todo}></Todo>
                                         </div>
                                     )}
                                 </Draggable>
