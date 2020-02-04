@@ -1,6 +1,8 @@
 import 'dotenv/config';
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
 import mongoose from 'mongoose';
+import express from 'express';
+import path from 'path';
 
 import { typeDefs } from './backend/src/schema';
 import { resolvers } from './backend/src/resolvers';
@@ -14,14 +16,24 @@ const server = new ApolloServer({
     }),
 });
 
+const app = express();
+
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'frontend/dist/index.html'));
+// });
+
+server.applyMiddleware({ app });
+
 mongoose.connect(process.env.DATABASE_URI!, {
     useNewUrlParser: true,
     useFindAndModify: false,
 });
 
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
-    console.log(`🚀 Server ready at ${url}`);
-});
+const port = process.env.PORT || 4000;
+app.listen({ port }, () =>
+    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+);
 
 process.on('exit', () => {
     server.stop();
