@@ -12,7 +12,8 @@ const cx = classNames.bind(styles);
 
 interface ITodoListProps {
     createTodo: (value: string) => void;
-    reorderTodos: (reorderedActiveTodos: ITodo[]) => void;
+    reorderCompleted: (reordered: ITodo[]) => void;
+    reorderActive: (reordered: ITodo[]) => void;
     active: [ITodo];
     completed: [ITodo];
 }
@@ -21,7 +22,8 @@ export const TodoList: React.FC<ITodoListProps> = ({
     createTodo,
     active,
     completed,
-    reorderTodos,
+    reorderCompleted,
+    reorderActive,
 }) => {
     const [isCompletedHidden, setIsCompletedHidden] = useState(false);
     const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
@@ -44,7 +46,7 @@ export const TodoList: React.FC<ITodoListProps> = ({
             <section className={cx('active')}>
                 <DraggableTodoList
                     todos={active}
-                    onReorder={reorderTodos}
+                    onReorder={reorderActive}
                     classNames={cx('list')}
                 />
             </section>
@@ -59,9 +61,11 @@ export const TodoList: React.FC<ITodoListProps> = ({
                         {completeItemsText}
                     </div>
                     <ul className={cx('list')}>
-                        {completed?.map((todo: ITodo) => (
-                            <Todo key={todo.id} todo={todo} />
-                        ))}
+                        <DraggableTodoList
+                            todos={completed}
+                            onReorder={reorderCompleted}
+                            classNames={cx('list')}
+                        />
                     </ul>
                 </section>
             ) : null}

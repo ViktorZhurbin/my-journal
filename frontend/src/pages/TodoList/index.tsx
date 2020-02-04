@@ -35,8 +35,13 @@ const TodoListContainer = () => {
         },
     });
 
-    const handleReorderTodos = (reorderedActiveTodos: ITodo[]) => {
-        const allTodos = reorderedActiveTodos.concat(completed);
+    const handleReorder = (type: 'active' | 'completed' = 'active') => (
+        reordered: ITodo[]
+    ) => {
+        const allTodos =
+            type === 'active'
+                ? [...reordered, ...completed]
+                : [...active, ...reordered];
         const todos = allTodos.map(({ id, task, isComplete }) => ({
             id,
             task,
@@ -97,13 +102,17 @@ const TodoListContainer = () => {
         }
     };
 
+    const reorderCompleted = handleReorder('completed');
+    const reorderActive = handleReorder('active');
+
     if (loading || !data) return <p>Loading...</p>;
     if (error) return <p>ERROR</p>;
 
     return (
         <TodoList
             createTodo={handleCreateTodo}
-            reorderTodos={handleReorderTodos}
+            reorderActive={reorderActive}
+            reorderCompleted={reorderCompleted}
             active={active}
             completed={completed}
         />
