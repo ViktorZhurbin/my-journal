@@ -12,10 +12,12 @@ import { App } from '~/App';
 
 import './index.css';
 
+const uri =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:4000'
+        : process.env.API_URL;
 const cache = new InMemoryCache();
-const link = new HttpLink({
-    uri: 'http://localhost:4000/',
-});
+const link = new HttpLink({ uri });
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     cache,
