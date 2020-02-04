@@ -2,9 +2,9 @@ import 'dotenv/config';
 import { ApolloServer } from 'apollo-server';
 import mongoose from 'mongoose';
 
-import { typeDefs } from './schema';
-import { resolvers } from './resolvers';
-import { models } from './models';
+import { typeDefs } from './backend/src/schema';
+import { resolvers } from './backend/src/resolvers';
+import { models } from './backend/src/models';
 
 const server = new ApolloServer({
     typeDefs,

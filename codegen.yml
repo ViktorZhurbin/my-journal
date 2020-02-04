@@ -1,6 +1,6 @@
-schema: './src/schema.ts'
+schema: 'backend/src/schema.ts'
 generates:
-    './src/types.d.ts':
+    'backend/src/types.d.ts':
         plugins:
             - typescript
             - typescript-resolvers

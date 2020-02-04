@@ -2,7 +2,7 @@
   "name": "my-journal",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ViktorZhurbin/my-journal.git"
@@ -12,8 +12,8 @@
   "license": "ISC",
   "homepage": "https://github.com/ViktorZhurbin/my-journal#readme",
   "scripts": {
-    "start": "ts-node 'src/index.ts'",
-    "dev": "ts-node-dev 'src/index.ts' --no-notify --respawn --transpileOnly ./",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts --no-notify --respawn --transpileOnly ./",
     "generate": "graphql-codegen"
   },
   "dependencies": {
