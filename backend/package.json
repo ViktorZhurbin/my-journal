@@ -1,24 +1,21 @@
 {
-  "name": "daybook",
-  "version": "1.0.0",
+  "name": "my-journal",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ViktorZhurbin/my-journal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/ViktorZhurbin/my-journal#readme",
   "scripts": {
     "start": "ts-node 'src/index.ts'",
     "dev": "ts-node-dev 'src/index.ts' --no-notify --respawn --transpileOnly ./",
     "generate": "graphql-codegen"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ViktorZhurbin/js-journal.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ViktorZhurbin/js-journal/issues"
-  },
-  "homepage": "https://github.com/ViktorZhurbin/js-journal#readme",
   "dependencies": {
     "@graphql-codegen/cli": "^1.12.0",
     "@graphql-codegen/typescript": "^1.12.0",
