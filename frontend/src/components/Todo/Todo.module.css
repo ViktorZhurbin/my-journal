@@ -42,19 +42,11 @@
     margin-top: 3px;
 }
 
-.todo:hover > svg path {
-    fill: #333;
-}
-
 .deleteButton {
-    display: none;
-}
-
-.todo:hover .deleteButton {
     display: block;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 5px;
     width: 16px;
     height: 16px;
     padding: 4px;
