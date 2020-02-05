@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import { CREATE_TODO, GET_TODOS, UPDATE_ALL_TODOS } from '~/store/todos';
@@ -8,41 +8,22 @@ import { TodoList } from './TodoList';
 
 const TodoListContainer = () => {
     const { data, loading, error } = useQuery(GET_TODOS);
-    const [active, setActive] = useState();
-    const [completed, setCompleted] = useState();
-
-    useEffect(() => {
-        setCompleted(
-            data && data.todos.filter((item: ITodo) => item.isComplete)
-        );
-        setActive(data && data.todos.filter((item: ITodo) => !item.isComplete));
-    }, [data && data.todos]);
 
     const [updateAllTodos] = useMutation(UPDATE_ALL_TODOS, {
         update: (proxy: any, { data: { updateAllTodos } }: any) => {
-            let data = proxy.readQuery({
-                query: GET_TODOS,
-            });
-
             if (updateAllTodos) {
-                data = updateAllTodos.data;
-
                 proxy.writeQuery({
                     query: GET_TODOS,
-                    data,
+                    data: updateAllTodos.data,
                 });
             }
         },
     });
 
-    const handleReorder = (type: 'active' | 'completed' = 'active') => (
-        reordered: ITodo[]
-    ) => {
-        const allTodos =
-            type === 'active'
-                ? [...reordered, ...completed]
-                : [...active, ...reordered];
-        const todos = allTodos.map(({ id, task, isComplete }) => ({
+    const handleReorder = (reordered: ITodo[]) => {
+        // need to strip __typename manually
+        // see https://github.com/apollographql/apollo-feature-requests/issues/6
+        const todos = reordered.map(({ id, task, isComplete }) => ({
             id,
             task,
             isComplete,
@@ -53,7 +34,7 @@ const TodoListContainer = () => {
                 success: true,
                 data: {
                     __typename: 'Query',
-                    todos: allTodos,
+                    todos: reordered,
                 },
             },
         };
@@ -65,15 +46,13 @@ const TodoListContainer = () => {
 
     const [createTodo] = useMutation(CREATE_TODO, {
         update: (proxy: any, { data: { createTodo } }: any) => {
-            // Read the data from our cache for this query.
             const data = proxy.readQuery({
                 query: GET_TODOS,
             });
 
             if (createTodo) {
-                // Add our todo from the mutation to the end.
-                data.todos.push(createTodo.data);
-                // Write our data back to the cache.
+                const newTodo = createTodo.data;
+                data.todos = [newTodo, ...data.todos];
                 proxy.writeQuery({
                     query: GET_TODOS,
                     data,
@@ -102,20 +81,17 @@ const TodoListContainer = () => {
         }
     };
 
-    const reorderCompleted = handleReorder('completed');
-    const reorderActive = handleReorder('active');
-
     if (loading || !data) return <p>Loading...</p>;
     if (error) return <p>ERROR</p>;
 
     return (
-        <TodoList
-            createTodo={handleCreateTodo}
-            reorderActive={reorderActive}
-            reorderCompleted={reorderCompleted}
-            active={active}
-            completed={completed}
-        />
+        data && (
+            <TodoList
+                createTodo={handleCreateTodo}
+                reorder={handleReorder}
+                todos={data.todos}
+            />
+        )
     );
 };
 

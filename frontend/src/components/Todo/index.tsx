@@ -20,9 +20,10 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
             });
 
             if (toggleTodo) {
+                const toggledIsComplete = toggleTodo.data.isComplete;
                 const updatedTodos = data.todos.map((item: ITodo) =>
                     item.id === id
-                        ? { ...item, isComplete: toggleTodo.data.isComplete }
+                        ? { ...item, isComplete: toggledIsComplete }
                         : item
                 );
 
@@ -46,13 +47,14 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
                     isComplete: !isComplete,
                     __typename: 'Todo',
                 },
+                isComplete,
             },
         };
         toggleTodo({
             variables: { id },
             optimisticResponse,
         });
-    }, [id]);
+    }, [id, isComplete]);
 
     const [editTodo] = useMutation(EDIT_TODO, {
         update: (proxy: any, { data: { editTodo } }: any) => {
@@ -61,10 +63,9 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
             });
 
             if (editTodo) {
+                const editedTask = editTodo.data.task;
                 const updatedTodos = data.todos.map((item: ITodo) =>
-                    item.id === id
-                        ? { ...item, task: editTodo.data.task }
-                        : item
+                    item.id === id ? { ...item, task: editedTask } : item
                 );
 
                 proxy.writeQuery({

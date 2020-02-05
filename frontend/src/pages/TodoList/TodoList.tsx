@@ -11,29 +11,16 @@ import { DraggableTodoList } from './DraggableTodoList';
 const cx = classNames.bind(styles);
 
 interface ITodoListProps {
+    todos: [ITodo];
     createTodo: (value: string) => void;
-    reorderCompleted: (reordered: ITodo[]) => void;
-    reorderActive: (reordered: ITodo[]) => void;
-    active: [ITodo];
-    completed: [ITodo];
+    reorder: (reordered: ITodo[]) => void;
 }
 
 export const TodoList: React.FC<ITodoListProps> = ({
+    todos,
     createTodo,
-    active,
-    completed,
-    reorderCompleted,
-    reorderActive,
+    reorder,
 }) => {
-    const [isCompletedHidden, setIsCompletedHidden] = useState(false);
-    const toggleCompleteHidden = () => setIsCompletedHidden(!isCompletedHidden);
-
-    const completeItemsText =
-        completed &&
-        `${completed.length} Completed ${
-            completed.length > 1 ? 'items' : 'item'
-        }`;
-
     return (
         <div className={styles.container}>
             <header>
@@ -43,32 +30,7 @@ export const TodoList: React.FC<ITodoListProps> = ({
                     classNames={cx('inputTodo')}
                 />
             </header>
-            <section className={cx('active')}>
-                <DraggableTodoList
-                    todos={active}
-                    onReorder={reorderActive}
-                    classNames={cx('list')}
-                />
-            </section>
-            {completed?.length ? (
-                <section className={cx('completed', { isCompletedHidden })}>
-                    {active?.length ? <hr /> : null}
-                    <div
-                        className={cx('numCompletedText')}
-                        onClick={toggleCompleteHidden}
-                    >
-                        <div className={cx('toggleComplete')} />
-                        {completeItemsText}
-                    </div>
-                    <ul className={cx('list')}>
-                        <DraggableTodoList
-                            todos={completed}
-                            onReorder={reorderCompleted}
-                            classNames={cx('list')}
-                        />
-                    </ul>
-                </section>
-            ) : null}
+            <DraggableTodoList todos={todos} onReorder={reorder} />
         </div>
     );
 };

@@ -20,13 +20,11 @@ const cx = classNames.bind(styles);
 interface DraggableTodoListProps {
     todos: ITodo[];
     onReorder: (reordered: ITodo[]) => void;
-    classNames: string;
 }
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
     todos,
     onReorder,
-    classNames,
 }) => {
     const onDragEnd = (result: DropResult) => {
         if (!result.destination) {
@@ -47,7 +45,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
     };
 
     return (
-        <ul className={classNames}>
+        <ul className={cx('list')}>
             <DragDropContext onDragEnd={onDragEnd}>
                 <Droppable droppableId="active">
                     {(provided, { isDraggingOver }) => (
