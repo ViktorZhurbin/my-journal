@@ -6,7 +6,7 @@
     "author": "",
     "license": "ISC",
     "scripts": {
-        "start": "parcel src/index.html -p 9001",
+        "dev": "parcel src/index.html -p 9001",
         "build": "parcel build src/index.html",
         "codegen": "apollo client:codegen --target typescript --watch"
     },
