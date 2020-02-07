@@ -27,26 +27,24 @@ export const Todo: React.FC<TodoProps> = ({
 
     return (
         <li className={cx('todo', { isEditing })}>
+            <div
+                className={cx('deleteButton')}
+                onClick={onDelete}
+                role="button"
+                aria-label="Delete"
+            />
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
                 onToggle={onToggle}
             />
-            <div className={cx('todoItem')}>
-                <EditableText
-                    text={task}
-                    classNames={cx('todoText', { isComplete })}
-                    onSubmit={onEdit}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                />
-                <div
-                    className={cx('deleteButton')}
-                    onClick={onDelete}
-                    role="button"
-                    aria-label="Delete"
-                />
-            </div>
+            <EditableText
+                text={task}
+                classNames={cx('todoText', { isComplete })}
+                onInputSubmit={onEdit}
+                isEditing={isEditing}
+                setIsEditing={setIsEditing}
+            />
         </li>
     );
 };

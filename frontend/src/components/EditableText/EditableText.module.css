@@ -1,19 +1,11 @@
 .text {
     white-space: pre-wrap;
     word-wrap: break-word;
-}
-
-.text,
-.edit {
+    overflow: hidden;
     width: 100%;
-}
-
-.edit {
-    box-sizing: border-box;
-    border: none;
-}
-
-.edit:focus {
-    outline: none;
     padding: 0;
+}
+
+.text:focus {
+    outline: none;
 }

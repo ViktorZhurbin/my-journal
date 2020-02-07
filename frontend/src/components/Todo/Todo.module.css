@@ -24,19 +24,14 @@
     text-decoration-line: line-through;
 }
 
-.todoItem {
-    position: relative;
-    width: 100%;
-    padding-left: 15px;
-}
-
 .todoText {
-    position: relative;
+    width: 100%;
     color: #4d4d4d;
     font-size: 1rem;
     line-height: 1.5rem;
     font-weight: 400;
     cursor: text;
+    margin: 0 15px;
 }
 
 .checkbox {
@@ -47,8 +42,8 @@
 .deleteButton {
     display: block;
     position: absolute;
-    top: 0;
-    right: 5px;
+    top: 5px;
+    left: 0;
     width: 16px;
     height: 16px;
     padding: 4px;

@@ -1,67 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './EditableText.module.css';
 
 const cx = classNames.bind(styles);
 
-interface IEditableTextProps {
+interface EditableTextProps {
     text: string;
-    onSubmit: (value: string) => void;
     isEditing: boolean;
+    classNames?: string;
     setIsEditing: (value: boolean) => void;
-    classNames: string;
+    onInputSubmit: (value: string) => void;
 }
-export const EditableText: React.FC<IEditableTextProps> = ({
+
+export const EditableText: React.FC<EditableTextProps> = ({
     text,
-    onSubmit,
     isEditing,
     setIsEditing,
+    onInputSubmit,
     classNames,
 }) => {
-    const [inputValue, setInputValue] = useState(text || '');
+    const [inputValue, setInputValue] = useState(text);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    useEffect(() => {
         if (isEditing) {
-            setInputValue(event.target.value);
+            refDiv?.current?.focus();
         }
+    }, [isEditing]);
+
+    const refDiv = useRef<HTMLDivElement>(null);
+
+    const onInput = (event: React.SyntheticEvent<HTMLElement>) => {
+        let target = event.target as HTMLDivElement;
+
+        setInputValue(target.innerText);
     };
 
     const handleSubmit = () => {
-        if (inputValue.length) {
-            onSubmit(inputValue);
-            setIsEditing(false);
+        if (inputValue !== text && inputValue.length) {
+            onInputSubmit(inputValue);
         }
+
+        setIsEditing(false);
     };
 
-    const handleCancel = () => {
+    const onCancel = () => {
+        if (refDiv?.current) {
+            refDiv.current.innerText = text;
+        }
         setInputValue(text);
         setIsEditing(false);
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent) => {
+    const onKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             handleSubmit();
         } else if (event.key === 'Escape') {
-            handleCancel();
+            onCancel();
         }
     };
 
-    const onTextClick = () => setIsEditing(true);
+    const onClick = () => {
+        setIsEditing(true);
+        refDiv?.current?.focus();
+    };
 
-    return isEditing ? (
-        <input
-            autoFocus
-            className={cx('edit', classNames)}
-            type="text"
-            value={inputValue}
-            onChange={handleChange}
+    return (
+        <div
+            className={cx('text', classNames)}
+            ref={refDiv}
+            onClick={onClick}
+            onInput={onInput}
             onBlur={handleSubmit}
-            onKeyDown={handleKeyDown}
-        />
-    ) : (
-        <div className={cx('text', classNames)} onClick={onTextClick}>
-            {inputValue}
+            onKeyDown={onKeyDown}
+            contentEditable={isEditing}
+            suppressContentEditableWarning
+        >
+            {text}
         </div>
     );
 };
