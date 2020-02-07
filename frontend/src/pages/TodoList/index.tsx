@@ -52,7 +52,7 @@ const TodoListContainer = () => {
 
             if (createTodo) {
                 const newTodo = createTodo.data;
-                data.todos = [newTodo, ...data.todos];
+                data.todos = [...data.todos, newTodo];
                 proxy.writeQuery({
                     query: GET_TODOS,
                     data,

@@ -16,12 +16,15 @@
 
 .inputTodo {
     width: 100%;
-    box-sizing: border-box;
-    border-radius: 5px;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    margin-top: 5px;
-    margin-bottom: 15px;
+    color: #4d4d4d;
     font-size: 1rem;
-    font-family: Roboto, Arial, sans-serif;
+    line-height: 1.5rem;
+    font-weight: 400;
+    cursor: text;
+    margin: 0 15px;
+}
+
+.inputTodo.isAdding {
+    border-top-color: rgba(0, 0, 0, 0.15);
+    border-bottom-color: rgba(0, 0, 0, 0.15);
 }

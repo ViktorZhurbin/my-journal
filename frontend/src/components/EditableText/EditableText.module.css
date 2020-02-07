@@ -6,6 +6,7 @@
     padding: 0;
 }
 
+.placeholder:focus,
 .text:focus {
     outline: none;
 }

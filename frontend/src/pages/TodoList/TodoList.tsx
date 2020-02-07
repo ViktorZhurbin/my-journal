@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-
-import { Todo } from '~/components/Todo';
-import { Input } from '~/components/Input';
+import React from 'react';
 
 import styles from './TodoList.module.css';
+
 import { ITodo } from '~/models';
 import { DraggableTodoList } from './DraggableTodoList';
-
-const cx = classNames.bind(styles);
+import { InputField } from '~/components/Todo/InputField/InputField';
 
 interface ITodoListProps {
     todos: [ITodo];
@@ -23,14 +19,8 @@ export const TodoList: React.FC<ITodoListProps> = ({
 }) => {
     return (
         <div className={styles.container}>
-            <header>
-                <Input
-                    placeholder="What needs to be done?"
-                    onSubmit={createTodo}
-                    classNames={cx('inputTodo')}
-                />
-            </header>
             <DraggableTodoList todos={todos} onReorder={reorder} />
+            <InputField onCreate={createTodo} />
         </div>
     );
 };
