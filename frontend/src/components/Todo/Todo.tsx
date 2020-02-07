@@ -27,12 +27,6 @@ export const Todo: React.FC<TodoProps> = ({
 
     return (
         <li className={cx('todo', { isEditing })}>
-            <div
-                className={cx('deleteButton')}
-                onClick={onDelete}
-                role="button"
-                aria-label="Delete"
-            />
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}

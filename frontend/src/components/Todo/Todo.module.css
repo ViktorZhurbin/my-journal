@@ -1,3 +1,13 @@
+.container {
+    position: relative;
+    width: 100%;
+    background-color: red;
+}
+
+.motion {
+    background-color: white;
+}
+
 .todo {
     position: relative;
     display: flex;
@@ -47,7 +57,6 @@
 }
 
 .input,
-.deleteButton,
 .plus {
     opacity: 0.5;
 }
@@ -57,41 +66,18 @@
     margin-top: 3px;
 }
 
-.deleteButton {
-    display: block;
+.deleteText {
     position: absolute;
-    top: 5px;
-    left: 0;
-    width: 16px;
-    height: 16px;
-    padding: 4px;
-    border-radius: 50%;
-    cursor: pointer;
+    top: 11px;
+    color: #fff;
+    font-size: 13px;
+}
+.deleteText.left {
+    left: 6px;
 }
 
-.deleteButton:hover {
-    display: block;
-    opacity: 0.9;
-    background-color: #5f636828;
-}
-
-.deleteButton:before,
-.deleteButton:after {
-    position: absolute;
-    left: 11.375px;
-    top: 5.5px;
-    content: ' ';
-    height: 13px;
-    width: 1.25px;
-    background-color: #333;
-}
-
-.deleteButton:before {
-    transform: rotate(45deg);
-}
-
-.deleteButton:after {
-    transform: rotate(-45deg);
+.deleteText.right {
+    right: 6px;
 }
 
 .plus {
@@ -117,4 +103,16 @@
 
 .plus:before {
     transform: rotate(90deg);
+}
+
+.dragHandle {
+    z-index: 1;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.dragIcon {
+    width: 15px;
+    height: 15px;
 }
