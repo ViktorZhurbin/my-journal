@@ -47,11 +47,10 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
                     isComplete: !isComplete,
                     __typename: 'Todo',
                 },
-                isComplete,
             },
         };
         toggleTodo({
-            variables: { id },
+            variables: { id, isComplete },
             optimisticResponse,
         });
     }, [id, isComplete]);

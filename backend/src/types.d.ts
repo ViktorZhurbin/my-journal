@@ -43,7 +43,8 @@ export type MutationEditTodoArgs = {
 
 
 export type MutationToggleTodoArgs = {
-  id: Scalars['String']
+  id: Scalars['String'],
+  isComplete: Scalars['Boolean']
 };
 
 
@@ -199,7 +200,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'task'>>,
   deleteTodo?: Resolver<ResolversTypes['ResponseMessage'], ParentType, ContextType, RequireFields<MutationDeleteTodoArgs, 'id'>>,
   editTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationEditTodoArgs, 'id' | 'task'>>,
-  toggleTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationToggleTodoArgs, 'id'>>,
+  toggleTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationToggleTodoArgs, 'id' | 'isComplete'>>,
   updateAllTodos?: Resolver<ResolversTypes['TodoUpdateAllResponse'], ParentType, ContextType, RequireFields<MutationUpdateAllTodosArgs, 'todos'>>,
 }>;
 

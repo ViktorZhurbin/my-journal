@@ -37,8 +37,8 @@ export const DELETE_TODO = gql`
 `;
 
 export const TOGGLE_TODO = gql`
-    mutation ToggleTodo($id: String!) {
-        toggleTodo(id: $id) {
+    mutation ToggleTodo($id: String!, $isComplete: Boolean!) {
+        toggleTodo(id: $id, isComplete: $isComplete) {
             success
             data {
                 id

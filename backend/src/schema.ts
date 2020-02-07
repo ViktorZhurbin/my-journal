@@ -35,7 +35,7 @@ const typeDefs = gql`
         createTodo(task: String!): TodoUpdateResponse!
         deleteTodo(id: String!): ResponseMessage!
         editTodo(id: String!, task: String!): TodoUpdateResponse!
-        toggleTodo(id: String!): TodoUpdateResponse!
+        toggleTodo(id: String!, isComplete: Boolean!): TodoUpdateResponse!
         updateAllTodos(todos: [TodoInput]!): TodoUpdateAllResponse!
     }
 `;

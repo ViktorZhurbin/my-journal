@@ -33,11 +33,10 @@ const Mutation: MutationResolvers = {
         };
     },
 
-    toggleTodo: async (_, { id }, { models }) => {
-        const todo = await models.todoModel.findOne({ id });
+    toggleTodo: async (_, { id, isComplete }, { models }) => {
         const data = await models.todoModel.findOneAndUpdate(
             { id },
-            { isComplete: !todo.isComplete },
+            { isComplete: !isComplete },
             { new: true } /* Return modified entry rather than the original */
         );
 
