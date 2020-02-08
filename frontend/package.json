@@ -13,17 +13,6 @@
         "build": "parcel build src/index.html",
         "generate": "graphql-codegen"
     },
-    "lint-staged": {
-        "*.{js,ts,tsx,css,html,json,md}": [
-            "prettier --write",
-            "git add"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "browserslist": {
         "production": [
             "last 2 versions",
@@ -53,17 +42,11 @@
         "concurrently": "^5.1.0",
         "framer-motion": "^1.8.4",
         "graphql": "^14.5.8",
-        "husky": "^4.0.1",
-        "lint-staged": "^9.5.0",
         "parcel-bundler": "^1.12.4",
         "postcss-modules": "^1.5.0",
-        "prettier": "1.19.1",
         "react": "^16.12.0",
         "react-beautiful-dnd": "^12.2.0",
         "react-dom": "^16.12.0",
-        "stylelint": "^12.0.1",
-        "stylelint-config-prettier": "^8.0.0",
-        "stylelint-prettier": "^1.1.2",
         "ts-loader": "^6.2.1",
         "typescript": "^3.7.4"
     }

@@ -1,1 +1,1 @@
-# js-journal
+# my-journal
