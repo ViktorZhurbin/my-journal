@@ -3,5 +3,5 @@
     "rules": {
         "prettier": true
     },
-    "exclude": ["node_modules/", "dist/", ".vscode/", ".cache/"]
+    "exclude": ["node_modules/", "dist/", ".vscode/", ".cache/", "**/*.d.ts"]
 }
