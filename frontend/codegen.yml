@@ -1,9 +1,9 @@
-schema: 'backend/src/schema.ts'
+schema: '../backend/src/schema.ts'
 generates:
-    'backend/src/types.d.ts':
+    'src/@types/types.d.ts':
         plugins:
             - typescript
-            - typescript-resolvers
+            - typescript-operations
         config:
             federation: true
             useIndexSignature: true

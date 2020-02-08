@@ -12,8 +12,9 @@
   "license": "ISC",
   "homepage": "https://github.com/ViktorZhurbin/my-journal#readme",
   "scripts": {
+    "prestart": "yarn generate",
     "start": "ts-node index.ts",
-    "dev": "ts-node-dev index.ts --no-notify --respawn --transpileOnly ./",
+    "dev": "concurrently 'yarn generate --watch' 'ts-node-dev --no-notify index.ts'",
     "generate": "graphql-codegen",
     "heroku-postbuild": "cd frontend && yarn && yarn build"
   },
@@ -25,6 +26,7 @@
     "@types/node": "^13.5.0",
     "apollo-boost": "^0.4.7",
     "apollo-server-express": "^2.9.16",
+    "concurrently": "^5.1.0",
     "depcheck": "^0.9.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
