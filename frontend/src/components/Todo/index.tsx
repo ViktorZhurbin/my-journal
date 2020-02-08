@@ -3,15 +3,17 @@ import { useMutation } from '@apollo/react-hooks';
 
 import { DELETE_TODO, EDIT_TODO, TOGGLE_TODO, GET_TODOS } from '~/store/todos';
 
-import { Todo } from './Todo';
+import { SwipableTodo } from './SwipableTodo';
 import { ITodo } from '~/models';
 
 interface TodoContainerProps {
     todo: ITodo;
+    dragHandleProps: any;
 }
 
 const TodoContainer: React.FC<TodoContainerProps> = ({
     todo: { id, task, isComplete },
+    dragHandleProps,
 }) => {
     const [toggleTodo] = useMutation(TOGGLE_TODO, {
         update: (proxy: any, { data: { toggleTodo } }: any) => {
@@ -134,14 +136,15 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
     };
 
     return (
-        <Todo
+        <SwipableTodo
             task={task}
             isComplete={isComplete}
             onToggle={handleToggleTodo}
             onEdit={handleEditTodo}
             onDelete={handleDeleteTodo}
+            dragHandleProps={dragHandleProps}
         />
     );
 };
 
-export { TodoContainer as Todo };
+export { TodoContainer as SwipableTodo };

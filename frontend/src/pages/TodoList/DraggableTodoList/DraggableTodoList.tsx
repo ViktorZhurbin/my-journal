@@ -7,9 +7,8 @@ import {
 } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
 
-import DragHandleIcon from '~/assets/icons/dragIcon.svg';
 import { reorder } from '~/helpers';
-import { Todo } from '~/components/Todo';
+import { SwipableTodo } from '~/components/Todo';
 
 import { ITodo } from '~/models';
 
@@ -67,15 +66,12 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                         >
-                                            <Todo todo={todo}></Todo>
-                                            <span
-                                                {...provided.dragHandleProps}
-                                                className={cx('dragHandle')}
-                                            >
-                                                <DragHandleIcon
-                                                    className={cx('dragIcon')}
-                                                />
-                                            </span>
+                                            <SwipableTodo
+                                                todo={todo}
+                                                dragHandleProps={
+                                                    provided.dragHandleProps
+                                                }
+                                            />
                                         </div>
                                     )}
                                 </Draggable>
