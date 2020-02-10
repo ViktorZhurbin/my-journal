@@ -13,9 +13,7 @@ import { App } from '~/App';
 import './index.css';
 
 const baseUrl =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4000'
-        : process.env.API_URL;
+    process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '';
 const cache = new InMemoryCache();
 const link = new HttpLink({ uri: `${baseUrl}/graphql` });
 
