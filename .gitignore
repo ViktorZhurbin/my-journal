@@ -1,10 +1,24 @@
+# Temporary folders
+tmp/
+temp/
+
+# Build output
 dist/
+
+# Dependency directories
 node_modules/
 
-.DS_Store
-.vscode/
+# Parcel cache
 .cache/
+
+.DS_*
+
+# dotenv environment variables file
+.env
+
+.vscode/
 
 *.sqlite
 
+*.log
 yarn-*.log
