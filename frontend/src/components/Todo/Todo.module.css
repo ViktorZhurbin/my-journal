@@ -6,6 +6,8 @@
 
 .motion {
     background-color: white;
+    display: flex;
+    align-items: center;
 }
 
 .todo {
@@ -64,6 +66,14 @@
 .checkbox {
     user-select: none;
     margin-top: 3px;
+}
+
+.deleteText {
+    margin-right: 4px;
+    padding: 0 5px;
+    font-size: 13px;
+    color: black;
+    cursor: pointer;
 }
 
 .plus {

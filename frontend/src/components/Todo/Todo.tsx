@@ -39,6 +39,9 @@ export const Todo: React.FC<TodoProps> = ({
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
             />
+            <span className={cx('deleteText')} onClick={onDelete}>
+                X
+            </span>
         </li>
     );
 };
