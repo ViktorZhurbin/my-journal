@@ -22,15 +22,25 @@ app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
 server.applyMiddleware({ app });
 
-mongoose.connect(process.env.DATABASE_URI!, {
-    useNewUrlParser: true,
-    useFindAndModify: false,
-});
+const connectDb = () =>
+    mongoose.connect(process.env.DATABASE_URI!, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+
+mongoose.connection.on(
+    'error',
+    console.error.bind(console, 'MongoDB connection error:')
+);
 
 const port = process.env.PORT || 4000;
-app.listen({ port }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
-);
+connectDb().then(async () => {
+    app.listen({ port }, () =>
+        console.log(
+            `🚀 Server ready at http://localhost:4000${server.graphqlPath}`
+        )
+    );
+});
 
 process.on('exit', () => {
     server.stop();
