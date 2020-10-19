@@ -25,6 +25,9 @@ export const Todo: React.FC<TodoProps> = ({
 }) => {
     const [isEditing, setIsEditing] = useState(false);
 
+    const onEditCancel = () => setIsEditing(false);
+    const onEditStart = () => setIsEditing(true);
+
     return (
         <li className={cx('todo', { isEditing })}>
             <Checkbox
@@ -35,9 +38,9 @@ export const Todo: React.FC<TodoProps> = ({
             <EditableText
                 text={task}
                 classNames={cx('todoText', { isComplete })}
-                onInputSubmit={onEdit}
-                isEditing={isEditing}
-                setIsEditing={setIsEditing}
+                onSubmit={onEdit}
+                onCancel={onEditCancel}
+                onStart={onEditStart}
             />
             <span className={cx('deleteText')} onClick={onDelete}>
                 X

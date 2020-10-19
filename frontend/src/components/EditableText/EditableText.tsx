@@ -7,73 +7,56 @@ const cx = classNames.bind(styles);
 
 interface EditableTextProps {
     text: string;
-    isEditing: boolean;
     classNames?: string;
-    setIsEditing: (value: boolean) => void;
-    onInputSubmit: (value: string) => void;
+    onSubmit: (value: string) => void;
+    onCancel: () => void;
+    onStart: () => void;
 }
 
 export const EditableText: React.FC<EditableTextProps> = ({
     text,
-    isEditing,
-    setIsEditing,
-    onInputSubmit,
+    onStart,
+    onSubmit,
+    onCancel,
     classNames,
 }) => {
-    const [inputValue, setInputValue] = useState(text);
-
-    useEffect(() => {
-        if (isEditing) {
-            refDiv?.current?.focus();
-        }
-    }, [isEditing]);
-
-    const refDiv = useRef<HTMLDivElement>(null);
-
-    const onInput = (event: React.SyntheticEvent<HTMLElement>) => {
-        let target = event.target as HTMLDivElement;
-
-        setInputValue(target.innerText);
+    const [value, setValue] = useState(text);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const handleChange = (event: React.SyntheticEvent) => {
+        setValue((event.target as HTMLInputElement).value);
     };
 
     const handleSubmit = () => {
-        if (inputValue !== text && inputValue.length) {
-            onInputSubmit(inputValue);
+        if (Boolean(value) && value !== text) {
+            onSubmit(value);
         }
-
-        setIsEditing(false);
+        inputRef?.current?.blur();
+        onCancel();
     };
 
-    const onCancel = () => {
-        if (refDiv?.current) {
-            refDiv.current.innerText = text;
-        }
-        setInputValue(text);
-        setIsEditing(false);
+    const handleCancel = () => {
+        setValue(text);
+        onCancel();
     };
 
     const onKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
             handleSubmit();
         } else if (event.key === 'Escape') {
-            onCancel();
+            handleCancel();
         }
-    };
-
-    const onClick = () => {
-        setIsEditing(true);
-        refDiv?.current?.focus();
     };
 
     return (
         <input
+            ref={inputRef}
             className={cx('text', classNames)}
-            onClick={onClick}
-            onInput={onInput}
+            value={value}
+            onChange={handleChange}
             onBlur={handleSubmit}
+            onClick={onStart}
+            onSubmit={handleSubmit}
             onKeyDown={onKeyDown}
-            contentEditable={isEditing}
-            value={text}
         />
     );
 };
