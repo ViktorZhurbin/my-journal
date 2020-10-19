@@ -1,4 +1,4 @@
-import { MutationResolvers, Todo } from '../types';
+import { MutationResolvers } from '../types';
 
 const Mutation: MutationResolvers = {
     createTodo: async (_, { task }, { models }) => {
@@ -13,10 +13,10 @@ const Mutation: MutationResolvers = {
     },
 
     deleteTodo: async (_, { id }, { models }) => {
-        await models.todoModel.deleteOne({ id });
+        const { deletedCount } = await models.todoModel.deleteOne({ id });
 
         return {
-            success: true,
+            success: deletedCount === 1,
         };
     },
 
@@ -24,7 +24,7 @@ const Mutation: MutationResolvers = {
         const data = await models.todoModel.findOneAndUpdate(
             { id },
             { task },
-            { new: true } /* Return modified entry rather than the original */
+            { new: true } /* Return object *after* update */
         );
 
         return {
@@ -37,7 +37,7 @@ const Mutation: MutationResolvers = {
         const data = await models.todoModel.findOneAndUpdate(
             { id },
             { isComplete: !isComplete },
-            { new: true } /* Return modified entry rather than the original */
+            { new: true } /* Return object *after* update */
         );
 
         return {
@@ -46,14 +46,13 @@ const Mutation: MutationResolvers = {
         };
     },
 
-    updateAllTodos: async (_, { todos }, { models }) => {
+    updateAllTodos: async (_, { todos: newTodos }, { models }) => {
         await models.todoModel.deleteMany({});
-        await models.todoModel.insertMany(todos);
-        const newTodos: Todo[] = await models.todoModel.find({});
+        const todos = await models.todoModel.insertMany(newTodos);
 
         return {
             success: true,
-            data: { todos: newTodos },
+            data: { todos },
         };
     },
 };
