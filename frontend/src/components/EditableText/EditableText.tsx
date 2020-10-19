@@ -66,17 +66,14 @@ export const EditableText: React.FC<EditableTextProps> = ({
     };
 
     return (
-        <div
+        <input
             className={cx('text', classNames)}
-            ref={refDiv}
             onClick={onClick}
             onInput={onInput}
             onBlur={handleSubmit}
             onKeyDown={onKeyDown}
             contentEditable={isEditing}
-            suppressContentEditableWarning
-        >
-            {text}
-        </div>
+            value={text}
+        />
     );
 };

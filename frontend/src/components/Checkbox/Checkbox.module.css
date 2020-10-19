@@ -9,6 +9,7 @@
     width: 18px;
     height: 18px;
     outline-color: transparent;
+    user-select: none;
 }
 
 .checkbox:hover {
