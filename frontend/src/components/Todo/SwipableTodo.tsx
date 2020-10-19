@@ -53,9 +53,6 @@ export const SwipableTodo: React.FC<SwipableTodoProps> = ({
 
     return (
         <div className={cx('container')}>
-            <div className={cx('deleteText', 'left')} onClick={onDelete}>
-                Delete
-            </div>
             <motion.div
                 className={cx('motion')}
                 drag="x"
@@ -76,9 +73,6 @@ export const SwipableTodo: React.FC<SwipableTodoProps> = ({
                     <DragHandleIcon className={cx('dragIcon')} />
                 </span>
             </motion.div>
-            <div className={cx('deleteText', 'right')} onClick={onDelete}>
-                Delete
-            </div>
         </div>
     );
 };

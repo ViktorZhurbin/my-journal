@@ -66,20 +66,6 @@
     margin-top: 3px;
 }
 
-.deleteText {
-    position: absolute;
-    top: 11px;
-    color: #fff;
-    font-size: 13px;
-}
-.deleteText.left {
-    left: 6px;
-}
-
-.deleteText.right {
-    right: 6px;
-}
-
 .plus {
     display: block;
     position: absolute;
@@ -110,6 +96,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
+    cursor: grab;
 }
 
 .dragIcon {
