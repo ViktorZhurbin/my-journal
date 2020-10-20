@@ -19,11 +19,6 @@
     border-bottom-color: rgba(0, 0, 0, 0.15);
 }
 
-.todo.isComplete {
-    color: #5f6368;
-    text-decoration-line: line-through;
-}
-
 .text {
     width: 100%;
     color: #4d4d4d;
@@ -33,6 +28,11 @@
     cursor: text;
     margin: 0 15px;
     outline: none;
+}
+
+.text.isComplete {
+    color: #5f6368;
+    text-decoration-line: line-through;
 }
 
 .checkbox {
