@@ -20,6 +20,7 @@ export type Mutation = {
    __typename?: 'Mutation',
   createTodo: TodoUpdateResponse,
   deleteTodo: ResponseMessage,
+  deleteAllTodos: ResponseMessage,
   editTodo: TodoUpdateResponse,
   toggleTodo: TodoUpdateResponse,
   updateAllTodos: TodoUpdateAllResponse,
@@ -199,6 +200,7 @@ export type TodoResolvers<ContextType = any, ParentType extends ResolversParentT
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationCreateTodoArgs, 'task'>>,
   deleteTodo?: Resolver<ResolversTypes['ResponseMessage'], ParentType, ContextType, RequireFields<MutationDeleteTodoArgs, 'id'>>,
+  deleteAllTodos?: Resolver<ResolversTypes['ResponseMessage'], ParentType, ContextType>,
   editTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationEditTodoArgs, 'id' | 'task'>>,
   toggleTodo?: Resolver<ResolversTypes['TodoUpdateResponse'], ParentType, ContextType, RequireFields<MutationToggleTodoArgs, 'id' | 'isComplete'>>,
   updateAllTodos?: Resolver<ResolversTypes['TodoUpdateAllResponse'], ParentType, ContextType, RequireFields<MutationUpdateAllTodosArgs, 'todos'>>,

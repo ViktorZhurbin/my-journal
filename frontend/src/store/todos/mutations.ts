@@ -36,6 +36,14 @@ export const DELETE_TODO = gql`
     }
 `;
 
+export const DELETE_ALL_TODOS = gql`
+    mutation DeleteAllTodos {
+        deleteAllTodos {
+            success
+        }
+    }
+`;
+
 export const TOGGLE_TODO = gql`
     mutation ToggleTodo($id: String!, $isComplete: Boolean!) {
         toggleTodo(id: $id, isComplete: $isComplete) {

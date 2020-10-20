@@ -19,6 +19,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createTodo: TodoUpdateResponse;
   deleteTodo: ResponseMessage;
+  deleteAllTodos: ResponseMessage;
   editTodo: TodoUpdateResponse;
   toggleTodo: TodoUpdateResponse;
   updateAllTodos: TodoUpdateAllResponse;

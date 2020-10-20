@@ -20,6 +20,14 @@ const Mutation: MutationResolvers = {
         };
     },
 
+    deleteAllTodos: async (_, __, { models }) => {
+        await models.todoModel.deleteMany({});
+
+        return {
+            success: true,
+        };
+    },
+
     editTodo: async (_, { id, task }, { models }) => {
         const data = await models.todoModel.findOneAndUpdate(
             { id },

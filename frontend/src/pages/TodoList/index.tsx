@@ -1,8 +1,13 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { CREATE_TODO, GET_TODOS, UPDATE_ALL_TODOS } from '~/store/todos';
-import { ITodo } from '~/models';
+import {
+    CREATE_TODO,
+    DELETE_ALL_TODOS,
+    GET_TODOS,
+    UPDATE_ALL_TODOS,
+} from '../../store/todos';
+import { ITodo } from '../../models';
 
 import { TodoList } from './TodoList';
 
@@ -43,6 +48,8 @@ const TodoListContainer = () => {
             optimisticResponse,
         });
     };
+
+    const [deleteAllTodos] = useMutation(DELETE_ALL_TODOS);
 
     const [createTodo] = useMutation(CREATE_TODO, {
         update: (proxy: any, { data: { createTodo } }: any) => {
@@ -86,11 +93,14 @@ const TodoListContainer = () => {
 
     return (
         data && (
-            <TodoList
-                createTodo={handleCreateTodo}
-                reorder={handleReorder}
-                todos={data.todos}
-            />
+            <>
+                <button onClick={deleteAllTodos}>Delete All</button>
+                <TodoList
+                    createTodo={handleCreateTodo}
+                    reorder={handleReorder}
+                    todos={data.todos}
+                />
+            </>
         )
     );
 };
