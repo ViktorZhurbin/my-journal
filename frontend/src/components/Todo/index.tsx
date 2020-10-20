@@ -16,127 +16,119 @@ interface TodoProps {
     dragHandleProps: any;
 }
 
+type CacheData = { todos: ITodo[] } | null;
+
 export const Todo: React.FC<TodoProps> = ({
     todo: { id, task, isComplete },
     dragHandleProps,
 }) => {
-    const [toggleTodo] = useMutation(TOGGLE_TODO, {
-        update: (proxy: any, { data: { toggleTodo } }: any) => {
-            const data = proxy.readQuery({
-                query: GET_TODOS,
-            });
-
-            if (toggleTodo) {
-                const toggledIsComplete = toggleTodo.data.isComplete;
-                const updatedTodos = data.todos.map((item: ITodo) =>
-                    item.id === id
-                        ? { ...item, isComplete: toggledIsComplete }
-                        : item
-                );
-
-                proxy.writeQuery({
-                    query: GET_TODOS,
+    const [toggleTodoMutation] = useMutation(TOGGLE_TODO);
+    const toggleTodo = () => {
+        toggleTodoMutation({
+            variables: { id, isComplete },
+            optimisticResponse: {
+                toggleTodo: {
+                    __typename: 'TodoUpdateResponse',
+                    success: true,
                     data: {
-                        todos: updatedTodos,
+                        id,
+                        task,
+                        isComplete: !isComplete,
+                        __typename: 'Todo',
                     },
-                });
-            }
-        },
-    });
-    const handleToggleTodo = useCallback(() => {
-        const optimisticResponse = {
-            toggleTodo: {
-                __typename: 'TodoUpdateResponse',
-                success: true,
-                data: {
-                    id,
-                    task,
-                    isComplete: !isComplete,
-                    __typename: 'Todo',
                 },
             },
-        };
-        toggleTodo({
-            variables: { id, isComplete },
-            optimisticResponse,
-        });
-    }, [id, isComplete]);
-
-    const [editTodo] = useMutation(EDIT_TODO, {
-        update: (proxy: any, { data: { editTodo } }: any) => {
-            const data = proxy.readQuery({
-                query: GET_TODOS,
-            });
-
-            if (editTodo) {
-                const editedTask = editTodo.data.task;
-                const updatedTodos = data.todos.map((item: ITodo) =>
-                    item.id === id ? { ...item, task: editedTask } : item
-                );
-
-                proxy.writeQuery({
+            update: (cache, { data: { toggleTodo } }) => {
+                const data: CacheData = cache.readQuery({
                     query: GET_TODOS,
-                    data: {
-                        todos: updatedTodos,
-                    },
                 });
-            }
-        },
-    });
-    const handleEditTodo = useCallback(
-        (task: string) => {
-            if (task.length) {
-                const optimisticResponse = {
-                    editTodo: {
-                        __typename: 'TodoUpdateResponse',
-                        success: true,
+
+                if (data && toggleTodo?.data) {
+                    const updatedTodos = data.todos.map((item: ITodo) =>
+                        item.id === id
+                            ? {
+                                  ...item,
+                                  isComplete: toggleTodo.data.isComplete,
+                              }
+                            : item
+                    );
+
+                    cache.writeQuery({
+                        query: GET_TODOS,
                         data: {
-                            id,
-                            task,
-                            isComplete,
-                            __typename: 'Todo',
+                            todos: updatedTodos,
                         },
-                    },
-                };
-                editTodo({
-                    variables: { id, task },
-                    optimisticResponse,
-                });
-            }
-        },
-        [id, task]
-    );
-
-    const [deleteTodo] = useMutation(DELETE_TODO, {
-        update: (proxy: any, { data: { deleteTodo } }: any) => {
-            const data = proxy.readQuery({
-                query: GET_TODOS,
-            });
-
-            if (deleteTodo) {
-                const updatedTodos = data.todos.filter(
-                    (item: ITodo) => item.id !== id
-                );
-
-                proxy.writeQuery({
-                    query: GET_TODOS,
-                    data: {
-                        todos: updatedTodos,
-                    },
-                });
-            }
-        },
-    });
-    const handleDeleteTodo = () => {
-        const optimisticResponse = {
-            deleteTodo: {
-                __typename: 'ResponseMessage',
-                success: true,
+                    });
+                }
             },
-        };
-        deleteTodo({
+        });
+    };
+
+    const [editTodoMutation] = useMutation(EDIT_TODO);
+    const editTodo = (text: string) => {
+        editTodoMutation({
+            variables: { id, task: text },
+            optimisticResponse: {
+                editTodo: {
+                    __typename: 'TodoUpdateResponse',
+                    success: true,
+                    data: {
+                        id,
+                        task: text,
+                        isComplete,
+                        __typename: 'Todo',
+                    },
+                },
+            },
+            update: cache => {
+                const data: CacheData = cache.readQuery({
+                    query: GET_TODOS,
+                });
+
+                if (data) {
+                    const updatedTodos = data.todos.map((item: ITodo) =>
+                        item.id === id ? { ...item, task: text } : item
+                    );
+
+                    cache.writeQuery({
+                        query: GET_TODOS,
+                        data: {
+                            todos: updatedTodos,
+                        },
+                    });
+                }
+            },
+        });
+    };
+
+    const [deleteTodoMutation] = useMutation(DELETE_TODO);
+    const deleteTodo = () => {
+        deleteTodoMutation({
             variables: { id },
-            optimisticResponse,
+            optimisticResponse: {
+                deleteTodo: {
+                    __typename: 'ResponseMessage',
+                    success: true,
+                },
+            },
+            update: (cache, { data: { deleteTodo } }) => {
+                const data: CacheData = cache.readQuery({
+                    query: GET_TODOS,
+                });
+
+                if (data && deleteTodo) {
+                    const updatedTodos = data.todos.filter(
+                        (item: ITodo) => item.id !== id
+                    );
+
+                    cache.writeQuery({
+                        query: GET_TODOS,
+                        data: {
+                            todos: updatedTodos,
+                        },
+                    });
+                }
+            },
         });
     };
 
@@ -144,9 +136,9 @@ export const Todo: React.FC<TodoProps> = ({
         <SwipableTodo
             text={task}
             isComplete={isComplete}
-            onToggle={handleToggleTodo}
-            onEdit={handleEditTodo}
-            onDelete={handleDeleteTodo}
+            onToggle={toggleTodo}
+            onEdit={editTodo}
+            onDelete={deleteTodo}
             dragHandleProps={dragHandleProps}
         />
     );
