@@ -1,33 +1,27 @@
 import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 
-import { Checkbox } from '../../../Checkbox';
-import { TextField } from '../../../TextField';
+import { Checkbox } from '../../Checkbox';
+import { TextField } from '../../TextField';
 
 import styles from './BaseTodo.module.css';
+import { ITodo } from '../../../models';
+import { useTodoMutations } from '../../../hooks/useTodoMutations';
 
 const cx = classNames.bind(styles);
 
 interface BaseTodoProps {
-    text: string;
-    isComplete: boolean;
-    onToggle: () => void;
-    onEdit: (text: string) => void;
-    onDelete: () => void;
+    todo: ITodo;
 }
 
-export const BaseTodo: React.FC<BaseTodoProps> = ({
-    text,
-    isComplete,
-    onToggle,
-    onEdit,
-    onDelete,
-}) => {
+export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const { toggleTodo, editTodo, deleteTodo } = useTodoMutations(todo);
+    const { task, isComplete } = todo;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onEdit(event.target.value);
+        editTodo(event.target.value);
     };
 
     const handleSubmit = () => {
@@ -48,18 +42,18 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
-                onToggle={onToggle}
+                onToggle={toggleTodo}
             />
             <TextField
                 ref={inputRef}
-                value={text}
+                value={task}
                 className={cx('text', { isComplete })}
                 onChange={handleChange}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}
             />
-            <span className={cx('delete')} onClick={onDelete}>
+            <span className={cx('delete')} onClick={deleteTodo}>
                 X
             </span>
         </li>
