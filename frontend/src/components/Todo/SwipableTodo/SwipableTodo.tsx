@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames/bind';
 import { motion, useAnimation, PanInfo } from 'framer-motion';
 
 import DragHandleIcon from '../../../assets/icons/dragIcon.svg';
 
-import styles from './SwipableTodo.module.css';
 import { Todo } from './Todo';
+import styles from './SwipableTodo.module.css';
 
 const cx = classNames.bind(styles);
 

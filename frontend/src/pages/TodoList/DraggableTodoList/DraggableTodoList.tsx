@@ -8,7 +8,7 @@ import {
 import classNames from 'classnames/bind';
 
 import { reorder } from '../../../helpers';
-import { SwipableTodo } from '../../../components/Todo';
+import { Todo } from '../../../components/Todo';
 
 import { ITodo } from '../../../models';
 
@@ -66,7 +66,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
                                             ref={provided.innerRef}
                                             {...provided.draggableProps}
                                         >
-                                            <SwipableTodo
+                                            <Todo
                                                 todo={todo}
                                                 dragHandleProps={
                                                     provided.dragHandleProps

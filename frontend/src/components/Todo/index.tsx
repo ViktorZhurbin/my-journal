@@ -11,12 +11,12 @@ import {
 import { SwipableTodo } from './SwipableTodo';
 import { ITodo } from '../../models';
 
-interface TodoContainerProps {
+interface TodoProps {
     todo: ITodo;
     dragHandleProps: any;
 }
 
-const TodoContainer: React.FC<TodoContainerProps> = ({
+export const Todo: React.FC<TodoProps> = ({
     todo: { id, task, isComplete },
     dragHandleProps,
 }) => {
@@ -151,5 +151,3 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
         />
     );
 };
-
-export { TodoContainer as SwipableTodo };
