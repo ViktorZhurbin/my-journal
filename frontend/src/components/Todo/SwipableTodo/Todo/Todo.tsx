@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 
 import { Checkbox } from '../../../Checkbox';
@@ -9,34 +9,35 @@ import styles from './Todo.module.css';
 const cx = classNames.bind(styles);
 
 interface TodoProps {
-    task: string;
+    text: string;
     isComplete: boolean;
     onToggle: () => void;
-    onEdit: (task: string) => void;
+    onEdit: (text: string) => void;
     onDelete: () => void;
 }
 
 export const Todo: React.FC<TodoProps> = ({
-    task,
+    text,
     isComplete,
     onToggle,
     onEdit,
     onDelete,
 }) => {
-    const [value, setValue] = useState('');
     const [isFocused, setFocused] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onEdit(event.target.value);
     };
 
-    const handleSubmit = (value: string) => {
+    const handleSubmit = () => {
         setFocused(false);
+        inputRef?.current?.blur();
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            handleSubmit(value);
+            handleSubmit();
         } else if (event.key === 'Escape') {
             setFocused(false);
         }
@@ -50,7 +51,8 @@ export const Todo: React.FC<TodoProps> = ({
                 onToggle={onToggle}
             />
             <TextField
-                value={Boolean(value) ? value : task}
+                ref={inputRef}
+                value={text}
                 className={cx('text', { isComplete })}
                 onChange={handleChange}
                 onBlur={() => setFocused(false)}

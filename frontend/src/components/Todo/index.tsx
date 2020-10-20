@@ -142,7 +142,7 @@ const TodoContainer: React.FC<TodoContainerProps> = ({
 
     return (
         <SwipableTodo
-            task={task}
+            text={task}
             isComplete={isComplete}
             onToggle={handleToggleTodo}
             onEdit={handleEditTodo}

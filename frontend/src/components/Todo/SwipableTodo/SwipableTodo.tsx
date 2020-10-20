@@ -10,16 +10,16 @@ import { Todo } from './Todo';
 const cx = classNames.bind(styles);
 
 interface SwipableTodoProps {
-    task: string;
+    text: string;
     isComplete: boolean;
     onToggle: () => void;
-    onEdit: (task: string) => void;
+    onEdit: (text: string) => void;
     onDelete: () => void;
     dragHandleProps: any;
 }
 
 export const SwipableTodo: React.FC<SwipableTodoProps> = ({
-    task,
+    text,
     isComplete,
     onToggle,
     onEdit,
@@ -63,7 +63,7 @@ export const SwipableTodo: React.FC<SwipableTodoProps> = ({
                 animate={controls}
             >
                 <Todo
-                    task={task}
+                    text={text}
                     isComplete={isComplete}
                     onToggle={onToggle}
                     onEdit={onEdit}

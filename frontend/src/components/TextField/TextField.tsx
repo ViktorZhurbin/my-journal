@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { forwardRef, useRef } from 'react';
 import cl from 'classnames/bind';
 
 import styles from './TextField.module.css';
@@ -11,46 +11,52 @@ interface TextFieldProps {
     placeholder?: string;
     name?: string;
     active?: boolean;
-    onBlur?: (event: React.SyntheticEvent) => void;
-    onFocus?: (event: React.SyntheticEvent) => void;
+    onBlur?: () => void;
+    onFocus?: () => void;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     onTouchMove?: () => void;
+    ref?: React.RefObject<HTMLInputElement>;
 }
 
-export const TextField: React.FC<TextFieldProps> = ({
-    className,
-    value = '',
-    placeholder = '',
-    active = false,
-    onBlur,
-    onFocus,
-    onChange,
-    onTouchMove,
-    onKeyDown,
-}) => {
-    const inputRef = useRef<HTMLInputElement>(null);
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
+    (
+        {
+            className,
+            value = '',
+            placeholder = '',
+            onBlur,
+            onFocus,
+            onChange,
+            onTouchMove,
+            onKeyDown,
+        },
+        ref
+    ) => {
+        const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleFocus = (event: React.SyntheticEvent) => {
-        inputRef.current?.focus?.();
-        onFocus?.(event);
-    };
+        const handleFocus = () => {
+            inputRef.current?.focus?.();
+            onFocus?.();
+        };
 
-    const handleBlur = (event: React.SyntheticEvent) => {
-        onBlur?.(event);
-    };
+        const handleBlur = () => {
+            onBlur?.();
+        };
 
-    return (
-        <input
-            className={cx('input', className)}
-            type="text"
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            onTouchMove={onTouchMove}
-        />
-    );
-};
+        return (
+            <input
+                ref={ref}
+                className={cx('input', className)}
+                type="text"
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+                onTouchMove={onTouchMove}
+            />
+        );
+    }
+);
