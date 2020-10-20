@@ -7,19 +7,14 @@ import styles from './TodoList.module.css';
 
 interface ITodoListProps {
     todos: [ITodo];
-    createTodo: (value: string) => void;
     reorder: (reordered: ITodo[]) => void;
 }
 
-export const TodoList: React.FC<ITodoListProps> = ({
-    todos,
-    createTodo,
-    reorder,
-}) => {
+export const TodoList: React.FC<ITodoListProps> = ({ todos, reorder }) => {
     return (
         <div className={styles.container}>
             <DraggableTodoList todos={todos} onReorder={reorder} />
-            <AddTodo onAddTodo={createTodo} />
+            <AddTodo />
         </div>
     );
 };

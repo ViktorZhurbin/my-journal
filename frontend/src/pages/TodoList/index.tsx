@@ -2,7 +2,6 @@ import React from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
 import {
-    CREATE_TODO,
     DELETE_ALL_TODOS,
     GET_TODOS,
     UPDATE_ALL_TODOS,
@@ -51,43 +50,6 @@ const TodoListContainer = () => {
 
     const [deleteAllTodos] = useMutation(DELETE_ALL_TODOS);
 
-    const [createTodo] = useMutation(CREATE_TODO, {
-        update: (proxy: any, { data: { createTodo } }: any) => {
-            const data = proxy.readQuery({
-                query: GET_TODOS,
-            });
-
-            if (createTodo) {
-                const newTodo = createTodo.data;
-                data.todos = [...data.todos, newTodo];
-                proxy.writeQuery({
-                    query: GET_TODOS,
-                    data,
-                });
-            }
-        },
-    });
-    const handleCreateTodo = (task: string) => {
-        if (task.length) {
-            const optimisticResponse = {
-                createTodo: {
-                    __typename: 'TodoUpdateResponse',
-                    success: true,
-                    data: {
-                        __typename: 'Todo',
-                        id: '-1', // -1 is a temporary id for the optimistic response.
-                        task,
-                        isComplete: false,
-                    },
-                },
-            };
-            createTodo({
-                variables: { task },
-                optimisticResponse,
-            });
-        }
-    };
-
     if (loading || !data) return <p>Loading...</p>;
     if (error) return <p>ERROR</p>;
 
@@ -95,11 +57,7 @@ const TodoListContainer = () => {
         data && (
             <>
                 <button onClick={() => deleteAllTodos()}>Delete All</button>
-                <TodoList
-                    createTodo={handleCreateTodo}
-                    reorder={handleReorder}
-                    todos={data.todos}
-                />
+                <TodoList reorder={handleReorder} todos={data.todos} />
             </>
         )
     );

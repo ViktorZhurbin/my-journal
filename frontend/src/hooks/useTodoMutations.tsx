@@ -1,12 +1,51 @@
 import { useMutation } from '@apollo/react-hooks';
 
-import { DELETE_TODO, EDIT_TODO, TOGGLE_TODO, GET_TODOS } from '../store/todos';
+import {
+    CREATE_TODO,
+    DELETE_TODO,
+    EDIT_TODO,
+    TOGGLE_TODO,
+    GET_TODOS,
+} from '../store/todos';
 
 import { ITodo } from '../models';
 
 type CacheData = { todos: ITodo[] } | null;
 
 export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
+    const [createTodoMutation] = useMutation(CREATE_TODO);
+    const createTodo = (task: string) => {
+        createTodoMutation({
+            variables: { task },
+            optimisticResponse: {
+                createTodo: {
+                    __typename: 'TodoUpdateResponse',
+                    success: true,
+                    data: {
+                        __typename: 'Todo',
+                        id: '-1',
+                        task,
+                        isComplete: false,
+                    },
+                },
+            },
+            update: (proxy: any, { data: { createTodo } }: any) => {
+                const data = proxy.readQuery({
+                    query: GET_TODOS,
+                });
+
+                if (createTodo) {
+                    const newTodo = createTodo.data;
+                    data.todos = [...data.todos, newTodo];
+                    proxy.writeQuery({
+                        query: GET_TODOS,
+                        data,
+                    });
+                }
+            },
+        });
+    };
+
     const [toggleTodoMutation] = useMutation(TOGGLE_TODO);
     const toggleTodo = () => {
         toggleTodoMutation({
@@ -118,6 +157,7 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
     };
 
     return {
+        createTodo,
         toggleTodo,
         editTodo,
         deleteTodo,
