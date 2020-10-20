@@ -94,7 +94,7 @@ const TodoListContainer = () => {
     return (
         data && (
             <>
-                <button onClick={deleteAllTodos}>Delete All</button>
+                <button onClick={() => deleteAllTodos()}>Delete All</button>
                 <TodoList
                     createTodo={handleCreateTodo}
                     reorder={handleReorder}
