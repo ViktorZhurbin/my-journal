@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ITodo } from '../../models';
-import { AddTodo } from '../../components/Todo/AddTodo';
+import { AddTodo } from '../../components/AddTodo';
 import { DraggableTodoList } from './DraggableTodoList';
 import styles from './TodoList.module.css';
 
@@ -19,7 +19,7 @@ export const TodoList: React.FC<ITodoListProps> = ({
     return (
         <div className={styles.container}>
             <DraggableTodoList todos={todos} onReorder={reorder} />
-            <InputField onCreate={createTodo} />
+            <AddTodo onAddTodo={createTodo} />
         </div>
     );
 };

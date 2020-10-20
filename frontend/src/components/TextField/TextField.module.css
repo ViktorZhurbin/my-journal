@@ -1,13 +1,8 @@
-.text {
+.input {
     white-space: pre-wrap;
     word-wrap: break-word;
     overflow: hidden;
     width: 100%;
     padding: 0;
     border: none;
-}
-
-.placeholder:focus,
-.text:focus {
-    outline: none;
 }
