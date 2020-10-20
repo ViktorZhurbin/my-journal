@@ -26,6 +26,7 @@ const connectDb = () =>
     mongoose.connect(process.env.DATABASE_URI!, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false,
     });
 
 mongoose.connection.on(
