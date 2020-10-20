@@ -8,8 +8,7 @@ import {
 } from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 
-import { App } from '~/App';
-
+import { App } from './App';
 import './index.css';
 
 const baseUrl =

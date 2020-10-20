@@ -1,10 +1,15 @@
 import React, { useCallback } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 
-import { DELETE_TODO, EDIT_TODO, TOGGLE_TODO, GET_TODOS } from '~/store/todos';
+import {
+    DELETE_TODO,
+    EDIT_TODO,
+    TOGGLE_TODO,
+    GET_TODOS,
+} from '../../store/todos';
 
 import { SwipableTodo } from './SwipableTodo';
-import { ITodo } from '~/models';
+import { ITodo } from '../../models';
 
 interface TodoContainerProps {
     todo: ITodo;

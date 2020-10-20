@@ -7,10 +7,10 @@ import {
 } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
 
-import { reorder } from '~/helpers';
-import { SwipableTodo } from '~/components/Todo';
+import { reorder } from '../../../helpers';
+import { SwipableTodo } from '../../../components/Todo';
 
-import { ITodo } from '~/models';
+import { ITodo } from '../../../models';
 
 import styles from './DraggableTodoList.module.css';
 

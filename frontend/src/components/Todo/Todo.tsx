@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 
-import { Checkbox } from '~/components/Checkbox';
-import { EditableText } from '~/components/EditableText';
+import { Checkbox } from '../Checkbox';
+import { EditableText } from '../EditableText';
 
 import styles from './Todo.module.css';
 

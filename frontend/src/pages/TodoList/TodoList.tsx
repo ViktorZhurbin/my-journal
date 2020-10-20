@@ -1,10 +1,9 @@
 import React from 'react';
 
-import styles from './TodoList.module.css';
-
-import { ITodo } from '~/models';
+import { ITodo } from '../../models';
+import { AddTodo } from '../../components/Todo/AddTodo';
 import { DraggableTodoList } from './DraggableTodoList';
-import { InputField } from '~/components/Todo/InputField/InputField';
+import styles from './TodoList.module.css';
 
 interface ITodoListProps {
     todos: [ITodo];
