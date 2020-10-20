@@ -4,7 +4,7 @@ import { motion, useAnimation, PanInfo } from 'framer-motion';
 
 import DragHandleIcon from '../../../assets/icons/dragIcon.svg';
 
-import { Todo } from './Todo';
+import { BaseTodo } from './BaseTodo';
 import styles from './SwipableTodo.module.css';
 
 const cx = classNames.bind(styles);
@@ -62,7 +62,7 @@ export const SwipableTodo: React.FC<SwipableTodoProps> = ({
                 dragDirectionLock
                 animate={controls}
             >
-                <Todo
+                <BaseTodo
                     text={text}
                     isComplete={isComplete}
                     onToggle={onToggle}

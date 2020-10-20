@@ -4,11 +4,11 @@ import classNames from 'classnames/bind';
 import { Checkbox } from '../../../Checkbox';
 import { TextField } from '../../../TextField';
 
-import styles from './Todo.module.css';
+import styles from './BaseTodo.module.css';
 
 const cx = classNames.bind(styles);
 
-interface TodoProps {
+interface BaseTodoProps {
     text: string;
     isComplete: boolean;
     onToggle: () => void;
@@ -16,7 +16,7 @@ interface TodoProps {
     onDelete: () => void;
 }
 
-export const Todo: React.FC<TodoProps> = ({
+export const BaseTodo: React.FC<BaseTodoProps> = ({
     text,
     isComplete,
     onToggle,
