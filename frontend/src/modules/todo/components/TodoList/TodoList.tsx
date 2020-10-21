@@ -1,9 +1,9 @@
 import React from 'react';
 import { useQuery, useMutation } from '@apollo/client';
 
-import { AddTodo } from '../../components/AddTodo';
+import { AddTodo } from '../AddTodo';
 import { DELETE_ALL_TODOS, GET_TODOS } from '../../resolvers';
-import { DraggableTodoList } from '../../components/DraggableTodoList';
+import { DraggableTodoList } from '../DraggableTodoList';
 import styles from './TodoList.module.css';
 
 export const TodoList: React.FC = () => {

@@ -7,11 +7,11 @@
     "license": "ISC",
     "proxy": "http://localhost:4000",
     "scripts": {
-        "dev": "concurrently 'yarn start' 'yarn generate --watch'",
+        "dev": "next",
+        "build": "next build",
+        "start": "next start",
         "prestart": "yarn generate",
-        "start": "parcel src/index.html -p 9001",
         "prebuild": "yarn generate",
-        "build": "parcel build src/index.html",
         "generate": "graphql-codegen"
     },
     "browserslist": {
@@ -27,6 +27,7 @@
         ]
     },
     "devDependencies": {
+        "babel-plugin-inline-react-svg": "^1.1.1",
         "concurrently": "^5.1.0"
     },
     "dependencies": {
@@ -43,12 +44,11 @@
         "classnames": "^2.2.6",
         "framer-motion": "^1.8.4",
         "graphql": "^14.5.8",
-        "parcel-bundler": "^1.12.4",
-        "postcss-modules": "^1.5.0",
+        "next": "^9.5.5",
+        "next-images": "^1.6.0",
         "react": "^16.12.0",
         "react-beautiful-dnd": "^12.2.0",
         "react-dom": "^16.12.0",
-        "ts-loader": "^6.2.1",
         "typescript": "^3.7.4"
     }
 }

@@ -49,35 +49,39 @@ export const useTodoMutations = () => {
 
     const [createTodoMutation] = useMutation(CREATE_TODO);
     const createTodo = (task: string) => {
-        createTodoMutation({
-            variables: { task },
-            optimisticResponse: {
-                createTodo: {
-                    __typename: 'TodoUpdateResponse',
-                    success: true,
-                    data: {
-                        __typename: 'Todo',
-                        id: '-1',
-                        task,
-                        isComplete: false,
+        task &&
+            createTodoMutation({
+                variables: { task },
+                optimisticResponse: {
+                    createTodo: {
+                        __typename: 'TodoUpdateResponse',
+                        success: true,
+                        data: {
+                            __typename: 'Todo',
+                            id: '-1',
+                            task,
+                            isComplete: false,
+                        },
                     },
                 },
-            },
-            update: (proxy, { data: { createTodo } }) => {
-                const data: CacheData = proxy.readQuery({
-                    query: GET_TODOS,
-                });
-
-                if (data && createTodo) {
-                    const newTodo = createTodo.data;
-                    data.todos = [...data.todos, newTodo];
-                    proxy.writeQuery({
+                update: (proxy, { data: { createTodo } }) => {
+                    const data: CacheData = proxy.readQuery({
                         query: GET_TODOS,
-                        data,
                     });
-                }
-            },
-        });
+
+                    if (data && createTodo) {
+                        const newTodo = createTodo.data;
+                        const newTodos = [...data.todos, newTodo];
+                        proxy.writeQuery({
+                            query: GET_TODOS,
+                            data: {
+                                ...data,
+                                todos: newTodos,
+                            },
+                        });
+                    }
+                },
+            });
     };
 
     const [toggleTodoMutation] = useMutation(TOGGLE_TODO);
@@ -114,6 +118,7 @@ export const useTodoMutations = () => {
                     cache.writeQuery({
                         query: GET_TODOS,
                         data: {
+                            ...data,
                             todos: updatedTodos,
                         },
                     });
@@ -151,6 +156,7 @@ export const useTodoMutations = () => {
                     cache.writeQuery({
                         query: GET_TODOS,
                         data: {
+                            ...data,
                             todos: updatedTodos,
                         },
                     });
@@ -169,19 +175,20 @@ export const useTodoMutations = () => {
                     success: true,
                 },
             },
-            update: (cache, { data: { deleteTodo } }) => {
+            update: cache => {
                 const data: CacheData = cache.readQuery({
                     query: GET_TODOS,
                 });
 
-                if (data && deleteTodo) {
-                    const updatedTodos = data.todos.filter(
+                if (data) {
+                    const updatedTodos = [...data.todos].filter(
                         (item: ITodo) => item.id !== id
                     );
 
                     cache.writeQuery({
                         query: GET_TODOS,
                         data: {
+                            ...data,
                             todos: updatedTodos,
                         },
                     });
