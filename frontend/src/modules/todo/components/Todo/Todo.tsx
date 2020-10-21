@@ -18,7 +18,7 @@ interface TodoProps {
 
 export const Todo: React.FC<TodoProps> = ({ todo, dragHandleProps }) => {
     const controls = useAnimation();
-    const { deleteTodo } = useTodoMutations(todo);
+    const { deleteTodo } = useTodoMutations();
 
     const handleDelete = async (event: any, info: PanInfo) => {
         const { x: point } = info.point;
@@ -28,13 +28,13 @@ export const Todo: React.FC<TodoProps> = ({ todo, dragHandleProps }) => {
                 x: '-80%',
                 transition: { duration: 0.3 },
             });
-            deleteTodo();
+            deleteTodo(todo.id);
         } else if (point > 50 || velocity > 500) {
             await controls.start({
                 x: '80%',
                 transition: { duration: 0.3 },
             });
-            deleteTodo();
+            deleteTodo(todo.id);
         } else {
             controls.start({
                 x: 0,
