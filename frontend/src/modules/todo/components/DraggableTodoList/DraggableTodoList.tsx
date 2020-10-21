@@ -22,11 +22,7 @@ interface DraggableTodoListProps {
 }
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
-    const { updateAllTodos } = useTodoMutations({
-        id: '1',
-        task: 'a',
-        isComplete: false,
-    });
+    const { updateAllTodos } = useTodoMutations();
     const onDragEnd = ({ source, destination }: DropResult) => {
         if (!destination || destination.index === source.index) {
             return;

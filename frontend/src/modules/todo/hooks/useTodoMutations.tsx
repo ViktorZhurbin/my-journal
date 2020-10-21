@@ -13,7 +13,7 @@ import { ITodo } from '../models';
 
 type CacheData = { todos: ITodo[] } | null;
 
-export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
+export const useTodoMutations = () => {
     const [updateAllTodosMutation] = useMutation(UPDATE_ALL_TODOS);
     const updateAllTodos = (updatedTodos: ITodo[]) => {
         // need to strip __typename manually
@@ -81,7 +81,7 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
     };
 
     const [toggleTodoMutation] = useMutation(TOGGLE_TODO);
-    const toggleTodo = () => {
+    const toggleTodo = ({ id, task, isComplete }: ITodo) => {
         toggleTodoMutation({
             variables: { id, isComplete },
             optimisticResponse: {
@@ -123,16 +123,16 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
     };
 
     const [editTodoMutation] = useMutation(EDIT_TODO);
-    const editTodo = (text: string) => {
+    const editTodo = ({ id, task, isComplete }: ITodo) => {
         editTodoMutation({
-            variables: { id, task: text },
+            variables: { id, task },
             optimisticResponse: {
                 editTodo: {
                     __typename: 'TodoUpdateResponse',
                     success: true,
                     data: {
                         id,
-                        task: text,
+                        task,
                         isComplete,
                         __typename: 'Todo',
                     },
@@ -145,7 +145,7 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
 
                 if (data) {
                     const updatedTodos = data.todos.map((item: ITodo) =>
-                        item.id === id ? { ...item, task: text } : item
+                        item.id === id ? { ...item, task } : item
                     );
 
                     cache.writeQuery({
@@ -160,7 +160,7 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
     };
 
     const [deleteTodoMutation] = useMutation(DELETE_TODO);
-    const deleteTodo = () => {
+    const deleteTodo = (id: string) => {
         deleteTodoMutation({
             variables: { id },
             optimisticResponse: {

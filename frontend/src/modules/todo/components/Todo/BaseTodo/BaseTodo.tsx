@@ -17,11 +17,11 @@ interface BaseTodoProps {
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { toggleTodo, editTodo, deleteTodo } = useTodoMutations(todo);
-    const { task, isComplete } = todo;
+    const { toggleTodo, editTodo, deleteTodo } = useTodoMutations();
+    const { id, task, isComplete } = todo;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        editTodo(event.target.value);
+        editTodo({ id, task: event.target.value, isComplete });
     };
 
     const handleSubmit = () => {
@@ -42,7 +42,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             <Checkbox
                 classNames={cx('checkbox')}
                 isChecked={isComplete}
-                onToggle={toggleTodo}
+                onToggle={() => toggleTodo(todo)}
             />
             <TextField
                 ref={inputRef}
@@ -53,7 +53,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}
             />
-            <span className={cx('delete')} onClick={deleteTodo}>
+            <span className={cx('delete')} onClick={() => deleteTodo(id)}>
                 X
             </span>
         </li>
