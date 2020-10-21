@@ -7,7 +7,7 @@
     "license": "ISC",
     "proxy": "http://localhost:4000",
     "scripts": {
-        "dev": "next",
+        "dev": "concurrently 'next' 'yarn generate --watch'",
         "build": "next build",
         "start": "next start",
         "prestart": "yarn generate",
@@ -27,20 +27,19 @@
         ]
     },
     "devDependencies": {
-        "babel-plugin-inline-react-svg": "^1.1.1",
-        "concurrently": "^5.1.0"
-    },
-    "dependencies": {
-        "@apollo/client": "^3.2.5",
         "@graphql-codegen/cli": "^1.17.8",
         "@graphql-codegen/typescript": "^1.17.8",
         "@graphql-codegen/typescript-operations": "^1.17.8",
-        "@svgr/parcel-plugin-svgr": "^5.0.1",
         "@types/classnames": "^2.2.9",
         "@types/node": "^13.5.0",
         "@types/react": "^16.9.17",
         "@types/react-beautiful-dnd": "^11.0.4",
         "@types/react-dom": "^16.9.4",
+        "babel-plugin-inline-react-svg": "^1.1.1",
+        "concurrently": "^5.1.0"
+    },
+    "dependencies": {
+        "@apollo/client": "^3.2.5",
         "classnames": "^2.2.6",
         "framer-motion": "^1.8.4",
         "graphql": "^14.5.8",
