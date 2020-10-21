@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 
-import { Checkbox } from '../../Checkbox';
-import { TextField } from '../../TextField';
+import { Checkbox } from '~/components/Checkbox';
+import { TextField } from '~/components/TextField';
 
 import styles from './BaseTodo.module.css';
 import { ITodo } from '../../../models';

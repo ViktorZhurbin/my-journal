@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import { motion, useAnimation, PanInfo } from 'framer-motion';
 
-import DragHandleIcon from '../../assets/icons/dragIcon.svg';
+import DragHandleIcon from './dragIcon.svg';
 
 import { BaseTodo } from './BaseTodo';
 import styles from './Todo.module.css';

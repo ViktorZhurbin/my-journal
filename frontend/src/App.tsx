@@ -1,9 +1,5 @@
 import React from 'react';
 
-import { TodoList } from './pages/TodoList';
+import { TodoList } from './modules/todo/pages/TodoList';
 
-export const App: React.FC = () => (
-    <div>
-        <TodoList />
-    </div>
-);
+export const App: React.FC = () => <TodoList />;

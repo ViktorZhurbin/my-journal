@@ -7,40 +7,38 @@ import {
 } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
 
-import { reorder } from '../../../helpers';
-import { Todo } from '../../../components/Todo';
+import { reorderArray } from '~/utils';
+import { Todo } from '../Todo';
 
-import { ITodo } from '../../../models';
+import { ITodo } from '../../models';
 
 import styles from './DraggableTodoList.module.css';
+import { useTodoMutations } from '../../hooks/useTodoMutations';
 
 const cx = classNames.bind(styles);
 
 interface DraggableTodoListProps {
     todos: ITodo[];
-    onReorder: (reordered: ITodo[]) => void;
 }
 
-const DraggableTodoList: React.FC<DraggableTodoListProps> = ({
-    todos,
-    onReorder,
-}) => {
-    const onDragEnd = (result: DropResult) => {
-        if (!result.destination) {
+const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
+    const { updateAllTodos } = useTodoMutations({
+        id: '1',
+        task: 'a',
+        isComplete: false,
+    });
+    const onDragEnd = ({ source, destination }: DropResult) => {
+        if (!destination || destination.index === source.index) {
             return;
         }
 
-        if (result.destination.index === result.source.index) {
-            return;
-        }
-
-        const reorderedActiveTodos = reorder(
+        const updatedTodos = reorderArray(
             todos,
-            result.source.index,
-            result.destination.index
+            source.index,
+            destination.index
         );
 
-        onReorder(reorderedActiveTodos);
+        updateAllTodos(updatedTodos);
     };
 
     return (

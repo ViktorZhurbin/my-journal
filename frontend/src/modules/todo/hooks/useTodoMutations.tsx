@@ -6,13 +6,47 @@ import {
     EDIT_TODO,
     TOGGLE_TODO,
     GET_TODOS,
-} from '../store/todos';
+    UPDATE_ALL_TODOS,
+} from '../resolvers';
 
 import { ITodo } from '../models';
 
 type CacheData = { todos: ITodo[] } | null;
 
 export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
+    const [updateAllTodosMutation] = useMutation(UPDATE_ALL_TODOS);
+    const updateAllTodos = (updatedTodos: ITodo[]) => {
+        // need to strip __typename manually
+        // see https://github.com/apollographql/apollo-feature-requests/issues/6
+        const todos = updatedTodos.map(({ id, task, isComplete }) => ({
+            id,
+            task,
+            isComplete,
+        }));
+
+        updateAllTodosMutation({
+            variables: { todos },
+            optimisticResponse: {
+                updateAllTodos: {
+                    __typename: 'TodoUpdateAllResponse',
+                    success: true,
+                    data: {
+                        __typename: 'Query',
+                        todos: updatedTodos,
+                    },
+                },
+            },
+            update: (proxy, { data: { updateAllTodos } }) => {
+                if (updateAllTodos) {
+                    proxy.writeQuery({
+                        query: GET_TODOS,
+                        data: updateAllTodos.data,
+                    });
+                }
+            },
+        });
+    };
+
     const [createTodoMutation] = useMutation(CREATE_TODO);
     const createTodo = (task: string) => {
         createTodoMutation({
@@ -29,12 +63,12 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
                     },
                 },
             },
-            update: (proxy: any, { data: { createTodo } }: any) => {
-                const data = proxy.readQuery({
+            update: (proxy, { data: { createTodo } }) => {
+                const data: CacheData = proxy.readQuery({
                     query: GET_TODOS,
                 });
 
-                if (createTodo) {
+                if (data && createTodo) {
                     const newTodo = createTodo.data;
                     data.todos = [...data.todos, newTodo];
                     proxy.writeQuery({
@@ -161,5 +195,6 @@ export const useTodoMutations = ({ id, task, isComplete }: ITodo) => {
         toggleTodo,
         editTodo,
         deleteTodo,
+        updateAllTodos,
     };
 };
