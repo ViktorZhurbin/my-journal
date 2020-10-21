@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from '@apollo/client';
 
 export const UPDATE_ALL_TODOS = gql`
     mutation UpdateAllTodos($todos: [TodoInput]!) {

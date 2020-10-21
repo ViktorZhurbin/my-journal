@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
     ApolloClient,
+    ApolloProvider,
     HttpLink,
     InMemoryCache,
     NormalizedCacheObject,
-} from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
+} from '@apollo/client';
 
 import { App } from './App';
 import './index.css';

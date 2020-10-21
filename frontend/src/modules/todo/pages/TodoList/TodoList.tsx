@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/client';
 
 import { AddTodo } from '../../components/AddTodo';
 import { DELETE_ALL_TODOS, GET_TODOS } from '../../resolvers';
