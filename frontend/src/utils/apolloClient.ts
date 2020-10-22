@@ -14,10 +14,12 @@ function createApolloClient() {
         }),
         cache: new InMemoryCache({
             typePolicies: {
-                Todo: {
+                Query: {
                     fields: {
-                        id: {
-                            merge: true,
+                        todos: {
+                            merge(existing, incoming) {
+                                return incoming;
+                            },
                         },
                     },
                 },

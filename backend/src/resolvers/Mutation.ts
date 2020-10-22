@@ -13,10 +13,13 @@ const Mutation: MutationResolvers = {
     },
 
     deleteTodo: async (_, { id }, { models }) => {
-        const { deletedCount } = await models.todoModel.deleteOne({ id });
+        const dbResponse = await models.todoModel.deleteOne({ id });
 
         return {
-            success: deletedCount === 1,
+            success: dbResponse?.deletedCount === 1,
+            data: {
+                id,
+            },
         };
     },
 

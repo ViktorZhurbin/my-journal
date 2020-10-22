@@ -32,6 +32,9 @@ export const DELETE_TODO = gql`
     mutation DeleteTodo($id: String!) {
         deleteTodo(id: $id) {
             success
+            data {
+                id
+            }
         }
     }
 `;

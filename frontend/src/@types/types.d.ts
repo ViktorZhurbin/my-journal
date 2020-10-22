@@ -15,10 +15,15 @@ export type Scalars = {
 
 
 
+export type Id = {
+  __typename?: 'Id';
+  id: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createTodo: TodoUpdateResponse;
-  deleteTodo: ResponseMessage;
+  deleteTodo: TodoDeleteResponse;
   deleteAllTodos: ResponseMessage;
   editTodo: TodoUpdateResponse;
   toggleTodo: TodoUpdateResponse;
@@ -67,6 +72,12 @@ export type Todo = {
   id: Scalars['String'];
   task: Scalars['String'];
   isComplete: Scalars['Boolean'];
+};
+
+export type TodoDeleteResponse = {
+  __typename?: 'TodoDeleteResponse';
+  success: Scalars['Boolean'];
+  data: Id;
 };
 
 export type TodoInput = {

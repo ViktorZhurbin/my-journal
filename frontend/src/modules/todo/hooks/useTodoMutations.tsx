@@ -171,8 +171,11 @@ export const useTodoMutations = () => {
             variables: { id },
             optimisticResponse: {
                 deleteTodo: {
-                    __typename: 'ResponseMessage',
+                    __typename: 'TodoDeleteResponse',
                     success: true,
+                    data: {
+                        id,
+                    },
                 },
             },
             update: cache => {
