@@ -11,6 +11,9 @@
     "author": "",
     "license": "ISC",
     "homepage": "https://github.com/ViktorZhurbin/my-journal#readme",
+    "engines": {
+        "node": "12.x"
+    },
     "scripts": {
         "prestart": "yarn generate",
         "start": "ts-node index.ts",
