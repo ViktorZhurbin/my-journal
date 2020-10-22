@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
     type Todo {
@@ -31,13 +31,13 @@ const typeDefs = gql`
         data: Todo!
     }
 
+    type Query {
+        todos: [Todo]!
+    }
+
     type TodoUpdateAllResponse {
         success: Boolean!
         data: Query
-    }
-
-    type Query {
-        todos: [Todo]!
     }
 
     type Mutation {

@@ -29,28 +29,29 @@
             "pre-commit": "lint-staged"
         }
     },
-    "dependencies": {
-        "@graphql-codegen/cli": "^1.12.0",
-        "@graphql-codegen/typescript": "^1.12.0",
-        "@graphql-codegen/typescript-resolvers": "^1.12.0",
+    "devDependencies": {
+        "@graphql-codegen/cli": "^1.17.8",
+        "@graphql-codegen/typescript": "^1.17.8",
+        "@graphql-codegen/typescript-resolvers": "^1.17.8",
         "@types/mongoose": "^5.5.43",
         "@types/node": "^13.5.0",
-        "apollo-boost": "^0.4.7",
-        "apollo-server-express": "^2.9.16",
         "concurrently": "^5.1.0",
-        "depcheck": "^0.9.2",
-        "dotenv": "^8.2.0",
-        "express": "^4.17.1",
         "husky": "^4.2.1",
         "lint-staged": "^10.0.7",
-        "mongoose": "^5.10.9",
         "nodemon": "^2.0.2",
         "prettier": "^1.19.1",
         "stylelint": "^13.0.0",
         "stylelint-config-prettier": "^8.0.1",
         "stylelint-prettier": "^1.1.2",
         "ts-node": "^8.6.2",
-        "ts-node-dev": "^1.0.0-pre.44",
+        "ts-node-dev": "^1.0.0"
+    },
+    "dependencies": {
+        "apollo-server-express": "^2.18.2",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "graphql": "^15.3.0",
+        "mongoose": "^5.10.9",
         "typescript": "^3.7.5"
     }
 }
