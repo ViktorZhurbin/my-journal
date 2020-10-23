@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { ApolloServer } from 'apollo-server-micro';
-import { connectDb, initModels } from '../../apollo/utils/db';
+
+import { initDb } from '../../apollo/initDb';
 import { schema } from '../../apollo/schema';
 
 export const config = {
@@ -9,8 +10,7 @@ export const config = {
     },
 };
 
-initModels();
-connectDb();
+initDb();
 
 const server = new ApolloServer({
     schema,
