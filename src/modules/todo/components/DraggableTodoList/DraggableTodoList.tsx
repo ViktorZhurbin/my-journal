@@ -48,8 +48,8 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
                         >
                             {todos?.map((todo, index) => (
                                 <Draggable
-                                    draggableId={todo.id}
-                                    key={todo.id}
+                                    draggableId={todo._id}
+                                    key={todo._id}
                                     index={index}
                                 >
                                     {(provided, { isDragging }) => (

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { models } from './models';
+import { models } from '../models';
 
 const createModels = async () => {
     try {
@@ -10,6 +10,7 @@ const createModels = async () => {
                 mongoose.model(name, schema);
             }
         });
+        console.log('Models are good now');
     } catch (error) {
         console.error('createModels', error);
     }
@@ -23,6 +24,7 @@ export const connectDb = async () => {
                 useUnifiedTopology: true,
                 useFindAndModify: false,
             });
+            console.log('Connected to MongoDB ');
         } catch (error) {
             console.error('connectDb error: ', error);
         }

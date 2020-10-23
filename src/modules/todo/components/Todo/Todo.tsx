@@ -28,13 +28,13 @@ export const Todo: React.FC<TodoProps> = ({ todo, dragHandleProps }) => {
                 x: '-80%',
                 transition: { duration: 0.3 },
             });
-            deleteTodo(todo.id);
+            deleteTodo(todo._id);
         } else if (point > 50 || velocity > 500) {
             await controls.start({
                 x: '80%',
                 transition: { duration: 0.3 },
             });
-            deleteTodo(todo.id);
+            deleteTodo(todo._id);
         } else {
             controls.start({
                 x: 0,

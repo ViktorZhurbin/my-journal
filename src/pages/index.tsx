@@ -1,17 +1,22 @@
 import * as React from 'react';
 import mongoose from 'mongoose';
+import { resetServerContext } from 'react-beautiful-dnd';
+
 import { TodoList as Component } from '../modules/todo/pages/TodoList';
-import { initDb } from '~/apollo/initDb';
+import { initDb } from '~/utils/initDb';
+import { ITodo } from '~/modules/todo/types';
 
-const TodoList = ({ todos }) => <Component todos={todos} />;
+const TodoList: React.FC<{ todos: ITodo[] }> = ({ todos }) => (
+    <Component todos={todos} />
+);
 
-export async function getStaticProps(context) {
-    console.log('context', context);
+export async function getStaticProps() {
+    resetServerContext();
+
     try {
-        console.log('Log');
         await initDb();
+
         const result = await mongoose.models.Todo.find({});
-        console.log('result', result);
         const todos = result.map((doc) => {
             const todo = doc.toObject();
             todo._id = todo._id.toString();

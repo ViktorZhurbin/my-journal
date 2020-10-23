@@ -18,10 +18,10 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const { toggleTodo, editTodo, deleteTodo } = useTodo();
-    const { id, task, isComplete } = todo;
+    const { _id, task, isComplete } = todo;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        editTodo({ id, task: event.target.value, isComplete });
+        editTodo({ _id, task: event.target.value, isComplete });
     };
 
     const handleSubmit = () => {
@@ -53,7 +53,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}
             />
-            <span className={cx('delete')} onClick={() => deleteTodo(id)}>
+            <span className={cx('delete')} onClick={() => deleteTodo(_id)}>
                 X
             </span>
         </li>

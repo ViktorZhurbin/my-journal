@@ -1,6 +1,8 @@
-// import { Todo } from '../../../apollo/models';
 import mongoose from 'mongoose';
+import { Todo } from '../../../models/Todo';
 import { ITodo } from '../types';
+
+const contentType = 'application/json';
 
 export const useTodo = () => {
     const updateAllTodos = async (updatedTodos: ITodo[]) => {
@@ -14,21 +16,28 @@ export const useTodo = () => {
     };
 
     const createTodo = async (task: string) => {
-        if (!task) {
-            return;
+        try {
+            const res = await fetch('/api/createTodo', {
+                method: 'POST',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType,
+                },
+                body: JSON.stringify({ task }),
+            });
+
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(`${res.status}`);
+            }
+        } catch (error) {
+            console.error('Failed to add task');
         }
-
-        const data = await mongoose.models.Todo.create({ task });
-
-        return {
-            success: true,
-            data,
-        };
     };
 
-    const toggleTodo = async ({ id, isComplete }: ITodo) => {
+    const toggleTodo = async ({ _id, isComplete }: ITodo) => {
         const data = await mongoose.models.Todo.findOneAndUpdate(
-            { id },
+            { _id },
             { isComplete: !isComplete },
             { new: true } /* Return updated object */
         );
@@ -39,9 +48,9 @@ export const useTodo = () => {
         };
     };
 
-    const editTodo = async ({ id, task }: ITodo) => {
+    const editTodo = async ({ _id, task }: ITodo) => {
         const data = await mongoose.models.Todo.findOneAndUpdate(
-            { id },
+            { _id },
             { task },
             { new: true } /* Return updated object */
         );
@@ -53,14 +62,23 @@ export const useTodo = () => {
     };
 
     const deleteTodo = async (id: string) => {
-        const dbResponse = await mongoose.models.Todo.deleteOne({ id });
+        try {
+            const res = await fetch('/api/deleteTodo', {
+                method: 'DELETE',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType,
+                },
+                body: JSON.stringify({ id }),
+            });
 
-        return {
-            success: dbResponse?.deletedCount === 1,
-            data: {
-                id,
-            },
-        };
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(`${res.status}`);
+            }
+        } catch (error) {
+            console.error('Failed to delete task');
+        }
     };
 
     return {
