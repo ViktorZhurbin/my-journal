@@ -38,44 +38,46 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
     };
 
     return (
-        <ul className={cx('list')}>
-            <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId="active">
-                    {(provided, { isDraggingOver }) => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                        >
-                            {todos?.map((todo, index) => (
-                                <Draggable
-                                    draggableId={todo._id}
-                                    key={todo._id}
-                                    index={index}
-                                >
-                                    {(provided, { isDragging }) => (
-                                        <div
-                                            className={cx('todoWrapper', {
-                                                isDraggingOver,
-                                            })}
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                        >
-                                            <Todo
-                                                todo={todo}
-                                                dragHandleProps={
-                                                    provided.dragHandleProps
-                                                }
-                                            />
-                                        </div>
-                                    )}
-                                </Draggable>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            </DragDropContext>
-        </ul>
+        Boolean(todos) && (
+            <ul className={cx('list')}>
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="active">
+                        {(provided, { isDraggingOver }) => (
+                            <div
+                                ref={provided.innerRef}
+                                {...provided.droppableProps}
+                            >
+                                {todos.map((todo, index) => (
+                                    <Draggable
+                                        draggableId={todo._id}
+                                        key={todo._id}
+                                        index={index}
+                                    >
+                                        {(provided, { isDragging }) => (
+                                            <div
+                                                className={cx('todoWrapper', {
+                                                    isDraggingOver,
+                                                })}
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                            >
+                                                <Todo
+                                                    todo={todo}
+                                                    dragHandleProps={
+                                                        provided.dragHandleProps
+                                                    }
+                                                />
+                                            </div>
+                                        )}
+                                    </Draggable>
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
+            </ul>
+        )
     );
 };
 

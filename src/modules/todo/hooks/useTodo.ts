@@ -30,6 +30,10 @@ export const useTodo = () => {
             if (!res.ok) {
                 throw new Error(`${res.status}`);
             }
+
+            const { data } = await res.json();
+            console.log('data', data);
+            return data;
         } catch (error) {
             console.error('Failed to add task');
         }
