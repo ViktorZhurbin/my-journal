@@ -18,17 +18,14 @@ const getConnection = () =>
         useFindAndModify: false,
     });
 
-let connection = null;
-
 export const connectDb = async () => {
-    if (connection === null) {
+    if (mongoose.connections.length) {
         try {
-            connection = await getConnection();
+            await getConnection();
         } catch (error) {
-            console.log('connectDb error: ', error);
+            console.error('connectDb error: ', error);
         }
     }
-    return connection;
 };
 
 mongoose.connection.on(
