@@ -4,14 +4,14 @@ import classNames from 'classnames/bind';
 import { TextField } from '../../../../components/TextField';
 
 import styles from './AddTodo.module.css';
-import { useTodoMutations } from '../../hooks/useTodoMutations';
+import { useTodo } from '../../hooks/useTodo';
 
 const cx = classNames.bind(styles);
 
 export const AddTodo: React.FC = () => {
     const [value, setValue] = useState('');
     const [isFocused, setFocused] = useState(false);
-    const { createTodo } = useTodoMutations();
+    const { createTodo } = useTodo();
     const handleChange = (event: React.SyntheticEvent) => {
         setValue((event.target as HTMLInputElement).value);
     };

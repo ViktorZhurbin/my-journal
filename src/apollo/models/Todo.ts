@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export const todoSchema = new mongoose.Schema({
+export const TodoSchema = new mongoose.Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
         default: mongoose.Types.ObjectId,
@@ -14,3 +14,5 @@ export const todoSchema = new mongoose.Schema({
         default: false,
     },
 });
+
+// export const Todo = mongoose.models?.Todo || mongoose.model('Todo', TodoSchema);

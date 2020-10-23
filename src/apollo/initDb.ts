@@ -2,16 +2,20 @@ import mongoose from 'mongoose';
 import { models } from './models';
 
 const createModels = async () => {
-    const modelNames = await mongoose.modelNames();
+    try {
+        const modelNames = await mongoose.modelNames();
 
-    Object.entries(models).forEach(([name, schema]) => {
-        if (!modelNames.includes(name)) {
-            mongoose.model(name, schema);
-        }
-    });
+        Object.entries(models).forEach(([name, schema]) => {
+            if (!modelNames.includes(name)) {
+                mongoose.model(name, schema);
+            }
+        });
+    } catch (error) {
+        console.error('createModels', error);
+    }
 };
 
-const connectDb = async () => {
+export const connectDb = async () => {
     if (mongoose.connections.length) {
         try {
             await mongoose.connect(process.env.DATABASE_URI, {

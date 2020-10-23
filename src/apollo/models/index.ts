@@ -1,5 +1,6 @@
-import { todoSchema } from './todoModel';
+import { TodoSchema } from './Todo';
+export * from './Todo';
 
 export const models = {
-    TodoModel: todoSchema,
+    Todo: TodoSchema,
 };

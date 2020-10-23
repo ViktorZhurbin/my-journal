@@ -6,7 +6,7 @@ import { TextField } from '~/components/TextField';
 
 import styles from './BaseTodo.module.css';
 import { ITodo } from '../../../types';
-import { useTodoMutations } from '../../../hooks/useTodoMutations';
+import { useTodo } from '../../../hooks/useTodo';
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +17,7 @@ interface BaseTodoProps {
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { toggleTodo, editTodo, deleteTodo } = useTodoMutations();
+    const { toggleTodo, editTodo, deleteTodo } = useTodo();
     const { id, task, isComplete } = todo;
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

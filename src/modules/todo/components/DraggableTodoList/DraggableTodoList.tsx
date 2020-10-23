@@ -13,7 +13,7 @@ import { Todo } from '../Todo';
 import { ITodo } from '../../types';
 
 import styles from './DraggableTodoList.module.css';
-import { useTodoMutations } from '../../hooks/useTodoMutations';
+import { useTodo } from '../../hooks/useTodo';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +22,7 @@ interface DraggableTodoListProps {
 }
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
-    const { updateAllTodos } = useTodoMutations();
+    const { updateAllTodos } = useTodo();
     const onDragEnd = ({ source, destination }: DropResult) => {
         if (!destination || destination.index === source.index) {
             return;
