@@ -1,9 +1,0 @@
-schema: '../backend/src/schema.ts'
-generates:
-    'src/@types/types.d.ts':
-        plugins:
-            - typescript
-            - typescript-operations
-        config:
-            federation: true
-            useIndexSignature: true

@@ -1,9 +1,6 @@
-schema: 'backend/src/schema.ts'
+schema: 'src/apollo/schema/typeDefs.ts'
 generates:
-    'backend/src/types.d.ts':
+    'src/@types/qraphql.d.ts':
         plugins:
             - typescript
             - typescript-resolvers
-        config:
-            federation: true
-            useIndexSignature: true

@@ -2,59 +2,59 @@
     "name": "my-journal",
     "version": "0.0.1",
     "description": "",
-    "main": "index.ts",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ViktorZhurbin/my-journal.git"
-    },
-    "keywords": [],
+    "main": "index.js",
     "author": "",
     "license": "ISC",
-    "homepage": "https://github.com/ViktorZhurbin/my-journal#readme",
-    "engines": {
-        "node": "12.x"
-    },
+    "proxy": "http://localhost:4000",
     "scripts": {
+        "dev": "concurrently 'next' 'yarn generate --watch'",
+        "build": "next build",
+        "start": "next start",
         "prestart": "yarn generate",
-        "start": "ts-node index.ts",
-        "dev": "concurrently 'yarn generate --watch' 'ts-node-dev --no-notify index.ts'",
-        "generate": "graphql-codegen",
-        "heroku-postbuild": "cd frontend && yarn && yarn build"
+        "prebuild": "yarn generate",
+        "generate": "graphql-codegen"
     },
-    "lint-staged": {
-        "*.{js,ts,tsx,css,html,json,md}": [
-            "prettier --write",
-            "git add"
+    "browserslist": {
+        "production": [
+            "last 2 versions",
+            "not < 1%",
+            "not ie 11"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
         ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^1.17.8",
         "@graphql-codegen/typescript": "^1.17.8",
-        "@graphql-codegen/typescript-resolvers": "^1.17.8",
-        "@types/mongoose": "^5.5.43",
+        "@graphql-codegen/typescript-operations": "^1.17.8",
+        "@graphql-codegen/typescript-resolvers": "^1.17.10",
+        "@types/classnames": "^2.2.9",
         "@types/node": "^13.5.0",
-        "concurrently": "^5.1.0",
-        "husky": "^4.2.1",
-        "lint-staged": "^10.0.7",
-        "nodemon": "^2.0.2",
-        "prettier": "^1.19.1",
-        "stylelint": "^13.0.0",
-        "stylelint-config-prettier": "^8.0.1",
-        "stylelint-prettier": "^1.1.2",
-        "ts-node": "^8.6.2",
-        "ts-node-dev": "^1.0.0"
+        "@types/react": "^16.9.17",
+        "@types/react-beautiful-dnd": "^11.0.4",
+        "@types/react-dom": "^16.9.4",
+        "babel-plugin-inline-react-svg": "^1.1.1",
+        "concurrently": "^5.1.0"
     },
     "dependencies": {
+        "@apollo/client": "^3.2.5",
         "apollo-server-express": "^2.18.2",
+        "apollo-server-micro": "^2.18.2",
+        "classnames": "^2.2.6",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
-        "graphql": "^15.3.0",
+        "framer-motion": "^1.8.4",
+        "graphql": "^15.0.0",
+        "graphql-tools": "^6.2.4",
         "mongoose": "^5.10.9",
-        "typescript": "^3.7.5"
+        "next": "latest",
+        "next-images": "^1.6.0",
+        "react": "^16.12.0",
+        "react-beautiful-dnd": "^12.2.0",
+        "react-dom": "^16.12.0",
+        "typescript": "^3.7.4"
     }
 }
