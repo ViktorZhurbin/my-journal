@@ -35,30 +35,44 @@ export const useTodo = () => {
         }
     };
 
-    const toggleTodo = async ({ _id, isComplete }: ITodo) => {
-        const data = await mongoose.models.Todo.findOneAndUpdate(
-            { _id },
-            { isComplete: !isComplete },
-            { new: true } /* Return updated object */
-        );
+    const toggleTodo = async ({ _id: id, isComplete }: ITodo) => {
+        try {
+            const res = await fetch('/api/toggleTodo', {
+                method: 'PUT',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType,
+                },
+                body: JSON.stringify({ id, isComplete }),
+            });
 
-        return {
-            success: true,
-            data,
-        };
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(`${res.status}`);
+            }
+        } catch (error) {
+            console.error('Failed to toggle todo');
+        }
     };
 
-    const editTodo = async ({ _id, task }: ITodo) => {
-        const data = await mongoose.models.Todo.findOneAndUpdate(
-            { _id },
-            { task },
-            { new: true } /* Return updated object */
-        );
+    const editTodo = async ({ _id: id, task }: ITodo) => {
+        try {
+            const res = await fetch('/api/editTodo', {
+                method: 'PUT',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType,
+                },
+                body: JSON.stringify({ id, task }),
+            });
 
-        return {
-            success: true,
-            data,
-        };
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(`${res.status}`);
+            }
+        } catch (error) {
+            console.error('Failed to edit todo');
+        }
     };
 
     const deleteTodo = async (id: string) => {
