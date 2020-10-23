@@ -1,5 +1,3 @@
-import mongoose from 'mongoose';
-import { Todo } from '../../../models/Todo';
 import { ITodo } from '../types';
 
 const contentType = 'application/json';
@@ -20,10 +18,6 @@ export const useTodo = () => {
             if (!res.ok) {
                 throw new Error(`${res.status}`);
             }
-
-            const { data } = await res.json();
-
-            return data;
         } catch (error) {
             console.error('Failed to update todos');
         }
@@ -44,10 +38,6 @@ export const useTodo = () => {
             if (!res.ok) {
                 throw new Error(`${res.status}`);
             }
-
-            const { data } = await res.json();
-
-            return data;
         } catch (error) {
             console.error('Failed to add task');
         }

@@ -1,24 +1,24 @@
+import { NextApiResponse, NextApiRequest } from 'next';
+
 import { connectDb } from '../../utils/initDb';
 import { Todo } from '../../models/Todo';
 
-export default async (req, res) => {
-    const {
-        method,
-        body: { id: _id, task },
-    } = req;
-
-    if (method !== 'PUT') {
-        throw new Error('Request method must be PUT');
-    }
-
-    if (!_id) {
-        throw new Error('Missing field: _id');
-    }
-    if (!task) {
-        throw new Error('Missing field: task');
-    }
-
+export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+        const {
+            method,
+            body: { id: _id, task },
+        } = req;
+        if (method !== 'PUT') {
+            throw new Error('Request method must be PUT');
+        }
+
+        if (!_id) {
+            throw new Error('Missing field: _id');
+        }
+        if (!task) {
+            throw new Error('Missing field: task');
+        }
         await connectDb();
         const todo = await Todo.findOneAndUpdate(
             { _id },
@@ -28,6 +28,6 @@ export default async (req, res) => {
 
         res.status(201).json({ success: true, data: todo });
     } catch (error) {
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error: error.message });
     }
 };
