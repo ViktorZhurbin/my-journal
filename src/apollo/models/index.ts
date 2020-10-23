@@ -1,7 +1,5 @@
-import { TodoModel } from './todoModel';
+import { todoSchema } from './todoModel';
 
-const models = {
-    TodoModel,
+export const models = {
+    TodoModel: todoSchema,
 };
-
-export { models };

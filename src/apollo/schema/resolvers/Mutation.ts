@@ -1,8 +1,10 @@
+import mongoose from 'mongoose';
+
 import { MutationResolvers } from '../../../@types/qraphql';
 
 export const Mutation: MutationResolvers = {
-    createTodo: async (_, { task }, { models }) => {
-        const data = await models.todoModel.create({
+    createTodo: async (_, { task }) => {
+        const data = await mongoose.models.TodoModel.create({
             task,
         });
 
@@ -12,8 +14,8 @@ export const Mutation: MutationResolvers = {
         };
     },
 
-    deleteTodo: async (_, { id }, { models }) => {
-        const dbResponse = await models.todoModel.deleteOne({ id });
+    deleteTodo: async (_, { id }) => {
+        const dbResponse = await mongoose.models.TodoModel.deleteOne({ id });
 
         return {
             success: dbResponse?.deletedCount === 1,
@@ -23,16 +25,16 @@ export const Mutation: MutationResolvers = {
         };
     },
 
-    deleteAllTodos: async (_, __, { models }) => {
-        await models.todoModel.deleteMany({});
+    deleteAllTodos: async (_, __) => {
+        await mongoose.models.TodoModel.deleteMany({});
 
         return {
             success: true,
         };
     },
 
-    editTodo: async (_, { id, task }, { models }) => {
-        const data = await models.todoModel.findOneAndUpdate(
+    editTodo: async (_, { id, task }) => {
+        const data = await mongoose.models.TodoModel.findOneAndUpdate(
             { id },
             { task },
             { new: true } /* Return updated object */
@@ -44,8 +46,8 @@ export const Mutation: MutationResolvers = {
         };
     },
 
-    toggleTodo: async (_, { id, isComplete }, { models }) => {
-        const data = await models.todoModel.findOneAndUpdate(
+    toggleTodo: async (_, { id, isComplete }) => {
+        const data = await mongoose.models.TodoModel.findOneAndUpdate(
             { id },
             { isComplete: !isComplete },
             { new: true } /* Return updated object */
@@ -57,9 +59,9 @@ export const Mutation: MutationResolvers = {
         };
     },
 
-    updateAllTodos: async (_, { todos: newTodos }, { models }) => {
-        await models.todoModel.deleteMany({});
-        const todos = await models.todoModel.insertMany(newTodos);
+    updateAllTodos: async (_, { todos: newTodos }) => {
+        await mongoose.models.TodoModel.deleteMany({});
+        const todos = await mongoose.models.TodoModel.insertMany(newTodos);
 
         return {
             success: true,

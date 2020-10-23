@@ -1,29 +1,35 @@
 import mongoose from 'mongoose';
+import { models } from '../models';
+
+export const initModels = () => {
+    const modelNames = mongoose.modelNames();
+
+    Object.entries(models).forEach(([name, schema]) => {
+        if (!modelNames.includes(name)) {
+            mongoose.model(name, schema);
+        }
+    });
+};
+
+const getConnection = () =>
+    mongoose.connect(process.env.DATABASE_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+    });
 
 let connection = null;
 
-export const getDbConnection = async () => {
+export const connectDb = async () => {
     if (connection === null) {
         try {
-            connection = await mongoose.connect(process.env.DATABASE_URI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-                useFindAndModify: false,
-            });
+            connection = await getConnection();
         } catch (error) {
-            console.log('getDbConnection error: ', error);
+            console.log('connectDb error: ', error);
         }
     }
     return connection;
 };
-
-// const connection = mongoose.connect(process.env.DATABASE_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false,
-// });
-
-// connection.then(db => db).catch(err => console.log(err));
 
 mongoose.connection.on(
     'error',
@@ -31,5 +37,3 @@ mongoose.connection.on(
 );
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
-
-export default getDbConnection;
