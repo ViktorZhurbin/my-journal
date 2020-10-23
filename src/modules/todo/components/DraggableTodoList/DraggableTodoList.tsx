@@ -6,7 +6,7 @@ import {
     DropResult,
 } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
-
+import { mutate } from 'swr';
 import { reorderArray } from '~/utils';
 import { Todo } from '../Todo';
 
@@ -23,6 +23,11 @@ interface DraggableTodoListProps {
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
     const { updateAllTodos } = useTodo();
+    const handleUpdateAllTodos = async (updatedTodos: ITodo[]) => {
+        mutate('/api/getTodos', { success: true, data: updatedTodos }, false);
+        await updateAllTodos(updatedTodos);
+        mutate('/api/getTodos');
+    };
     const onDragEnd = ({ source, destination }: DropResult) => {
         if (!destination || destination.index === source.index) {
             return;
@@ -34,7 +39,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
             destination.index
         );
 
-        updateAllTodos(updatedTodos);
+        handleUpdateAllTodos(updatedTodos);
     };
 
     return (

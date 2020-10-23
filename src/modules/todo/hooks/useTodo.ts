@@ -6,13 +6,27 @@ const contentType = 'application/json';
 
 export const useTodo = () => {
     const updateAllTodos = async (updatedTodos: ITodo[]) => {
-        await mongoose.models.Todo.deleteMany({});
-        const data = await mongoose.models.Todo.insertMany(updatedTodos);
+        try {
+            const res = await fetch('/api/updateAllTodos', {
+                method: 'POST',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType,
+                },
+                body: JSON.stringify({ updatedTodos }),
+            });
 
-        return {
-            success: true,
-            data,
-        };
+            // Throw error with status code in case Fetch API req failed
+            if (!res.ok) {
+                throw new Error(`${res.status}`);
+            }
+
+            const { data } = await res.json();
+
+            return data;
+        } catch (error) {
+            console.error('Failed to update todos');
+        }
     };
 
     const createTodo = async (task: string) => {
@@ -32,7 +46,7 @@ export const useTodo = () => {
             }
 
             const { data } = await res.json();
-            console.log('data', data);
+
             return data;
         } catch (error) {
             console.error('Failed to add task');
