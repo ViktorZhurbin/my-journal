@@ -16,6 +16,10 @@ export const AddTodo: React.FC = () => {
         setValue((event.target as HTMLInputElement).value);
     };
     const handleSubmit = async (value: string) => {
+        if (!value) {
+            return;
+        }
+
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
             '/api/todo/get',
