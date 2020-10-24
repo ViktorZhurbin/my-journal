@@ -7,7 +7,7 @@ import { TextField } from '~/components/TextField';
 
 import styles from './BaseTodo.module.css';
 import { ITodo } from '../../../types';
-import { useTodo } from '../../../hooks/useTodo';
+import { toggleTodo, editTodo, deleteTodo } from '../../../api';
 
 const cx = classNames.bind(styles);
 
@@ -18,19 +18,17 @@ interface BaseTodoProps {
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const { toggleTodo, editTodo, deleteTodo } = useTodo();
-    const { _id, task, isComplete } = todo;
 
     const handleDelete = async () => {
         mutate(
             '/api/getTodos',
             async ({ data }: { data: ITodo[] }) => {
-                const newTodos = data.filter((item) => item._id !== _id);
+                const newTodos = data.filter((item) => item._id !== todo._id);
                 return { success: true, data: newTodos };
             },
             false
         );
-        await deleteTodo(_id);
+        await deleteTodo(todo._id);
         mutate('/api/getTodos');
     };
 
@@ -39,7 +37,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             '/api/getTodos',
             async ({ data }: { data: ITodo[] }) => {
                 const newTodos = data.map((item) =>
-                    item._id === _id
+                    item._id === todo._id
                         ? { ...item, isComplete: !item.isComplete }
                         : item
                 );
@@ -56,7 +54,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             '/api/getTodos',
             async ({ data }: { data: ITodo[] }) => {
                 const newTodos = data.map((item) =>
-                    item._id === _id ? { ...item, task: value } : item
+                    item._id === todo._id ? { ...item, task: value } : item
                 );
                 return { success: true, data: newTodos };
             },
@@ -87,13 +85,13 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
         <li className={cx('todo', { isFocused })}>
             <Checkbox
                 classNames={cx('checkbox')}
-                isChecked={isComplete}
+                isChecked={todo.isComplete}
                 onToggle={handleToggle}
             />
             <TextField
                 ref={inputRef}
-                value={task}
-                className={cx('text', { isComplete })}
+                value={todo.task}
+                className={cx('text', { isComplete: todo.isComplete })}
                 onChange={handleChange}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}

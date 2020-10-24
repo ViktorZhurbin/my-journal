@@ -9,11 +9,11 @@ import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 import { reorderArray } from '~/utils';
 import { Todo } from '../Todo';
+import { updateAllTodos } from '../../api';
 
 import { ITodo } from '../../types';
 
 import styles from './DraggableTodoList.module.css';
-import { useTodo } from '../../hooks/useTodo';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +22,6 @@ interface DraggableTodoListProps {
 }
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
-    const { updateAllTodos } = useTodo();
     const handleUpdateAllTodos = async (updatedTodos: ITodo[]) => {
         mutate('/api/getTodos', { success: true, data: updatedTodos }, false);
         await updateAllTodos(updatedTodos);
