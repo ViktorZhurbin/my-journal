@@ -10,7 +10,8 @@
         "dev": "next",
         "build": "next build",
         "start": "next start",
-        "prettier": "prettier --write 'src/**/*.(tsx|ts)'"
+        "prettier": "prettier --write 'src/**/*.(tsx|ts)'",
+        "stylelint": "stylelint 'src/**/*.css'"
     },
     "browserslist": {
         "production": [
@@ -34,6 +35,7 @@
         "prettier": "2.1.2",
         "stylelint": "^13.7.2",
         "stylelint-config-prettier": "^8.0.2",
+        "stylelint-config-standard": "^20.0.0",
         "stylelint-prettier": "^1.1.2"
     },
     "dependencies": {

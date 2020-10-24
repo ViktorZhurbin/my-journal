@@ -49,8 +49,8 @@
     padding: 4px;
 }
 
-.plus:before,
-.plus:after {
+.plus::before,
+.plus::after {
     position: absolute;
     left: 11.375px;
     top: 6px;
@@ -60,6 +60,6 @@
     background-color: #333;
 }
 
-.plus:before {
+.plus::before {
     transform: rotate(90deg);
 }

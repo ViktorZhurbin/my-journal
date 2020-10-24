@@ -22,10 +22,6 @@
     height: 16px;
 }
 
-.checkbox.isChecked svg path {
-    stroke-dashoffset: 0;
-}
-
 .checkbox svg path {
     fill: none;
     stroke: #333;
@@ -34,5 +30,8 @@
     stroke-linejoin: round;
     stroke-dasharray: 100;
     stroke-dashoffset: 101;
-    /* transition: all 350ms cubic-bezier(1, 0, 0.37, 0.91); */
+}
+
+.checkbox.isChecked svg path {
+    stroke-dashoffset: 0;
 }
