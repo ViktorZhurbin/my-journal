@@ -4,10 +4,10 @@ import { motion, useAnimation, PanInfo } from 'framer-motion';
 
 import DragHandleIcon from './icon.svg';
 
-import { BaseTodo } from './BaseTodo';
-import styles from './Todo.module.css';
 import { deleteTodo } from '../../api';
 import { ITodo } from '../../types';
+import { BaseTodo } from './BaseTodo';
+import styles from './Todo.module.css';
 
 const cx = classNames.bind(styles);
 

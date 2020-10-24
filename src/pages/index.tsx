@@ -1,1 +1,1 @@
-export { TodoList as default } from '~/modules/todo/pages/TodoList';
+export { TodoList as default } from '@/modules/todo/pages/TodoList';

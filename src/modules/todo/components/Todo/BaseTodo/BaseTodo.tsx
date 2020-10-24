@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
-import { Checkbox } from '~/components/Checkbox';
-import { TextField } from '~/components/TextField';
+import { Checkbox } from '@/components/Checkbox';
+import { TextField } from '@/components/TextField';
 
-import styles from './BaseTodo.module.css';
 import { ITodo } from '../../../types';
 import { toggleTodo, editTodo, deleteTodo } from '../../../api';
+import styles from './BaseTodo.module.css';
 
 const cx = classNames.bind(styles);
 

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
-import { TextField } from '../../../../components/TextField';
+import { TextField } from '@/components/TextField';
 import { createTodo } from '../../api';
-import styles from './AddTodo.module.css';
 import { ITodo } from '../../types';
+import styles from './AddTodo.module.css';
 
 const cx = classNames.bind(styles);
 

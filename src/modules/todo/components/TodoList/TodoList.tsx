@@ -3,7 +3,7 @@ import React from 'react';
 import { AddTodo } from '../AddTodo';
 import { DraggableTodoList } from '../DraggableTodoList';
 
-import { useData } from '~/hooks/useData';
+import { useData } from '@/hooks/useData';
 import { ITodo } from '../../types';
 
 import styles from './TodoList.module.css';
