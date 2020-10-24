@@ -2,10 +2,6 @@
     "name": "my-journal",
     "version": "0.0.1",
     "description": "",
-    "main": "index.js",
-    "author": "",
-    "license": "ISC",
-    "proxy": "http://localhost:4000",
     "scripts": {
         "dev": "next",
         "build": "next build",
@@ -13,6 +9,16 @@
         "prettier": "prettier --write 'src/**/*.(js|jsx|tsx|ts)'",
         "lint": "eslint src",
         "stylelint": "stylelint 'src/**/*.css'"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": "eslint --cache --fix",
+        "*.css": "stylelint --fix",
+        "*.{js,css,md}": "prettier --write"
     },
     "browserslist": {
         "production": [
@@ -37,6 +43,8 @@
         "babel-plugin-inline-react-svg": "^1.1.1",
         "eslint": "^7.11.0",
         "eslint-config-prettier": "^6.14.0",
+        "husky": ">=4",
+        "lint-staged": ">=10",
         "prettier": "2.1.2",
         "stylelint": "^13.7.2",
         "stylelint-config-prettier": "^8.0.2",
