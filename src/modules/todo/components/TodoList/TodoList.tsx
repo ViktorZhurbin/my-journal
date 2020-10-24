@@ -9,7 +9,7 @@ import { ITodo } from '../../types';
 import styles from './TodoList.module.css';
 
 export const TodoList: React.FC<{ todos: ITodo[] }> = () => {
-    const { data, isLoading, isError } = useData('/api/getTodos');
+    const { data, isLoading, isError } = useData('/api/todo/get');
 
     if (isLoading) {
         return <span>Loading...</span>;

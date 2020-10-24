@@ -21,7 +21,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
 
     const handleDelete = async () => {
         mutate(
-            '/api/getTodos',
+            '/api/todo/get',
             async ({ data }: { data: ITodo[] }) => {
                 const newTodos = data.filter((item) => item._id !== todo._id);
                 return { success: true, data: newTodos };
@@ -29,12 +29,12 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             false
         );
         await deleteTodo(todo._id);
-        mutate('/api/getTodos');
+        mutate('/api/todo/get');
     };
 
     const handleToggle = async () => {
         mutate(
-            '/api/getTodos',
+            '/api/todo/get',
             async ({ data }: { data: ITodo[] }) => {
                 const newTodos = data.map((item) =>
                     item._id === todo._id
@@ -46,12 +46,12 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             false
         );
         await toggleTodo(todo);
-        mutate('/api/getTodos');
+        mutate('/api/todo/get');
     };
 
     const handleEdit = async (value: string) => {
         mutate(
-            '/api/getTodos',
+            '/api/todo/get',
             async ({ data }: { data: ITodo[] }) => {
                 const newTodos = data.map((item) =>
                     item._id === todo._id ? { ...item, task: value } : item
@@ -61,7 +61,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
             false
         );
         await editTodo({ ...todo, task: value });
-        mutate('/api/getTodos');
+        mutate('/api/todo/get');
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

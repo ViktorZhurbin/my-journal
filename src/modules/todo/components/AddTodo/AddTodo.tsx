@@ -18,14 +18,14 @@ export const AddTodo: React.FC = () => {
     const handleSubmit = async (value: string) => {
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
-            '/api/getTodos',
+            '/api/todo/get',
             async ({ data }: { data: ITodo[] }) => {
                 return { success: true, data: [...data, newTodo] };
             },
             false
         );
         await createTodo(value);
-        mutate('/api/getTodos');
+        mutate('/api/todo/get');
         setValue('');
     };
 

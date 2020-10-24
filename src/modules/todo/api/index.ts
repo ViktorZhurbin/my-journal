@@ -1,41 +1,17 @@
 import { ITodo } from '../types';
-
-const contentType = 'application/json';
-const headers = {
-    Accept: contentType,
-    'Content-Type': contentType,
-};
-
-const fetcher = async (
-    endpoint: string,
-    method: string,
-    payload: { [key: string]: any }
-) => {
-    try {
-        const res = await fetch(endpoint, {
-            method,
-            headers,
-            body: JSON.stringify({ ...payload }),
-        });
-        if (!res.ok) {
-            throw new Error(`${res.status}`);
-        }
-    } catch (error) {
-        console.error(`Request failed with status code ${error.message}`);
-    }
-};
+import { fetcher } from '../../../utils/fetcher';
 
 export const updateAllTodos = (updatedTodos: ITodo[]): Promise<void> =>
-    fetcher('/api/updateAllTodos', 'POST', { updatedTodos });
+    fetcher('/api/todo/updateAll', 'POST', { updatedTodos });
 
 export const createTodo = (task: string): Promise<void> =>
-    fetcher('/api/createTodo', 'POST', { task });
+    fetcher('/api/todo/create', 'POST', { task });
 
 export const toggleTodo = ({ _id: id, isComplete }: ITodo): Promise<void> =>
-    fetcher('/api/toggleTodo', 'PUT', { id, isComplete });
+    fetcher('/api/todo/toggle', 'PUT', { id, isComplete });
 
 export const editTodo = ({ _id: id, task }: ITodo): Promise<void> =>
-    fetcher('/api/editTodo', 'PUT', { id, task });
+    fetcher('/api/todo/edit', 'PUT', { id, task });
 
 export const deleteTodo = (id: string): Promise<void> =>
-    fetcher('/api/deleteTodo', 'DELETE', { id });
+    fetcher('/api/todo/delete', 'DELETE', { id });

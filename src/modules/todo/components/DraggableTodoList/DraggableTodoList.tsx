@@ -23,9 +23,9 @@ interface DraggableTodoListProps {
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
     const handleUpdateAllTodos = async (updatedTodos: ITodo[]) => {
-        mutate('/api/getTodos', { success: true, data: updatedTodos }, false);
+        mutate('/api/todo/get', { success: true, data: updatedTodos }, false);
         await updateAllTodos(updatedTodos);
-        mutate('/api/getTodos');
+        mutate('/api/todo/get');
     };
     const onDragEnd = ({ source, destination }: DropResult) => {
         if (!destination || destination.index === source.index) {

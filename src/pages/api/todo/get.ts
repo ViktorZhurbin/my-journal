@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 
-import { connectDb } from '../../utils/initDb';
-import { Todo } from '../../models/Todo';
+import { connectDb } from '../../../utils/initDb';
+import { Todo } from '../../../models/Todo';
 
 export default async (
     req: NextApiRequest,
