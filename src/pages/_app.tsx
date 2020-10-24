@@ -37,7 +37,7 @@ export default function MyApp({
                 <link rel="apple-touch-icon" href="/apple-icon.png"></link>
                 <meta name="theme-color" content="#317EFB" />
             </Head>
-            <Component {...pageProps} />;
+            <Component {...pageProps} />
         </>
     );
 }
