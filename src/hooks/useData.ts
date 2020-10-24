@@ -5,7 +5,6 @@ const fetcher = (input: RequestInfo, init?: RequestInit) =>
 
 export const useData = (apiEndpoint: string) => {
     const { data, error } = useSWR(apiEndpoint, fetcher);
-    console.log('data', data);
 
     return {
         data: data?.data,
