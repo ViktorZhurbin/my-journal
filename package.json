@@ -2,8 +2,10 @@
     "name": "my-journal",
     "version": "0.0.1",
     "description": "",
+    "license": "MIT",
     "scripts": {
         "dev": "next",
+        "debug": "NODE_OPTIONS='--inspect' next dev",
         "build": "next build",
         "start": "next start",
         "prettier": "prettier --write 'src/**/*.(js|jsx|tsx|ts)'",
