@@ -24,3 +24,5 @@ node_modules/
 
 *.log
 yarn-*.log
+
+next.config.js
