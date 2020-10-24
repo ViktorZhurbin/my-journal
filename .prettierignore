@@ -1,3 +1,26 @@
+# Temporary folders
+tmp/
+temp/
+
+# Build output
+dist/
+
+# Dependency directories
 node_modules/
+
+# Parcel cache
 .cache/
-**/*.d.ts
+
+.DS_*
+
+# dotenv environment variables file
+.env
+
+.vscode/
+
+.next/
+
+*.sqlite
+
+*.log
+yarn-*.log
