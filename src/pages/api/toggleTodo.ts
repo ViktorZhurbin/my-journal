@@ -2,8 +2,17 @@ import { NextApiResponse, NextApiRequest } from 'next';
 
 import { connectDb } from '../../utils/initDb';
 import { Todo } from '../../models/Todo';
+import { ITodo } from '~/modules/todo/types';
+type Data = {
+    success: boolean;
+    data?: ITodo;
+    error?: string;
+};
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+    req: NextApiRequest,
+    res: NextApiResponse<Data>
+): Promise<any> => {
     try {
         const {
             method,

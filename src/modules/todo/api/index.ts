@@ -25,17 +25,17 @@ const fetcher = async (
     }
 };
 
-export const updateAllTodos = (updatedTodos: ITodo[]) =>
+export const updateAllTodos = (updatedTodos: ITodo[]): Promise<void> =>
     fetcher('/api/updateAllTodos', 'POST', { updatedTodos });
 
-export const createTodo = (task: string) =>
+export const createTodo = (task: string): Promise<void> =>
     fetcher('/api/createTodo', 'POST', { task });
 
-export const toggleTodo = ({ _id: id, isComplete }: ITodo) =>
+export const toggleTodo = ({ _id: id, isComplete }: ITodo): Promise<void> =>
     fetcher('/api/toggleTodo', 'PUT', { id, isComplete });
 
-export const editTodo = ({ _id: id, task }: ITodo) =>
+export const editTodo = ({ _id: id, task }: ITodo): Promise<void> =>
     fetcher('/api/editTodo', 'PUT', { id, task });
 
-export const deleteTodo = (id: string) =>
+export const deleteTodo = (id: string): Promise<void> =>
     fetcher('/api/deleteTodo', 'DELETE', { id });

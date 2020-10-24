@@ -6,7 +6,7 @@ import DragHandleIcon from './icon.svg';
 
 import { BaseTodo } from './BaseTodo';
 import styles from './Todo.module.css';
-import { useTodo } from '../../hooks/useTodo';
+import { deleteTodo } from '../../api';
 import { ITodo } from '../../types';
 
 const cx = classNames.bind(styles);
@@ -18,7 +18,6 @@ interface TodoProps {
 
 export const Todo: React.FC<TodoProps> = ({ todo, dragHandleProps }) => {
     const controls = useAnimation();
-    const { deleteTodo } = useTodo();
 
     const handleDelete = async (event: any, info: PanInfo) => {
         const { x: point } = info.point;

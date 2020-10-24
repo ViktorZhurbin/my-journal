@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 interface ICheckboxProps {
     isChecked: boolean;
     onToggle: () => void;
-    classNames?: any;
+    classNames?: string;
 }
 
 export const Checkbox: React.FC<ICheckboxProps> = ({

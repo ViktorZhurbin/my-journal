@@ -16,7 +16,7 @@ const createModels = async () => {
     }
 };
 
-export const connectDb = async () => {
+export const connectDb = async (): Promise<void> => {
     if (mongoose.connections.length) {
         try {
             await mongoose.connect(process.env.DATABASE_URI, {
@@ -38,7 +38,7 @@ export const connectDb = async () => {
     mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
 };
 
-export const initDb = async () => {
+export const initDb = async (): Promise<void> => {
     await createModels();
     await connectDb();
 };

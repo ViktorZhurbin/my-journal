@@ -57,7 +57,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
                                         key={todo._id}
                                         index={index}
                                     >
-                                        {(provided, { isDragging }) => (
+                                        {(provided) => (
                                             <div
                                                 className={cx('todoWrapper', {
                                                     isDraggingOver,

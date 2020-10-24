@@ -3,7 +3,10 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import { connectDb } from '../../utils/initDb';
 import { Todo } from '../../models/Todo';
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+    req: NextApiRequest,
+    res: NextApiResponse
+): Promise<any> => {
     try {
         const { method } = req;
 
