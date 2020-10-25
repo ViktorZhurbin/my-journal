@@ -14,7 +14,7 @@ node_modules/
 .DS_*
 
 # dotenv environment variables file
-.env
+.env*
 
 .vscode/
 
@@ -24,3 +24,7 @@ node_modules/
 
 *.log
 yarn-*.log
+
+# service worker
+sw.*
+workbox*
