@@ -7,6 +7,7 @@ import {
 } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
+
 import { reorderArray } from '@/utils';
 import { Todo } from '../Todo';
 import { updateAllTodos } from '../../api';

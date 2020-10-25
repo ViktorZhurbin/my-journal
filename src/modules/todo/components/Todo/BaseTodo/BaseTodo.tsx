@@ -4,7 +4,6 @@ import { mutate } from 'swr';
 
 import { Checkbox } from '@/components/Checkbox';
 import { TextField } from '@/components/TextField';
-
 import { ITodo } from '../../../types';
 import { toggleTodo, editTodo, deleteTodo } from '../../../api';
 import styles from './BaseTodo.module.css';
