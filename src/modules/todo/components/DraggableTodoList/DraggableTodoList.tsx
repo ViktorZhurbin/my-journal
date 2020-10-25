@@ -47,7 +47,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
             <ul className={cx('list')}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="active">
-                        {(provided, { isDraggingOver }) => (
+                        {(provided) => (
                             <div
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
@@ -60,11 +60,10 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
                                     >
                                         {(provided) => (
                                             <div
-                                                className={cx('todoWrapper', {
-                                                    isDraggingOver,
-                                                })}
+                                                className={cx('todoWrapper')}
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
                                             >
                                                 <Todo
                                                     todo={todo}
