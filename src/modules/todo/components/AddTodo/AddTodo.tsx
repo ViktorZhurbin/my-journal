@@ -20,6 +20,7 @@ export const AddTodo: React.FC = () => {
             return;
         }
 
+        setValue('');
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
             '/api/todo/get',
@@ -30,7 +31,6 @@ export const AddTodo: React.FC = () => {
         );
         await createTodo(value);
         mutate('/api/todo/get');
-        setValue('');
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
