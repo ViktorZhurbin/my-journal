@@ -15,6 +15,7 @@ interface TextAreaProps {
     onFocus?: () => void;
     onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
+    onKeyUp?: (event: React.KeyboardEvent) => void;
     onTouchMove?: () => void;
     ref?: React.RefObject<HTMLTextAreaElement>;
 }
@@ -30,6 +31,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             onChange,
             onTouchMove,
             onKeyDown,
+            onKeyUp,
         },
         ref
     ) => {
@@ -41,6 +43,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
                 value={value}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
                 onBlur={onBlur}
                 onFocus={onFocus}
                 onTouchMove={onTouchMove}

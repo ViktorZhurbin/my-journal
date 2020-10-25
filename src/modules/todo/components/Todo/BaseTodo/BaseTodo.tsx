@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
 import { Checkbox } from '@/components/Checkbox';
-import { TextField } from '@/components/TextField';
+import { TextArea } from '@/components/TextArea';
 import { ITodo } from '../../../types';
 import { toggleTodo, editTodo, deleteTodo } from '../../../api';
 import styles from './BaseTodo.module.css';
@@ -16,7 +16,8 @@ interface BaseTodoProps {
 
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
+    const [height, setHeight] = useState<number>();
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const handleDelete = async () => {
         mutate(
@@ -63,7 +64,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
         mutate('/api/todo/get');
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         handleEdit(event.target.value);
     };
 
@@ -80,6 +81,31 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
         }
     };
 
+    const calcHeight = (value: string) => {
+        const numberOfLineBreaks = (value.match(/\n/g) || []).length;
+        console.log('value', value);
+        console.log('numberOfLineBreaks', numberOfLineBreaks);
+        // min-height + lines x line-height + padding + border
+        return 1.5 + numberOfLineBreaks;
+    };
+
+    const onKeyUp = () => {
+        if (inputRef?.current) {
+            const {
+                offsetHeight,
+                scrollHeight,
+                clientHeight,
+                style,
+            } = inputRef?.current;
+            console.log('offsetHeight', offsetHeight);
+            console.log('clientHeight', clientHeight);
+            console.log('scrollHeight', scrollHeight);
+            const height =
+                offsetHeight === scrollHeight ? '1.5rem' : `${scrollHeight}px`;
+            style.height = height;
+        }
+    };
+
     return (
         <li className={cx('todo', { isFocused })}>
             <Checkbox
@@ -87,14 +113,16 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
                 isChecked={todo.isComplete}
                 onToggle={handleToggle}
             />
-            <TextField
+            <TextArea
                 ref={inputRef}
+                // styles={{ height: `${height}px` }}
                 value={todo.task}
                 className={cx('text', { isComplete: todo.isComplete })}
                 onChange={handleChange}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}
+                onKeyUp={onKeyUp}
             />
             <span className={cx('delete')} onClick={handleDelete}>
                 X
