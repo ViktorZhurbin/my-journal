@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import cl from 'classnames/bind';
 
 import styles from './TextArea.module.css';
@@ -33,30 +33,20 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         },
         ref
     ) => {
-        const inputRef = useRef<HTMLTextAreaElement>(null);
-
-        const handleFocus = () => {
-            inputRef.current?.focus?.();
-            onFocus?.();
-        };
-
-        const handleBlur = () => {
-            onBlur?.();
-        };
-
         return (
             <textarea
                 ref={ref}
-                // rows={1}
                 className={cx('textarea', className)}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
+                onBlur={onBlur}
+                onFocus={onFocus}
                 onTouchMove={onTouchMove}
             />
         );
     }
 );
+
+TextArea.displayName = 'TextArea';

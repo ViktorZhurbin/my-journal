@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react';
+import React, { forwardRef } from 'react';
 import cl from 'classnames/bind';
 
 import styles from './TextField.module.css';
@@ -33,17 +33,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         },
         ref
     ) => {
-        const inputRef = useRef<HTMLInputElement>(null);
-
-        const handleFocus = () => {
-            inputRef.current?.focus?.();
-            onFocus?.();
-        };
-
-        const handleBlur = () => {
-            onBlur?.();
-        };
-
         return (
             <input
                 ref={ref}
@@ -53,10 +42,12 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
                 value={value}
                 onChange={onChange}
                 onKeyDown={onKeyDown}
-                onBlur={handleBlur}
-                onFocus={handleFocus}
+                onBlur={onBlur}
+                onFocus={onFocus}
                 onTouchMove={onTouchMove}
             />
         );
     }
 );
+
+TextField.displayName = 'TextField';
