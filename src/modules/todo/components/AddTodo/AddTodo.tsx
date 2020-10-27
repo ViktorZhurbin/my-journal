@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
-import { TextField } from '@/components/TextField';
+import { TextArea } from '@/components/TextArea';
 import { createTodo } from '../../services';
 import { ITodo } from '../../@types';
 import styles from './AddTodo.module.css';
@@ -12,15 +12,9 @@ const cx = classNames.bind(styles);
 export const AddTodo: React.FC = () => {
     const [value, setValue] = useState('');
     const [isFocused, setFocused] = useState(false);
-    const handleChange = (event: React.SyntheticEvent) => {
-        setValue((event.target as HTMLInputElement).value);
-    };
-    const handleSubmit = async (value: string) => {
-        if (!value) {
-            return;
-        }
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
-        setValue('');
+    const handleCreate = async () => {
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
             '/api/todo/get',
@@ -32,23 +26,33 @@ export const AddTodo: React.FC = () => {
         await createTodo(value);
         mutate('/api/todo/get');
     };
+    const handleSubmit = () => {
+        if (!value.trim()) {
+            return;
+        }
+        setValue('');
+        handleCreate();
+    };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
         if (event.key === 'Enter') {
-            handleSubmit(value);
+            handleSubmit();
         } else if (event.key === 'Escape') {
             setFocused(false);
+            inputRef?.current?.blur();
+            setValue('');
         }
     };
 
     return (
         <li className={cx('addTodo', { isFocused })}>
             <i className={cx('plus')} />
-            <TextField
+            <TextArea
+                ref={inputRef}
                 value={value}
                 placeholder={isFocused ? '' : 'New task'}
                 className={cx('input')}
-                onChange={handleChange}
+                onChange={setValue}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}

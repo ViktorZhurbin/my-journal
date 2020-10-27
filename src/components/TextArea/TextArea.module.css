@@ -1,7 +1,28 @@
+.parent {
+    display: inline-grid;
+    align-items: stretch;
+    vertical-align: top;
+    position: relative;
+    width: 100%;
+}
+
+.parent::after {
+    content: attr(data-value) ' ';
+    visibility: hidden;
+}
+
+.parent::after,
+.textarea {
+    padding: 0 4px;
+    grid-area: 2 / 1;
+    width: 100%;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .textarea {
     resize: none;
+    overflow: hidden;
     font: inherit;
-    width: 100%;
-    padding: 0;
     border: none;
 }

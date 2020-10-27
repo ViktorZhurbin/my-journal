@@ -19,9 +19,6 @@ export default async (
         if (!_id) {
             throw new Error('Missing field: _id');
         }
-        if (!task) {
-            throw new Error('Missing field: task');
-        }
         await connectDb();
         const todo = await Todo.findOneAndUpdate(
             { _id },

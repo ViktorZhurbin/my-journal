@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
 import { Checkbox } from '@/components/Checkbox';
-import { EditableText } from '@/components/EditableText';
+import { TextArea } from '@/components/TextArea';
 import { ITodo } from '../../../@types';
 import { toggleTodo, editTodo, deleteTodo } from '../../../services';
 import styles from './BaseTodo.module.css';
@@ -16,6 +16,7 @@ interface BaseTodoProps {
 
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const [isFocused, setFocused] = useState(false);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const handleDelete = async () => {
         mutate(
@@ -62,6 +63,17 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
         mutate('/api/todo/get');
     };
 
+    const handleBlur = () => {
+        setFocused(false);
+        inputRef?.current?.blur();
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        if (['Escape', 'Enter'].includes(event.key)) {
+            handleBlur();
+        }
+    };
+
     return (
         <li className={cx('todo', { isFocused })}>
             <Checkbox
@@ -69,12 +81,14 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
                 isChecked={todo.isComplete}
                 onToggle={handleToggle}
             />
-            <EditableText
-                text={todo.task}
+            <TextArea
+                ref={inputRef}
+                value={todo.task}
                 className={cx('text', { isComplete: todo.isComplete })}
-                onEdit={handleEdit}
+                onChange={handleEdit}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}
+                onKeyDown={handleKeyDown}
             />
             <span className={cx('delete')} onClick={handleDelete}>
                 X
