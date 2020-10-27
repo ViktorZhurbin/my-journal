@@ -14,7 +14,7 @@ export const AddTodo: React.FC = () => {
     const [isFocused, setFocused] = useState(false);
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
-    const handleCreate = async () => {
+    const handleCreate = async (value: string) => {
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
             '/api/todo/get',
@@ -26,21 +26,29 @@ export const AddTodo: React.FC = () => {
         await createTodo(value);
         mutate('/api/todo/get');
     };
-    const handleSubmit = () => {
-        if (!value.trim()) {
+
+    const handleSubmit = async () => {
+        if (!value) {
             return;
         }
+        await handleCreate(value);
         setValue('');
-        handleCreate();
+    };
+
+    const handleCancel = () => {
+        setFocused(false);
+        inputRef?.current?.blur();
+        setValue('');
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            handleSubmit();
-        } else if (event.key === 'Escape') {
-            setFocused(false);
-            inputRef?.current?.blur();
-            setValue('');
+        switch (event.key) {
+            case 'Enter':
+                return handleSubmit();
+            case 'Escape':
+                return handleCancel();
+            default:
+                return undefined;
         }
     };
 
