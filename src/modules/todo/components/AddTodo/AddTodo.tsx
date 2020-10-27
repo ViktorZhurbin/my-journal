@@ -3,8 +3,8 @@ import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
 import { TextField } from '@/components/TextField';
-import { createTodo } from '../../api';
-import { ITodo } from '../../types';
+import { createTodo } from '../../services';
+import { ITodo } from '../../@types';
 import styles from './AddTodo.module.css';
 
 const cx = classNames.bind(styles);

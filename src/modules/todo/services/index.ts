@@ -1,4 +1,4 @@
-import { ITodo } from '../types';
+import { ITodo } from '../@types';
 import { fetcher } from '../../../utils/fetcher';
 
 export const updateAllTodos = (updatedTodos: ITodo[]): Promise<void> =>

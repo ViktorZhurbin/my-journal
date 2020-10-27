@@ -10,9 +10,9 @@ import { mutate } from 'swr';
 
 import { reorderArray } from '@/utils';
 import { Todo } from '../Todo';
-import { updateAllTodos } from '../../api';
+import { updateAllTodos } from '../../services';
 
-import { ITodo } from '../../types';
+import { ITodo } from '../../@types';
 
 import styles from './DraggableTodoList.module.css';
 

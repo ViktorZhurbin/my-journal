@@ -4,8 +4,8 @@ import { mutate } from 'swr';
 
 import { Checkbox } from '@/components/Checkbox';
 import { EditableText } from '@/components/EditableText';
-import { ITodo } from '../../../types';
-import { toggleTodo, editTodo, deleteTodo } from '../../../api';
+import { ITodo } from '../../../@types';
+import { toggleTodo, editTodo, deleteTodo } from '../../../services';
 import styles from './BaseTodo.module.css';
 
 const cx = classNames.bind(styles);

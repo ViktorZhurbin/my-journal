@@ -2,7 +2,7 @@ import { NextApiResponse, NextApiRequest } from 'next';
 
 import { connectDb } from '../../../utils/initDb';
 import { Todo } from '../../../models/Todo';
-import { ITodo } from '@/modules/todo/types';
+import { ITodo } from '@/modules/todo/@types';
 type Data = {
     success: boolean;
     data?: ITodo;
