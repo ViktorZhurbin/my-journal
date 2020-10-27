@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
-import { TextField } from '@/components/TextField';
+import { TextArea } from '@/components/TextArea';
 import { createTodo } from '../../api';
 import { ITodo } from '../../types';
 import styles from './AddTodo.module.css';
@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 export const AddTodo: React.FC = () => {
     const [value, setValue] = useState('');
     const [isFocused, setFocused] = useState(false);
+    const inputRef = useRef<HTMLTextAreaElement>(null);
     const handleChange = (event: React.SyntheticEvent) => {
         setValue((event.target as HTMLInputElement).value);
     };
@@ -44,7 +45,8 @@ export const AddTodo: React.FC = () => {
     return (
         <li className={cx('addTodo', { isFocused })}>
             <i className={cx('plus')} />
-            <TextField
+            <TextArea
+                ref={inputRef}
                 value={value}
                 placeholder={isFocused ? '' : 'New task'}
                 className={cx('input')}

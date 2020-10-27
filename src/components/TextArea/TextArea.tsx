@@ -31,23 +31,24 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
             onChange,
             onTouchMove,
             onKeyDown,
-            onKeyUp,
         },
         ref
     ) => {
         return (
-            <textarea
-                ref={ref}
-                className={cx('textarea', className)}
-                placeholder={placeholder}
-                value={value}
-                onChange={onChange}
-                onKeyDown={onKeyDown}
-                onKeyUp={onKeyUp}
-                onBlur={onBlur}
-                onFocus={onFocus}
-                onTouchMove={onTouchMove}
-            />
+            <div className={cx('parent', className)} data-value={value.trim()}>
+                <textarea
+                    ref={ref}
+                    className={cx('textarea')}
+                    rows={1}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    onKeyDown={onKeyDown}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
+                    onTouchMove={onTouchMove}
+                />
+            </div>
         );
     }
 );
