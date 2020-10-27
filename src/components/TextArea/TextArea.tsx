@@ -37,7 +37,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         const handleChange = (
             event: React.ChangeEvent<HTMLTextAreaElement>
         ) => {
-            onChange(event.target.value);
+            const value = event.target.value.replace(/\r?\n|\r/, '');
+            onChange(value);
         };
 
         return (
