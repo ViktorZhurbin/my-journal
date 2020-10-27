@@ -20,19 +20,11 @@
 }
 
 .text {
-    width: 100%;
-    color: #4d4d4d;
-    font-size: 1rem;
-    line-height: 1.5rem;
-
-    /* height: 1.5rem; */
-    font-weight: 400;
     cursor: text;
     margin: 0 15px;
-    outline: none;
 }
 
-.text.isComplete {
+.text.isComplete textarea {
     color: #5f6368;
     text-decoration-line: line-through;
 }

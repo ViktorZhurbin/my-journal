@@ -3,6 +3,7 @@
     align-items: stretch;
     vertical-align: top;
     position: relative;
+    width: 100%;
 }
 
 .parent::after {
@@ -22,7 +23,6 @@
 .textarea {
     resize: none;
     overflow: hidden;
-    box-sizing: content-box;
     font: inherit;
     border: none;
 }
