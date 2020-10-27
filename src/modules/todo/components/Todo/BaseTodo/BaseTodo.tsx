@@ -63,19 +63,13 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
         mutate('/api/todo/get');
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        handleEdit(event.target.value);
-    };
-
     const handleBlur = () => {
         setFocused(false);
         inputRef?.current?.blur();
     };
 
     const handleKeyDown = (event: React.KeyboardEvent) => {
-        if (event.key === 'Enter') {
-            handleBlur();
-        } else if (event.key === 'Escape') {
+        if (['Escape', 'Enter'].includes(event.key)) {
             handleBlur();
         }
     };
@@ -91,7 +85,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
                 ref={inputRef}
                 value={todo.task}
                 className={cx('text', { isComplete: todo.isComplete })}
-                onChange={handleChange}
+                onChange={handleEdit}
                 onBlur={() => setFocused(false)}
                 onFocus={() => setFocused(true)}
                 onKeyDown={handleKeyDown}

@@ -13,7 +13,7 @@ interface TextAreaProps {
     active?: boolean;
     onBlur?: () => void;
     onFocus?: () => void;
-    onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onChange?: (value: string) => void;
     onKeyDown?: (event: React.KeyboardEvent) => void;
     onKeyUp?: (event: React.KeyboardEvent) => void;
     onTouchMove?: () => void;
@@ -34,6 +34,12 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
         },
         ref
     ) => {
+        const handleChange = (
+            event: React.ChangeEvent<HTMLTextAreaElement>
+        ) => {
+            onChange(event.target.value);
+        };
+
         return (
             <div className={cx('parent', className)} data-value={value.trim()}>
                 <textarea
@@ -42,7 +48,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
                     rows={1}
                     placeholder={placeholder}
                     value={value}
-                    onChange={onChange}
+                    onChange={handleChange}
                     onKeyDown={onKeyDown}
                     onBlur={onBlur}
                     onFocus={onFocus}
