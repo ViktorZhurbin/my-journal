@@ -9,9 +9,13 @@ const options = {
             clientId: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
         }),
+        Providers.Google({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        }),
     ],
     // SQL or MongoDB database (or leave empty)
-    // database: process.env.DATABASE_URI,
+    database: process.env.DATABASE_URI,
 };
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<any> =>
