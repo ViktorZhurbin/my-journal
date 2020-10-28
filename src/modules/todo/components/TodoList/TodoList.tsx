@@ -3,10 +3,9 @@ import React from 'react';
 import { useData } from '@/hooks/useData';
 import { AddTodo } from '../AddTodo';
 import { DraggableTodoList } from '../DraggableTodoList';
-import { ITodo } from '../../@types';
 import styles from './TodoList.module.css';
 
-export const TodoList: React.FC<{ todos: ITodo[] }> = () => {
+export const TodoList: React.FC = () => {
     const { data, isLoading, isError } = useData('/api/todo/get');
 
     if (isLoading) {
