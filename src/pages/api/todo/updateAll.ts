@@ -23,13 +23,12 @@ export default async (
             throw new Error('Missing field: updatedTodos');
         }
         await connectDb();
-        const newTodos = await Account.findOneAndUpdate(
-            { userId },
-            { $set: { todos: updatedTodos } },
-            { new: true }
-        );
 
-        res.status(201).json({ success: true, data: newTodos });
+        const account = await Account.findOne({ userId });
+        account.todos = updatedTodos;
+        const { todos } = await account.save();
+
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

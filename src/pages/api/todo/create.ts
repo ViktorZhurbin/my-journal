@@ -23,13 +23,12 @@ export default async (
         }
 
         await connectDb();
-        const account = await Account.findOneAndUpdate(
-            { userId },
-            { $push: { todos: { task } } },
-            { new: true }
-        );
 
-        res.status(201).json({ success: true, data: account.todos });
+        const account = await Account.findOne({ userId });
+        account.todos.push({ task });
+        const { todos } = await account.save();
+
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }
