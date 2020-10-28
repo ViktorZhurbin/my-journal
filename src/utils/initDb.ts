@@ -17,14 +17,14 @@ const createModels = async () => {
 };
 
 export const connectDb = async (): Promise<void> => {
-    if (!mongoose.connections.length) {
+    const disconnected = mongoose.connection['_readyState'] === 0;
+    if (disconnected) {
         try {
             await mongoose.connect(process.env.DATABASE_URI, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useFindAndModify: false,
             });
-            console.log('Connected to MongoDB ');
         } catch (error) {
             console.error('connectDb error: ', error);
         }
@@ -35,7 +35,9 @@ export const connectDb = async (): Promise<void> => {
         console.error.bind(console, 'MongoDB connection error:')
     );
 
-    mongoose.connection.once('open', () => console.log('Connected to MongoDB'));
+    mongoose.connection.on('connected', () =>
+        console.log('Connected to MongoDB')
+    );
 };
 
 export const initDb = async (): Promise<void> => {
