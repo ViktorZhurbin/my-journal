@@ -27,12 +27,12 @@ export const AddTodo: React.FC = () => {
         mutate('/api/todo/get');
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = (value: string) => {
         if (!value) {
             return;
         }
-        await handleCreate(value);
         setValue('');
+        handleCreate(value);
     };
 
     const handleCancel = () => {
@@ -44,7 +44,7 @@ export const AddTodo: React.FC = () => {
     const handleKeyDown = (event: React.KeyboardEvent) => {
         switch (event.key) {
             case 'Enter':
-                return handleSubmit();
+                return handleSubmit(value);
             case 'Escape':
                 return handleCancel();
             default:
