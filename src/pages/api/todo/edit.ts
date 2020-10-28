@@ -23,16 +23,15 @@ export default async (
             throw new Error('Missing field: _id');
         }
         await connectDb();
-        const todo = await Account.findOneAndUpdate(
-            { userId },
-            { $set: { 'todos.$[todo].task': task } },
-            {
-                arrayFilters: [{ 'todo._id': { $eq: _id } }],
-                new: true,
-            }
-        );
 
-        res.status(201).json({ success: true, data: todo });
+        const account = await Account.findOne({ userId });
+        const newTodos = account.todos.map((todo) =>
+            todo._id === _id ? { ...todo, task } : todo
+        );
+        account.todos = newTodos;
+        const { todos } = await account.save();
+
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

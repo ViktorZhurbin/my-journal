@@ -27,13 +27,13 @@ export default async (
             throw new Error('Missing field: _id');
         }
         await connectDb();
-        await Account.findOneAndUpdate(
-            { userId },
-            { $pull: { todos: { _id } } },
-            { new: true }
-        );
 
-        res.status(201).json({ success: true, data: { _id } });
+        const account = await Account.findOne({ userId });
+        const newTodos = account.todos.filter((todo) => todo._id !== _id);
+        account.todos = newTodos;
+        const { todos } = await account.save();
+
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

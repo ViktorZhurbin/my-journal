@@ -34,16 +34,14 @@ export default async (
         }
         await connectDb();
 
-        const todo = await Account.findOneAndUpdate(
-            { userId },
-            { $set: { 'todos.$[todo].isComplete': !isComplete } },
-            {
-                arrayFilters: [{ 'todo._id': { $eq: _id } }],
-                new: true,
-            }
+        const account = await Account.findOne({ userId });
+        const newTodos = account.todos.map((todo) =>
+            todo._id === _id ? { ...todo, isComplete: !isComplete } : todo
         );
+        account.todos = newTodos;
+        const { todos } = await account.save();
 
-        res.status(201).json({ success: true, data: todo });
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

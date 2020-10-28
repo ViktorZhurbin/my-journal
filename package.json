@@ -36,6 +36,7 @@
     },
     "devDependencies": {
         "@types/classnames": "^2.2.9",
+        "@types/mongoose": "^5.7.36",
         "@types/next-auth": "^3.1.14",
         "@types/node": "^13.5.0",
         "@types/react": "^16.9.17",
@@ -58,7 +59,6 @@
         "mongodb": "^3.6.2"
     },
     "dependencies": {
-        "@types/mongoose": "^5.7.36",
         "classnames": "^2.2.6",
         "framer-motion": "^1.8.4",
         "mongoose": "^5.10.9",
