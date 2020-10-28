@@ -17,7 +17,7 @@ const createModels = async () => {
 };
 
 export const connectDb = async (): Promise<void> => {
-    if (mongoose.connections.length) {
+    if (!mongoose.connections.length) {
         try {
             await mongoose.connect(process.env.DATABASE_URI, {
                 useNewUrlParser: true,
