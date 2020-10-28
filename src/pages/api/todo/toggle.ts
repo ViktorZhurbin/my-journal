@@ -1,8 +1,7 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/client';
-
+import mongodb from 'mongodb';
 import { connectDb } from '../../../utils/initDb';
-import { Account } from '../../../models/Account';
 
 import { ITodo } from '@/modules/todo/@types';
 type Data = {
@@ -32,18 +31,17 @@ export default async (
         if (isComplete === undefined) {
             throw new Error('Missing field: isComplete');
         }
-        await connectDb();
 
-        const todo = await Account.findOneAndUpdate(
-            { userId },
-            { $set: { 'todos.$[todo].isComplete': !isComplete } },
-            {
-                arrayFilters: [{ 'todo._id': { $eq: _id } }],
-                new: true,
-            }
-        );
+        const { db } = await connectDb();
+        const { todos } = await db
+            .collection('accounts')
+            .findOneAndUpdate(
+                { userId: new mongodb.ObjectId(userId) },
+                { $set: { 'todos.$[todo].isComplete': !isComplete } },
+                { arrayFilters: [{ 'todo._id': { $eq: _id } }] }
+            );
 
-        res.status(201).json({ success: true, data: todo });
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

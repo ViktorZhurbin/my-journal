@@ -1,8 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/client';
+import mongodb from 'mongodb';
 
 import { connectDb } from '../../../utils/initDb';
-import { Account } from '../../../models/Account';
 
 export default async (
     req: NextApiRequest,
@@ -22,14 +22,16 @@ export default async (
         if (!updatedTodos) {
             throw new Error('Missing field: updatedTodos');
         }
-        await connectDb();
-        const newTodos = await Account.findOneAndUpdate(
-            { userId },
-            { $set: { todos: updatedTodos } },
-            { new: true }
-        );
 
-        res.status(201).json({ success: true, data: newTodos });
+        const { db } = await connectDb();
+        const { todos } = await db
+            .collection('accounts')
+            .findOneAndUpdate(
+                { userId: new mongodb.ObjectId(userId) },
+                { $set: { todos: updatedTodos } }
+            );
+
+        res.status(201).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }
