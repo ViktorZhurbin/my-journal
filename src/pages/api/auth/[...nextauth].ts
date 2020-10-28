@@ -14,8 +14,13 @@ const options = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
-    // SQL or MongoDB database (or leave empty)
     database: process.env.DATABASE_URI,
+    callbacks: {
+        session: async (session, user) => {
+            session.userId = user.id;
+            return Promise.resolve(session);
+        },
+    },
 };
 
 export default (req: NextApiRequest, res: NextApiResponse): Promise<any> =>
