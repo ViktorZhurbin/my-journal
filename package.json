@@ -36,6 +36,7 @@
     },
     "devDependencies": {
         "@types/classnames": "^2.2.9",
+        "@types/next-auth": "^3.1.14",
         "@types/node": "^13.5.0",
         "@types/react": "^16.9.17",
         "@types/react-beautiful-dnd": "^11.0.4",
@@ -58,6 +59,7 @@
         "framer-motion": "^1.8.4",
         "mongoose": "^5.10.9",
         "next": "latest",
+        "next-auth": "^3.1.0",
         "next-images": "^1.6.0",
         "react": "^16.12.0",
         "react-beautiful-dnd": "^12.2.0",

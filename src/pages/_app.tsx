@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Provider } from 'next-auth/client';
 
 import { typography } from '../styles/typography';
 import '../styles/global.css';
@@ -19,7 +20,10 @@ export default function MyApp({
                     }}
                 />
             </Head>
-            <Component {...pageProps} />
+
+            <Provider session={pageProps.session}>
+                <Component {...pageProps} />
+            </Provider>
         </>
     );
 }
