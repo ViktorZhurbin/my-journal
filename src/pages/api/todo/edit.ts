@@ -1,7 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next';
+import { getSession } from 'next-auth/client';
 
 import { connectDb } from '../../../utils/initDb';
-import { Todo } from '../../../models/Todo';
+import { Account } from '../../../models/Account';
 
 export default async (
     req: NextApiRequest,
@@ -12,6 +13,8 @@ export default async (
             method,
             body: { id: _id, task },
         } = req;
+        const { userId } = await getSession({ req });
+
         if (method !== 'PUT') {
             throw new Error('Request method must be PUT');
         }
@@ -20,10 +23,13 @@ export default async (
             throw new Error('Missing field: _id');
         }
         await connectDb();
-        const todo = await Todo.findOneAndUpdate(
-            { _id },
-            { task },
-            { new: true } /* Return updated object */
+        const todo = await Account.findOneAndUpdate(
+            { userId },
+            { $set: { 'todos.$[todo].task': task } },
+            {
+                arrayFilters: [{ 'todo._id': { $eq: _id } }],
+                new: true,
+            }
         );
 
         res.status(201).json({ success: true, data: todo });

@@ -1,7 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next';
+import { getSession } from 'next-auth/client';
 
+import { Account } from '@/models/Account';
 import { connectDb } from '../../../utils/initDb';
-import { Todo } from '../../../models/Todo';
 
 export default async (
     req: NextApiRequest,
@@ -12,6 +13,12 @@ export default async (
             method,
             body: { id: _id },
         } = req;
+        const { userId } = await getSession({ req });
+
+        if (!userId) {
+            throw new Error('Not signed in');
+        }
+
         if (method !== 'DELETE') {
             throw new Error('Request method must be DELETE');
         }
@@ -20,11 +27,11 @@ export default async (
             throw new Error('Missing field: _id');
         }
         await connectDb();
-        const result = await Todo.deleteOne({ _id });
-
-        if (result?.deletedCount !== 1) {
-            throw new Error('Unable to delete task');
-        }
+        await Account.findOneAndUpdate(
+            { userId },
+            { $pull: { todos: { _id } } },
+            { new: true }
+        );
 
         res.status(201).json({ success: true, data: { _id } });
     } catch (error) {

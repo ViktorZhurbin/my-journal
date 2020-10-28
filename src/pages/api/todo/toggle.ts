@@ -1,7 +1,9 @@
 import { NextApiResponse, NextApiRequest } from 'next';
+import { getSession } from 'next-auth/client';
 
 import { connectDb } from '../../../utils/initDb';
-import { Todo } from '../../../models/Todo';
+import { Account } from '../../../models/Account';
+
 import { ITodo } from '@/modules/todo/@types';
 type Data = {
     success: boolean;
@@ -18,6 +20,8 @@ export default async (
             method,
             body: { id: _id, isComplete },
         } = req;
+        const { userId } = await getSession({ req });
+
         if (method !== 'PUT') {
             throw new Error('Request method must be PUT');
         }
@@ -29,10 +33,14 @@ export default async (
             throw new Error('Missing field: isComplete');
         }
         await connectDb();
-        const todo = await Todo.findOneAndUpdate(
-            { _id },
-            { isComplete: !isComplete },
-            { new: true } /* Return updated object */
+
+        const todo = await Account.findOneAndUpdate(
+            { userId },
+            { $set: { 'todos.$[todo].isComplete': !isComplete } },
+            {
+                arrayFilters: [{ 'todo._id': { $eq: _id } }],
+                new: true,
+            }
         );
 
         res.status(201).json({ success: true, data: todo });

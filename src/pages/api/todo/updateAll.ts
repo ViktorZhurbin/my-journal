@@ -1,7 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next';
+import { getSession } from 'next-auth/client';
 
 import { connectDb } from '../../../utils/initDb';
-import { Todo } from '../../../models/Todo';
+import { Account } from '../../../models/Account';
 
 export default async (
     req: NextApiRequest,
@@ -12,6 +13,7 @@ export default async (
             method,
             body: { updatedTodos },
         } = req;
+        const { userId } = await getSession({ req });
 
         if (method !== 'POST') {
             throw new Error('Request method must be POST');
@@ -21,8 +23,11 @@ export default async (
             throw new Error('Missing field: updatedTodos');
         }
         await connectDb();
-        await Todo.deleteMany({});
-        const newTodos = await Todo.insertMany(updatedTodos);
+        const newTodos = await Account.findOneAndUpdate(
+            { userId },
+            { $set: { todos: updatedTodos } },
+            { new: true }
+        );
 
         res.status(201).json({ success: true, data: newTodos });
     } catch (error) {
