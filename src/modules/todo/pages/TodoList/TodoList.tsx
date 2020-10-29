@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useData } from '@/hooks/useData';
-import { AddTodo } from '../AddTodo';
-import { DraggableTodoList } from '../DraggableTodoList';
+import { AddTodo } from '../../components/AddTodo';
+import { DraggableTodoList } from '../../components/DraggableTodoList';
 import styles from './TodoList.module.css';
 
 export const TodoList: React.FC = () => {
