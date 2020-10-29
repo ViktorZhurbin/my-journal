@@ -3,12 +3,14 @@ import { TodoList as Component } from '@/modules/todo/pages/TodoList';
 import { Auth } from '../components/Auth';
 
 const TodoList: React.FC = () => {
-    const [session] = useSession();
+    const [session, loading] = useSession();
 
-    return (
+    return loading ? (
+        <span>Spinner</span>
+    ) : (
         <div>
             <Auth />
-            {session ? <Component /> : 'Please sign in'}
+            {session && <Component />}
         </div>
     );
 };

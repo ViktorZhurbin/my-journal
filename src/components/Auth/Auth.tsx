@@ -7,18 +7,15 @@ const cx = classNames.bind(styles);
 export const Auth: React.FC = () => {
     const [session] = useSession();
 
-    return (
-        <div className={cx('wrapper')}>
-            {!session ? (
-                <button type="submit" onClick={() => signIn()}>
-                    Sign in
-                </button>
-            ) : (
-                <>
-                    <span>Signed in as {session.user.name}</span>
-                    <button onClick={() => signOut()}>Sign out</button>
-                </>
-            )}
+    return !session ? (
+        <div className={cx('signIn')}>
+            <p>Please sign in</p>
+            <button onClick={() => signIn()}>Sign in</button>
+        </div>
+    ) : (
+        <div className={cx('signOut')}>
+            <span>Signed in as {session.user.name}</span>
+            <button onClick={() => signOut()}>Sign out</button>
         </div>
     );
 };

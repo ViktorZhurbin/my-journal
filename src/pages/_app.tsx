@@ -6,10 +6,7 @@ import { Provider } from 'next-auth/client';
 import { typography } from '../styles/typography';
 import '../styles/global.css';
 
-export default function MyApp({
-    Component,
-    pageProps,
-}: AppProps): ReactElement {
+export default function App({ Component, pageProps }: AppProps): ReactElement {
     return (
         <>
             <Head>
