@@ -1,7 +1,7 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/client';
-import mongodb from 'mongodb';
-import { connectDb } from '../../../utils/initDb';
+
+import { findAccountAndUpdate } from '@/modules/account/utils/db';
 
 export default async (
     req: NextApiRequest,
@@ -22,14 +22,11 @@ export default async (
             throw new Error('Missing field: _id');
         }
 
-        const { db } = await connectDb();
-        const { todos } = await db
-            .collection('accounts')
-            .findOneAndUpdate(
-                { userId: new mongodb.ObjectId(userId) },
-                { $set: { 'todos.$[todo].task': task } },
-                { arrayFilters: [{ 'todo._id': { $eq: _id } }] }
-            );
+        const { todos } = await findAccountAndUpdate(
+            userId,
+            { $set: { 'todos.$[todo].task': task } },
+            { arrayFilters: [{ 'todo._id': { $eq: _id } }] }
+        );
 
         res.status(201).json({ success: true, data: todos });
     } catch (error) {
