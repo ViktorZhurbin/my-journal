@@ -4,10 +4,10 @@ import { getSession } from 'next-auth/client';
 import { connectDb } from '../../../utils/initDb';
 import { Account } from '../../../models/Account';
 
-import { ITodo } from '@/modules/todo/@types';
+import { Todo } from '@/modules/todo/@types';
 type Data = {
     success: boolean;
-    data?: ITodo;
+    data?: Todo;
     error?: string;
 };
 

@@ -4,14 +4,14 @@ import { mutate } from 'swr';
 
 import { Checkbox } from '@/components/Checkbox';
 import { TextArea } from '@/components/TextArea';
-import { ITodo } from '../../../@types';
+import { Todo } from '../../../@types';
 import { toggleTodo, editTodo, deleteTodo } from '../../../services';
 import styles from './BaseTodo.module.css';
 
 const cx = classNames.bind(styles);
 
 interface BaseTodoProps {
-    todo: ITodo;
+    todo: Todo;
 }
 
 export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
@@ -21,7 +21,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const handleDelete = async () => {
         mutate(
             '/api/todo/get',
-            async ({ data }: { data: ITodo[] }) => {
+            async ({ data }: { data: Todo[] }) => {
                 const newTodos = data.filter((item) => item._id !== todo._id);
                 return { success: true, data: newTodos };
             },
@@ -34,7 +34,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const handleToggle = async () => {
         mutate(
             '/api/todo/get',
-            async ({ data }: { data: ITodo[] }) => {
+            async ({ data }: { data: Todo[] }) => {
                 const newTodos = data.map((item) =>
                     item._id === todo._id
                         ? { ...item, isComplete: !item.isComplete }
@@ -51,7 +51,7 @@ export const BaseTodo: React.FC<BaseTodoProps> = ({ todo }) => {
     const handleEdit = async (value: string) => {
         mutate(
             '/api/todo/get',
-            async ({ data }: { data: ITodo[] }) => {
+            async ({ data }: { data: Todo[] }) => {
                 const newTodos = data.map((item) =>
                     item._id === todo._id ? { ...item, task: value } : item
                 );

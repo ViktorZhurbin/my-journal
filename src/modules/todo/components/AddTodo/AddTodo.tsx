@@ -4,7 +4,7 @@ import { mutate } from 'swr';
 
 import { TextArea } from '@/components/TextArea';
 import { createTodo } from '../../services';
-import { ITodo } from '../../@types';
+import { Todo } from '../../@types';
 import styles from './AddTodo.module.css';
 
 const cx = classNames.bind(styles);
@@ -18,7 +18,7 @@ export const AddTodo: React.FC = () => {
         const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
         mutate(
             '/api/todo/get',
-            async ({ data }: { data: ITodo[] }) => {
+            async ({ data }: { data: Todo[] }) => {
                 return { success: true, data: [...data, newTodo] };
             },
             false

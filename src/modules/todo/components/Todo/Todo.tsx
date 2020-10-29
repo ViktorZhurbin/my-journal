@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { motion, useAnimation, PanInfo } from 'framer-motion';
 
 import { deleteTodo } from '../../services';
-import { ITodo } from '../../@types';
+import { Todo } from '../../@types';
 import DragHandleIcon from './icon.svg';
 import { BaseTodo } from './BaseTodo';
 import styles from './Todo.module.css';
@@ -11,11 +11,14 @@ import styles from './Todo.module.css';
 const cx = classNames.bind(styles);
 
 interface TodoProps {
-    todo: ITodo;
+    todo: Todo;
     dragHandleProps: any;
 }
 
-export const Todo: React.FC<TodoProps> = ({ todo, dragHandleProps }) => {
+export const TodoComponent: React.FC<TodoProps> = ({
+    todo,
+    dragHandleProps,
+}) => {
     const controls = useAnimation();
 
     const handleDelete = async (event: any, info: PanInfo) => {

@@ -9,21 +9,21 @@ import classNames from 'classnames/bind';
 import { mutate } from 'swr';
 
 import { reorderArray } from '@/utils';
-import { Todo } from '../Todo';
+import { TodoComponent } from '../Todo';
 import { updateAllTodos } from '../../services';
 
-import { ITodo } from '../../@types';
+import { Todo } from '../../@types';
 
 import styles from './DraggableTodoList.module.css';
 
 const cx = classNames.bind(styles);
 
 interface DraggableTodoListProps {
-    todos: ITodo[];
+    todos: Todo[];
 }
 
 const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
-    const handleUpdateAllTodos = async (updatedTodos: ITodo[]) => {
+    const handleUpdateAllTodos = async (updatedTodos: Todo[]) => {
         mutate('/api/todo/get', { success: true, data: updatedTodos }, false);
         await updateAllTodos(updatedTodos);
         mutate('/api/todo/get');
@@ -65,7 +65,7 @@ const DraggableTodoList: React.FC<DraggableTodoListProps> = ({ todos }) => {
                                                 {...provided.draggableProps}
                                                 {...provided.dragHandleProps}
                                             >
-                                                <Todo
+                                                <TodoComponent
                                                     todo={todo}
                                                     dragHandleProps={
                                                         provided.dragHandleProps
