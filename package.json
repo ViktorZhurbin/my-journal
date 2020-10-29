@@ -17,11 +17,6 @@
             "pre-commit": "lint-staged"
         }
     },
-    "lint-staged": {
-        "*.js": "eslint --cache --fix",
-        "*.css": "stylelint --fix",
-        "*.{js,css,md}": "prettier --write"
-    },
     "browserslist": {
         "production": [
             "last 2 versions",
