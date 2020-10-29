@@ -18,6 +18,7 @@ export const TodoList: React.FC = () => {
     return (
         <div className={styles.container}>
             {/* <button onClick={() => Todo.deleteAllTodos()}>Delete All</button> */}
+            <h2 className={styles.title}>Today's Tasks</h2>
             <DraggableTodoList todos={data} />
             <AddTodo />
         </div>
