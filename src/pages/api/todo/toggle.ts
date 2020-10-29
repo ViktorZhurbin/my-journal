@@ -35,10 +35,7 @@ export default async (
         await connectDb();
 
         const account = await Account.findOne({ userId });
-        const newTodos = account.todos.map((todo) =>
-            todo._id === _id ? { ...todo, isComplete: !isComplete } : todo
-        );
-        account.todos = newTodos;
+        await account.todos.id(_id).set({ isComplete: !isComplete });
         const { todos } = await account.save();
 
         res.status(201).json({ success: true, data: todos });
