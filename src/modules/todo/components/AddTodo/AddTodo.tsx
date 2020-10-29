@@ -17,7 +17,7 @@ export const AddTodo: React.FC = () => {
     const handleCreate = async (value: string) => {
         const newTodo: Todo = {
             isComplete: false,
-            _id: '-1',
+            _id: Date.now().toString(),
             task: value,
         };
         const getOptimisticResponse = (cache: ResponseData) => {
