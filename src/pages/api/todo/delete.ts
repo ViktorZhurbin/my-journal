@@ -29,8 +29,7 @@ export default async (
         await connectDb();
 
         const account = await Account.findOne({ userId });
-        const newTodos = account.todos.filter((todo) => todo._id !== _id);
-        account.todos = newTodos;
+        account.todos.remove({ _id });
         const { todos } = await account.save();
 
         res.status(201).json({ success: true, data: todos });
