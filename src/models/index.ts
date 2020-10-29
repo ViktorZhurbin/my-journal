@@ -1,6 +1,7 @@
 import { TodoSchema } from './Todo';
-export * from './Todo';
+import { AccountSchema } from './Account';
 
-export const models = {
+export const schemas = {
     Todo: TodoSchema,
+    Account: AccountSchema,
 };

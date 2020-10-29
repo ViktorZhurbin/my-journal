@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
-import { models } from '../models';
+import { schemas } from '../models';
 
-const createModels = async () => {
+const createModels = () => {
     try {
-        const modelNames = await mongoose.modelNames();
+        const modelNames = mongoose.modelNames();
 
-        Object.entries(models).forEach(([name, schema]) => {
+        Object.entries(schemas).forEach(([name, schema]) => {
             if (!modelNames.includes(name)) {
                 mongoose.model(name, schema);
             }
@@ -41,6 +41,6 @@ export const connectDb = async (): Promise<void> => {
 };
 
 export const initDb = async (): Promise<void> => {
-    await createModels();
+    createModels();
     await connectDb();
 };
