@@ -1,3 +1,5 @@
+import { GenericObject } from '@/@types';
+
 const contentType = 'application/json';
 const headers = {
     Accept: contentType,
@@ -7,7 +9,7 @@ const headers = {
 export const fetcher = async (
     endpoint: string,
     method: string,
-    payload: { [key: string]: any }
+    payload: GenericObject
 ): Promise<any> => {
     try {
         const res = await fetch(endpoint, {
@@ -15,9 +17,12 @@ export const fetcher = async (
             headers,
             body: JSON.stringify({ ...payload }),
         });
+
         if (!res.ok) {
             throw new Error(`${res.status}`);
         }
+
+        return await res.json();
     } catch (error) {
         console.error(`Request failed with status code ${error.message}`);
     }

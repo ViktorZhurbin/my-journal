@@ -23,9 +23,9 @@ export default async (
         }
 
         await connectDb();
-        const account = await Account.findOne({ userId });
+        const { todos } = await Account.findOne({ userId });
 
-        res.status(200).json({ success: true, data: account.todos });
+        res.status(200).json({ success: true, data: todos });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }

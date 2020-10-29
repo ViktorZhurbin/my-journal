@@ -4,7 +4,7 @@ import { mutate } from 'swr';
 
 import { TextArea } from '@/components/TextArea';
 import { createTodo } from '../../services';
-import { Todo } from '../../@types';
+import { Todo, ResponseData } from '../../@types';
 import styles from './AddTodo.module.css';
 
 const cx = classNames.bind(styles);
@@ -15,14 +15,24 @@ export const AddTodo: React.FC = () => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
 
     const handleCreate = async (value: string) => {
-        const newTodo: ITodo = { _id: '-1', task: value, isComplete: false };
+        const newTodo: Todo = {
+            isComplete: false,
+            _id: '-1',
+            task: value,
+        };
+        const getOptimisticResponse = (cache: ResponseData) => {
+            return {
+                success: true,
+                data: [...cache.data, newTodo],
+            };
+        };
+
         mutate(
             '/api/todo/get',
-            async ({ data }: { data: Todo[] }) => {
-                return { success: true, data: [...data, newTodo] };
-            },
+            (cache: ResponseData) => getOptimisticResponse(cache),
             false
         );
+
         await createTodo(value);
         mutate('/api/todo/get');
     };
